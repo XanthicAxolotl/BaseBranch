@@ -218,11 +218,13 @@ someone will look at your code again. If they like it, it will get merged,
 else, just repeat again.
 
 Thanks for contributing!
+`
  ____      _    ____ ___ ____    _    _     _ 
 |  _ \    / \  |  _ \_ _/ ___|  / \  | |   | |
 | |_) |  / _ \ | | | | | |     / _ \ | |   | |
 |  _ <  / ___ \| |_| | | |___ / ___ \| |___|_|
 |_| \_\/_/   \_\____/___\____/_/   \_\_____(_)
+`
 
 ### Guidelines
 
