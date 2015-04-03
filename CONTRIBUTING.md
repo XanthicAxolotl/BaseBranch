@@ -219,14 +219,6 @@ else, just repeat again.
 
 Thanks for contributing!
 
-
- ____      _    ____ ___ ____    _    _     _ 
-|  _ \    / \  |  _ \_ _/ ___|  / \  | |   | |
-| |_) |  / _ \ | | | | | |     / _ \ | |   | |
-|  _ <  / ___ \| |_| | | |___ / ___ \| |___|_|
-|_| \_\/_/   \_\____/___\____/_/   \_\_____(_)
-
-
 ### Guidelines
 
 1. Uphold the current code standard:
