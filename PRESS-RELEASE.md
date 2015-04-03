@@ -17,36 +17,31 @@ Once the project moves into development, the press release can be used as a touc
  -->
 
 ## Heading ##
-  > Marginal.io
+  > BaseBranch
 
 ## Sub-Heading ##
-  > Collaborative annotation
+  > Crowd-Sourced Coding Curriculums
 
 ## Summary ##
-  > A platform that allows you and your friends to comment together on articles.
+  > A platform that allows users to look up or contribute resources to user-organized coding curriculums.
 
 ## Problem ##
-  > - comments on articles typically go at the end, rather than in line, which removes them from their proper context
-      - typical comment sections seperate comments from content
-    - article comment sections are open to the whole internet, but you're not interested in the whole internet's opinion
-
+  > - Using search engines to find code returns resources of variable quality
+    - No defined direction for additional learning
+  - User may not know certain valuable topics even exist
 
 ## Solution ##
-  > - Connect your comment to a particular point on the page
-  - Collect you and your friends' comments
-  - an alternative to long comment threads
-  - restrict comments to a group whose opinions you value
-
-
+  > - Organized curriculums to teach users the basics they need to know judged by other users
 
 ## Quote from You ##
-  > "Reading will never be the same!" -David "D" Hammer, Ph."D"
+  > "Learning new languages has never been easier!" -Wendy "Wendy Coin" Leung
 
 ## How to Get Started ##
-  > "User interfaces will never be the same!" -Michael "M" Roberts, "M".S.
+  > - Anyone may view curriculums and resources
+  - Logged in users may contribute resources, construct curriculums, bookmark curriculums, or vote and comment on the quality of curriculums and resources
 
 ## Customer Quote ##
-  > "This keeps my inbox clean and my mind sharp." -Anonymous
+  > "I didn't even know closures existed until I saw it in the JavaScript graph view." -Anonymous
 
 ## Closing and Call to Action ##
-  > To arms, my friends! Grab your guns and head for the hills #FongJohnson2016
+  > Don't let your peers leave their coding questions up to chance. Contribute to BaseBranch today!
