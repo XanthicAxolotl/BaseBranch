@@ -9,6 +9,7 @@
     1. [Cut a namespaced branch](#cut-a-namespaced-branch-from-develop)
     1. [Make commits to your branch](#make-commits-to-your-branch)
     1. [Commit Message Guidelines](#commit-message-guidelines)
+    1. [Locally test your changes](#locally-test-your-changes)
     1. [Rebase upstream changes into your branch](#rebase-upstream-changes-into-your-branch)
     1. [Get your feature implemented into the development branch](#get-your-feature-implemented-into-the-development-branch)
     1. [Make a pull request](#make-a-pull-request)
@@ -24,7 +25,7 @@ Note:  Our project uses the many-branched git-workflow, it is recommended you ad
 ## General Workflow
 
 1. Fork the repo
-1. Cut a namespaced branch from develop
+1. Cut a namespaced branch from master
   - bug/...
   - feat/...
   - test/...
@@ -42,9 +43,8 @@ Note:  Our project uses the many-branched git-workflow, it is recommended you ad
   - (doc) ...
 1. When you've finished with your fix or feature, Rebase upstream changes into your branch. submit a pull request
    directly to the branch you modified. Include a description of your changes.
-1. Your pull request will be reviewed by another maintainer. The point of code
-   reviews is to help keep the codebase clean and of high quality and, equally
-   as important, to help you grow as a programmer. If your code reviewer
+1. Your pull request will be reviewed by at least two other maintainers. The point of code
+   reviews is to help keep the codebase clean, of high quality, and to help you grow as a programmer. If your code reviewer
    requests you make a change you don't understand, ask them why.
 1. Fix any issues raised by your code reviwer, and push your fixes as a single
    new commit.
@@ -62,14 +62,17 @@ git remote add upstream https://github.com/<SOURCE_OF_REPO>/<NAME_OF_REPO>.git
 
 ### Be aware of your branch
 
-We are using the Git Workflow seen [here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) and [here](http://nvie.com/posts/a-successful-git-branching-model/).  In summary:
+We are using the Git Workflow seen [here](http://reinh.com/blog/2009/03/02/a-git-workflow-for-agile-teams.html)
+In summary:
 
-  - Branch master is always in a deployable state.
-  - Branch develop is where most work is done.
-    - Most work will be done off of the develop branch, this is where you will create most of your branches.
-      (i.e., feature branches, bugfix branches, test branches, etc...)
+  - Cut a feature branch on your local repository
+  - Make changes in this feature branch
+  - Locally test your feature branch
+  - Merge with your master branch
+  - Push to origin master
+  - Submit a pull request
 
-### Cut a namespaced branch from develop
+### Cut a namespaced branch from master
 
 Your branch should follow this naming convention:
   - bug/...
@@ -116,6 +119,13 @@ A commit should be short, and include only *one logical change*.
 
 [More information](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
+### Locally test your changes
+
+In order to ensure as little group downtime as possible, please make sure the changes in your feature branch do not
+cause any tests to fail.
+
+For more information on test driven development, click [here](http://en.wikipedia.org/wiki/Test-driven_development)
+
 ### Rebase upstream changes into your branch
 
 Once you are done making changes, you can begin the process of getting
@@ -127,10 +137,10 @@ from your branch:
 # Syntax                      FROM HERE:
 (TO HERE)$ git pull --rebase (target repo) (target branch)
 #e.g.,
-(develop)$ git pull --rebase upstream develop
+(develop)$ git pull --rebase upstream master
 ```
 (This changes the commit history on your local repo to match the upstream repo.  This
-will allow pull requests to merge automatically)
+will allow pull requests to merge automatically and is a vitally important step)
 
 This will start the rebase process. You must commit all of your changes
 before doing this. If there are no conflicts, this should just roll all
@@ -162,17 +172,17 @@ make sure they work also.
 If rebasing broke anything, fix it, then repeat the above process until
 you get here again and nothing is broken and all the tests pass.
 
-### Get your feature implemented into the development branch
+### Get your feature implemented into the master branch
 [(Ensure that you rebased your code onto upstream before doing this!)](#rebase-upstream-changes-into-your-branch)
 
-Rebase your branch onto development.  This creates a cleaner commit history than using a merge.
+Rebase your branch onto master.  This creates a cleaner commit history than using a merge.
 
 ```bash
 #Syntax
 (FROM HERE)$ git rebase (TO HERE)
 
 #e.g.,
-(your feature branch)$ git rebase develop
+(your feature branch)$ git rebase master
 #This will attach your feature to the develop branch, and implement it
 ```
 Like upstream rebasing, you may need to ```git rebase --continue``` through merge conflicts.
@@ -186,19 +196,19 @@ maintaining a clean, linear commit history.
 (Parent Branch)$ git merge --no-ff (Rebased branch)
 
 #e.g.,
-(develop)$ git merge --no-ff feat/docView
+(master)$ git merge --no-ff feat/docView
 ```
 
-Now, push to your repo and make a pull request to the upstream repo:
+Now, push to your repository and make a pull request to the upstream repository:
 
 ### Make a pull request
 
 Make a clear pull request from your fork and branch to the related upstream
 branch, detailing exactly what changes you made and what feature this
 should add. The clearer your pull request is the faster you can get
-your changes incorporated into this repo.
+your changes incorporated into this repository.
 
-At least one other person MUST give your changes a code review, and once
+At least two other people MUST give your changes a code review, and once
 they are satisfied they will merge your changes into upstream. Alternatively,
 they may have some requested changes. You should make more commits to your
 branch to fix these, then follow this process again from rebasing onwards.
@@ -229,7 +239,7 @@ pull from upstream before you prepare a personal pull request:
 # Syntax                      FROM HERE:
 (TO HERE)$ git pull --rebase (target repo) (target branch)
 #e.g.,
-(develop)$ git pull --rebase upstream develop
+(develop)$ git pull --rebase upstream master
 ```
 
 Next, resolve any merge conflicts, using:
@@ -244,8 +254,8 @@ Next, rebase your working branch onto the development branch:
 (Working branch)$ git rebase (parent branch)
 
 #e.g.,
-(your feature branch)$ git rebase develop
-#This will attach your feature to the develop branch, and implement it
+(your feature branch)$ git rebase master
+#This will attach your feature to the master branch, and implement it
 ```
 
 Next, merge --no-ff to maintain a clean commit history, and logically group changes:
@@ -263,7 +273,7 @@ Then push to your personal repo:
 (inconsequential)$ git push (target repo) (local branch to push)
 
 #e.g.,
-(any)$ git push origin develop
+(any)$ git push origin master
 ```
 
 Finally, create a pull request.  Ensure that you are going from your repo's relevant branch to
