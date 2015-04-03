@@ -129,7 +129,7 @@ When writing any block of code that is logically subordinate to the line immedia
     }
     ```
 
-* Don't use function statements for the entire first half of the course. They introduce a slew of subtle new rules to how the language behaves, and without a clear benefit. Once you and all your peers are expert level in the second half, you can start to use the more (needlessly) complicated option if you like.
+* Don't use function statements for the entire first half of the course. They introduce a slew of subtle new rules to how the language behaves without a clear benefit. Once you and all your peers are expert level in the second half, you can start to use the more (needlessly) complicated option if you like.
 
     ```javascript
     // good:
@@ -167,7 +167,7 @@ When writing any block of code that is logically subordinate to the line immedia
   };
   ```
 
-* Misleadingly, a function may be used at the end of a normal assignment statement, and would require a semicolon (even though it looks rather like the end of some statement block).
+* Function statements require a semicolon at the end of their block.
 
   ```javascript
   // good:
