@@ -9,7 +9,7 @@ var Main = React.createClass({
         <div>ASDF</div>
       </div>
     );
-  };
+  }
 });
 
 React.render(<Main />, document.getElementById('app'));

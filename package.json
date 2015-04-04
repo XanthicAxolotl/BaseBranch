@@ -3,7 +3,9 @@
   "main": "server.js",
   "version": "0.0.0",
   "dependencies": {
+    "browserify": "^9.0.7",
     "gulp": "^3.8.11",
+    "gulp-html-replace": "^1.4.4",
     "gulp-react": "^3.0.1",
     "react": "^0.12.2",
     "reactify": "^1.1.0",
