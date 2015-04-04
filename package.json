@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "dependencies": {
     "gulp": "^3.8.11",
+    "gulp-react": "^3.0.1",
     "react": "^0.12.2",
     "reactify": "^1.1.0",
     "reflux": "^0.2.7"
