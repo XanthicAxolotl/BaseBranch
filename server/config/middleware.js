@@ -22,7 +22,7 @@ module.exports = function (app, express) {
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
-  app.use(express.static(__dirname + '/../../client'));
+  app.use(express.static(__dirname + '/../../client/dist'));
   app.use(morgan('dev'));
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);

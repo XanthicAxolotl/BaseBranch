@@ -4,6 +4,12 @@ var app = require('../serverSetup.js').app;
 // var db = require('../serverSetup.js').db;
 
 describe('', function() {
+    describe('Basic Test', function() {
+    it('should return 200', function (done) {
+      expect(1).to.equal(1);
+      done();
+    });
+  });
   
   /*beforeEach(function(done) {
   
