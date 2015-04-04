@@ -1,0 +1,10 @@
+{
+  "name": "BaseBranch",
+  "main": "server.js",
+  "version": "0.0.0",
+  "dependencies": {
+    "react": "^0.12.2",
+    "reactify": "^1.1.0",
+    "reflux": "^0.2.7"
+  }
+}
