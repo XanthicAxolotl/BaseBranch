@@ -1,5 +1,5 @@
-var React = require('react');
 var mui = require('material-ui');
+var React = require('react');
 
 //NavBar Components
 var Toolbar = mui.Toolbar;
@@ -37,12 +37,8 @@ var NavBar = React.createClass({
           <RaisedButton label="Log In" linkButton={true} primary={true}/>
         </ToolbarGroup>
       </Toolbar>
-
     );
   }
 });
 
 module.exports = NavBar;
-
-
-
