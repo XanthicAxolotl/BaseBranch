@@ -1,5 +1,5 @@
-var mui = require('material-ui');
 var React = require('react');
+var mui = require('material-ui');
 
 //NavBar Components
 var Toolbar = mui.Toolbar;
@@ -8,6 +8,10 @@ var DropDownMenu = mui.DropDownMenu;
 var FontIcon = mui.FontIcon;
 var RaisedButton = mui.RaisedButton;
 var DropDownIcon = mui.DropDownIcon;
+var injectTapEventPlugin = require("react-tap-event-plugin");
+
+injectTapEventPlugin();
+
 
 var filterOptions = [
   {payload: '1', text:'About'},
@@ -33,9 +37,12 @@ var NavBar = React.createClass({
           <RaisedButton label="Log In" linkButton={true} primary={true}/>
         </ToolbarGroup>
       </Toolbar>
+
     );
   }
 });
 
 module.exports = NavBar;
+
+
 

@@ -6,6 +6,7 @@ var mui = require('material-ui');
 
 //Components
 var NavBar = require('./components/NavBar.jsx');
+var Paper = mui.Paper;
 
 
 injectTapEventPlugin();
