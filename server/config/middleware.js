@@ -13,11 +13,12 @@ var morgan = require('morgan');
 module.exports = function (app, express) {
 
   // Create Express routers for each type of route.
-  
-  // TODO: Create Express Routers for all appropriate request paths
-  // var ideaRouter = express.Router();
-  // var voteRouter = express.Router();
-  // var commentRouter = express.Router();
+  var channelRouter = express.Router();
+  var nodeRouter = express.Router();
+  var resourceRouter = express.Router();
+  var commentRouter = express.Router();
+  var curriculumRouter = express.Router();
+  var userRouter = express.Router();
 
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
@@ -27,20 +28,19 @@ module.exports = function (app, express) {
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);
 
-  // TODO: Connect request paths to appropriate Routers
-
-  // Use the idea router for all idea requests.
-  // app.use('/api/ideas', ideaRouter); 
-  // Use vote router for requests related to upvoting or downvoting.
-  // app.use('/api/vote', voteRouter);
-  // Use comment router for requests related to adding and getting comments.
-  // app.use('/api/comments', commentRouter);
+  // Connect request paths to appropriate Routers
+  app.use('/api/channel', channelRouter);
+  app.use('/api/node', nodeRouter);
+  app.use('/api/resource', resourceRouter);
+  app.use('/api/comment', commentRouter);
+  app.use('/api/curriculum', curriculumRouter);
+  app.use('/api/user', userRouter);
 
   // Inject our Express routers into their respective route files.
-
-  // TODO: Inject Routers into the appropriate route files
-
-  // require('../ideas/ideaRoutes.js')(ideaRouter);
-  // require('../votes/voteRoutes.js')(voteRouter);
-  // require('../comments/commentRoutes.js')(commentRouter);
+  require('../channels/channelRoutes.js')(channelRouter);
+  require('../nodes/nodeRoutes.js')(nodeRouter);
+  require('../resources/resourceRoutes.js')(resourceRouter);
+  require('../comments/commentRoutes.js')(commentRouter);
+  require('../curricula/curriculumRoutes.js')(curriculumRouter);
+  require('../users/userRoutes.js')(userRouter);
 };

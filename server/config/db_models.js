@@ -67,6 +67,9 @@ module.exports = function() {
     Resources.belongsToMany(Curricula, {through: 'curricula_resources'});
     Curricula.belongsToMany(Resources, {through: 'curricula_resources'});
 
+    Curricula.belongsToMany(Users, {through: 'subscriptions'});
+    Users.belongsToMany(Curricula, {through: 'subscriptions'});
+
     // sync tables to database
     sequelize.sync().success(function() {
         console.log('basebranch tables created successfully');
