@@ -18,39 +18,41 @@ module.exports = function() {
 
     // define Users model
     var Users = sequelize.define('users', {
-      name: Sequelize.STRING,
-      password: Sequelize.STRING,
-      email: Sequelize.STRING,
-      reputation: Sequelize.INTEGER
+      name: {type: Sequelize.STRING, allowNull: false},
+      password: {type: Sequelize.STRING, allowNull: false},
+      email: {type: Sequelize.STRING, allowNull: false},
+      reputation: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
+      picture: Sequelize.TEXT
     });
     
     // define Channels model
     var Channels = sequelize.define('channels', {
-      name: Sequelize.STRING
+      name: {type: Sequelize.STRING, allowNull: false}
     });
 
     // define Nodes model
     var Nodes = sequelize.define('nodes', {
-      name: Sequelize.STRING,
+      name: {type: Sequelize.STRING, allowNull: false}
     });
 
     // define Curricula model
     var Curricula = sequelize.define('curricula', {
-      name: Sequelize.STRING
+      name: {type: Sequelize.STRING, allowNull: false},
+      rating: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}
     });
 
     // define Resources model
     var Resources = sequelize.define('resources', {
-      name: Sequelize.STRING,
-      url: Sequelize.STRING,
-      type: Sequelize.STRING,
+      name: {type: Sequelize.STRING, allowNull: false},
+      url: {type: Sequelize.STRING, allowNull: false},
+      type: {type: Sequelize.STRING, allowNull: false},
       description: Sequelize.STRING,
-      rating: Sequelize.INTEGER
+      rating: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}
     });
 
     // define Comments model
     var Comments = sequelize.define('comments', {
-      text: Sequelize.STRING
+      text: {type: Sequelize.STRING, allowNull: false}
     });
     
     // define relationships
