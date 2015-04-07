@@ -4,7 +4,7 @@ var Sequelize = require("sequelize");
 
 module.exports = function() {
 
-    var connectionString = process.env.DATABASE_URL || 'mysql://admin:password@localhost:3306/basebranch';
+    var connectionString = process.env.CLEARDB_DATABASE_URL || 'mysql://admin:password@localhost:3306/basebranch';
     var sequelize = new Sequelize(connectionString);
 
     // Check the database connection status
