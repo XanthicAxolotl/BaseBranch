@@ -99,7 +99,7 @@ gulp.task('replaceHTML', function(){
   gulp.src(path.INDEX_HTML)
     .pipe(htmlreplace({
       'css': './css/main.css',
-      'js': 'build/' + path.MINIFIED_OUT
+      'js': 'build/' + path.INDEX_MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
 });
@@ -108,7 +108,7 @@ gulp.task('replaceGraphHTML', function(){
   gulp.src(path.GRAPH_HTML)
     .pipe(htmlreplace({
       'css': './css/main.css',
-      'js': 'build/' + path.MINIFIED_OUT
+      'js': 'build/' + path.GRAPH_MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
 });
@@ -117,7 +117,7 @@ gulp.task('replaceCurriculumHTML', function(){
   gulp.src(path.CURRICULUM_HTML)
     .pipe(htmlreplace({
       'css': './css/main.css',
-      'js': 'build/' + path.MINIFIED_OUT
+      'js': 'build/' + path.CURRICULUM_MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
 });

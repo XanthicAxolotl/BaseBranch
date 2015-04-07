@@ -49,6 +49,4 @@ var GraphView = React.createClass({
   }
 });
 
-React.render(<GraphView />, document.getElementById('graph'));
-
 module.exports = GraphView;
