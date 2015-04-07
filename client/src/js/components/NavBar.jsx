@@ -6,7 +6,7 @@ var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
 var DropDownMenu = mui.DropDownMenu;
 var FontIcon = mui.FontIcon;
-var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 var DropDownIcon = mui.DropDownIcon;
 var injectTapEventPlugin = require("react-tap-event-plugin");
 
@@ -23,7 +23,7 @@ var NavBar = React.createClass({
 
   render: function() {
     return (
-      <Toolbar>
+      <Toolbar className="blue">
         <ToolbarGroup key={0} float="left">
           <a className ="hidden-link" href="./"><h2 className="mui-app-bar-title">BaseBranch</h2></a>
         </ToolbarGroup>
@@ -31,10 +31,10 @@ var NavBar = React.createClass({
           <DropDownMenu menuItems={filterOptions} />
         </ToolbarGroup>
         <ToolbarGroup className="signup" key={2} float="right">
-          <RaisedButton className="secondary" label="Sign Up" linkButton={true} primary={true}/>
+          <FlatButton secondary={true} label="Sign Up" linkButton={true} />
         </ToolbarGroup>
         <ToolbarGroup className="login" key={3} float="right">
-          <RaisedButton className="secondary" label="Log In" linkButton={true} primary={true}/>
+          <FlatButton secondary={true} label="Log In" linkButton={true} />
         </ToolbarGroup>
       </Toolbar>
     );
