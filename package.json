@@ -32,7 +32,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "mocha server/spec/serverSpec.js; RES=$?; kill %1; exit $RES",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "gulp production"
   },
   "repository": {
     "type": "git",
