@@ -6,6 +6,7 @@ var mui = require('material-ui');
 
 //Components
 var NavBar = require('./components/NavBar.jsx');
+var GraphView = require('./components/GraphView.jsx');
 var Paper = mui.Paper;
 
 
@@ -16,6 +17,7 @@ var Main = React.createClass({
     return (
       <div className="full">
         <NavBar />
+        <GraphView />
       </div>
     );
   }
