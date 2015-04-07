@@ -32,7 +32,7 @@ var GraphBar = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="full">
         <div className="button-nav-container">
           <RaisedButton linkButton={true} href="https://pbs.twimg.com/profile_images/458794430200152064/XdQULww6_400x400.png">
             <span className="mui-raised-button-label">(Store) Topics</span>
