@@ -1,17 +1,31 @@
 <html>
   <head>
     <title>BaseBranch</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.95.3/js/materialize.min.js"></script>
+
+    <!-- build:css -->
+     <link rel="stylesheet" type="text/css" href="css/main.less">
+     <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <!-- endbuild -->
   </head>
   <body>
+  
 
-    <h1>Test Page</h1>
-    <p>Lorem Ipsum Yolo Swag</p>
-    <div id="app">
+    <div id="app" class="full">
+
+      <!-- build:js -->
+      <script type="text/jsx" src="js/components/NavBar.jsx"></script>
+      <script type="text/jsx" src="js/App.jsx"></script>
+
+      <!-- endbuild -->
+
     </div>
-    <!-- build:js -->
-    <script type="text/jsx" src="jsx/App.jsx"></script>
 
-    <!-- endbuild -->
 
   </body>
 </html>

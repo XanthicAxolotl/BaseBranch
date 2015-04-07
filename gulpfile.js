@@ -3,9 +3,11 @@ var uglify = require('gulp-uglify');
 var htmlreplace = require('gulp-html-replace');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
-// var watchify = require('watchify');
+var watchify = require('watchify');
 var reactify = require('reactify');
 var streamify = require('gulp-streamify');
+var server = require('gulp-server-livereload');
+var less = require('gulp-less');
 
 var path = {
   HTML: './client/src/*',
@@ -29,10 +31,21 @@ gulp.task('build', function(){
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
+gulp.task('less', function(){
+  return gulp.src('./client/src/css/main.less')
+    .pipe(less({path: '/'}))
+    .pipe(gulp.dest(path.DEST + '/css'))
+});
+
 gulp.task('copy', function(){
   gulp.src(path.HTML)
     .pipe(gulp.dest(path.DEST));
 });
+
+gulp.task('copyCSS', function(){
+    gulp.src(path.CSS)
+      .pipe(gulp.dest(path.DEST + '/css'));
+})
 
 // gulp.task('build', function () {
 //   return gulp.src(path.ENTRY_POINT)
@@ -40,10 +53,24 @@ gulp.task('copy', function(){
 //       .pipe(gulp.dest(path.DEST_JS));
 // });
 
+gulp.task('webserver', function() {
+  gulp.src('./client/dist')
+    .pipe(server({
+      livereload: true,
+      directoryListing: false,
+      defaultFile: '/index.html',
+      open: true
+    }));
+});
+
+gulp.task('watchProd', function(){
+  gulp.watch(['client/src/index.html', 'client/src/styles.css', 'client/src/js/*.jsx', 'client/src/js/components/*.jsx'], ['production'])
+});
+
 gulp.task('replaceHTML', function(){
   gulp.src(path.HTML)
     .pipe(htmlreplace({
-      // 'css': ['./css/main.css', './css/styles.css'],
+      'css': ['./css/main.css', './css/styles.css'],
       'js': 'build/' + path.MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
@@ -69,6 +96,10 @@ gulp.task('watch', function() {
     .pipe(source(path.OUT))
     .pipe(gulp.dest(path.DEST_SRC));
 });
+
+gulp.task('production', ['less', 'copy', 'copyCSS', 'replaceHTML', 'build']);
+gulp.task('localtest', ['production', 'webserver', 'watchProd']);
+gulp.task('default', ['watch']);
 
 
 
