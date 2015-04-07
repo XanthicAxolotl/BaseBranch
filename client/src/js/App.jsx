@@ -30,5 +30,3 @@ var Main = React.createClass({
 });
 
 React.render(<Main />, document.getElementById('app'));
-
-
