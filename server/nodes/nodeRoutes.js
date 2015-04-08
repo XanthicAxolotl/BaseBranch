@@ -5,5 +5,8 @@ module.exports = function(app) {
       .post(nodeController.createNode);
 
     app.route('/:nodeId')
+      .get(nodeController.getNode);
+
+    app.route('/resources/:nodeId')
       .get(nodeController.getResources);
 };
