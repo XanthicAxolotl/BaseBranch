@@ -6,12 +6,13 @@ var db = require('../config/db_models.js');
 
 beforeEach(function(done) {
   // clear out all records in all tables for testing
-
-  db.Resources.destroy({ where: { name: 'testresource' }})
-  .then(function(affectedRows) {
-    console.log('Deleted record from Resources table. Number of rows affected: ', affectedRows);
-    done();
-  });
+  db.sequelize.sync().then(function(){
+    db.Resources.destroy({ where: { name: 'testresource' }})
+    .then(function(affectedRows) {
+      console.log('Deleted record from Resources table. Number of rows affected: ', affectedRows);
+      done();
+    });    
+  })
   // db.sequelize.sync({force: true})
   // .then(function(){
   //   console.log('Dropped and recreated all tables successfully');
