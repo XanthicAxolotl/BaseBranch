@@ -54,6 +54,7 @@ var Comments = sequelize.define('comments', {
 });
 
 // define relationships
+Nodes.hasOne(Nodes, {as: 'Neighbor'});
 Nodes.belongsTo(Channels);
 Resources.belongsTo(Nodes);
 Resources.belongsTo(Users);
