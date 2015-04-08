@@ -36,7 +36,8 @@ describe('', function() {
       request(app)
         .post('/api/node')
         .send({
-          'name':'testnode'
+          'name':'testnode',
+          'neighbor': 1
         })
         .expect(function(res){
           nodeId = res.body.id

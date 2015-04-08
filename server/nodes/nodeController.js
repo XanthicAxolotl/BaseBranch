@@ -11,6 +11,13 @@ module.exports = {
     })
     .then(function(node) {
       console.log('Successfully created node in database');
+      node.addNeighbor(req.body.neighbor)
+      .then(function(){
+        console.log('Successfully set neighbor');
+      })
+      .error(function(err){
+        console.error('Error in setting neighbor');
+      })
       res.json(node);
     })
     .error(function(err){
