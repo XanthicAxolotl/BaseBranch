@@ -11,7 +11,7 @@ beforeEach(function(done) {
     .then(function(affectedRows) {
       console.log('Deleted record from Resources table. Number of rows affected: ', affectedRows);
       done();
-    });    
+    });
   });
 
 });
@@ -29,7 +29,7 @@ describe('', function() {
 
   describe('Resources', function(){
 
-    it('should create new resource', function(done){
+    it('should create new resource and node, and get resources and node', function(done){
 
       var nodeId;
       //create Node for testing
@@ -55,12 +55,53 @@ describe('', function() {
               expect(res.body.name).to.equal('testresource');
               expect(res.body.nodeId).to.equal(nodeId);
             })
+            .expect(function(res){
+              request(app)
+                .get('/api/node/resources/' + nodeId)
+                .expect(function(res){
+                  expect(Array.isArray(res.body)).to.equal(true);
+                })
+                .end()  
+            })
+            .end()
+        })
+        .expect(function(res){
+          var nodeId = res.body.id
+          request(app)
+            .get('/api/node/' + nodeId)
+            .expect(function(res){
+              expect(res.body.id).to.equal(nodeId)
+            })
             .end()
         })
         .end(done);
 
     });
   });
+
+  // describe('Nodes', function(){
+    
+  //   it('should find node', function(done){
+
+  //     //made node for testing
+  //     request(app)
+  //       .post('/api/node')
+  //       .send({
+  //         'name':'testnode',
+  //         'neighbor': 1
+  //       })
+  //       .expect(function(res){
+  //         var nodeId = res.body.id
+  //         request(app)
+  //           .get('/api/node/' + nodeId)
+  //           .expect(function(res){
+  //             expect(res.body.id).to.equal(nodeId)
+  //           })
+  //           .end()
+  //       })
+  //       .end(done);
+  //   });
+  // });
   
 /*
   describe('Idea creation: ', function() {
