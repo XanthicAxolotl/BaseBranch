@@ -3,8 +3,6 @@ var Resources = require('../config/db_models.js').Resources;
 module.exports = {
 
   createResource: function(req, res, next) {
-    // MVP
-    // TODO: Implement
     var body = req.body;
 
     Resources.create({
@@ -23,8 +21,17 @@ module.exports = {
   },
 
   getResource: function(req, res, next) {
-    // MVP
-    // TODO: Implement
+    // use :resourceID parameter from request URL
+    var resourceId = req.params.resourceId;
+
+    Resources.find({ where: { id: resourceId} })
+    .then(function(resource) {
+      console.log('successfully retrieved resource from database');
+      res.json(resource);
+    })
+    .error(function(err){
+      console.error('Error in retrieving instance of resource: ', err);
+    });
   },
 
   updateRating: function(req, res, next) {
