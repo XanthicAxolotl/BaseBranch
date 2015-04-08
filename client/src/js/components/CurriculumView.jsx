@@ -28,7 +28,7 @@ var menuItems = [{
                   name: 'Super Xanthic Curriculum!',
                   desc:'Example Framework 1',
                   author:'Xanthic Axolotl',
-                  anchor:'http://www.walmart.com',
+                  src:'http://www.walmart.com',
                   update: new Date().getDate,
                   rating: 20,
                   resources: [{key: 1, name: 'Super Awesome Javascript Blog!'}]
@@ -38,7 +38,7 @@ var menuItems = [{
                   name: 'Super Xanthic Curriculum!',
                   desc:'Example Framework 1',
                   author:'Xanthic Axolotl',
-                  anchor:'http://www.walmart.com',
+                  src:'http://www.walmart.com',
                   update: new Date().getDate,
                   rating: 20,
                   resources: [{key: 1, name: 'Super Awesome Javascript Blog!'},
@@ -53,11 +53,12 @@ var menuItems = [{
 var ItemView = React.createClass({
   render: function() {
     var resources = this.props.resources.map(function(resource){
-      return <li>{resource.name}</li>
+      return <li key={resource.key}>{resource.name}</li>
     });
+    Styles.curriculum.width = '100%';
     return(
       <li style={Styles.curriculum}>
-        <div>
+        <div style={Styles.information}>
           <ul>
             <li style={Styles.title}><div>{this.props.name}</div><a href={this.props.anchor}>View Curriculum</a></li>
             <li>{this.props.desc}</li>
@@ -66,7 +67,7 @@ var ItemView = React.createClass({
             <li>Rating: {this.props.rating}</li>
           </ul>
         </div>
-        <div>
+        <div style={Styles.resources}>
           <ul>
             {resources}
           </ul>
@@ -93,12 +94,13 @@ var CurriculumView = React.createClass({
     window.removeEventListener('resize', this.handleResize);
   },
   render: function() {
+    Styles.list.width = (window.innerWidth * 0.8);
     var curricula = menuItems.map(function(result) {
       return <ItemView key={result.id} name={result.name} desc={result.desc} author={result.author} anchor={result.src} update={result.update} rating={result.rating} resources={result.resources}/>
     });
     return (
-      <div>
-        <ul style={Styles.container}>
+      <div style={Styles.container}>
+        <ul style={Styles.list}>
           {curricula}
         </ul>
       </div>
