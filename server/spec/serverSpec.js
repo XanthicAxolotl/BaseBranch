@@ -43,11 +43,6 @@ describe('', function() {
         })
         .end(done);
     });
-
-    it('shoule get instance of resource', function(done){
-      request(app)
-        .get('/api/resource/')
-    })
   });
   
 /*
