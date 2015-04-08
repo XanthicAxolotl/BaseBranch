@@ -46,7 +46,10 @@ var menuItems = [{
                               {key: 2, name: 'Super Awesome Javascript Blog!'},
                               {key: 3, name: 'Super Awesome Javascript Blog!'},
                               {key: 4, name: 'Super Awesome Javascript Blog!'},
-                              {key: 5, name: 'Super Awesome Javascript Blog!'}]
+                              {key: 5, name: 'Super Awesome Javascript Blog!'},
+                              {key: 6, name: 'Super Awesome Javascript Blog!'},
+                              {key: 7, name: 'Super Awesome Javascript Blog!'},
+                              {key: 8, name: 'Super Awesome Javascript Blog!'}]
                 }];
 
 /*================ CREATE CURRICULUM COMPONENTS ================*/
@@ -80,13 +83,17 @@ var ItemView = React.createClass({
 
 //Create Container View
 var CurriculumView = React.createClass({
-  getInintialState: function(){
+  getInitialState: function(){
     return {
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      isMobile: window.innerWidth < 1024
     };
   },
   handleResize: function(e) {
-    this.setState({windowWidth: window.innerWidth});
+    this.setState({
+      windowWidth: window.innerWidth,
+      isMobile: window.innerWidth < 1024
+    });
   },
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
@@ -95,7 +102,7 @@ var CurriculumView = React.createClass({
     window.removeEventListener('resize', this.handleResize);
   },
   render: function() {
-    Styles.list.width = (window.innerWidth * 0.8);
+    Styles.list.width = (this.state.windowWidth * 0.9);
     var curricula = menuItems.map(function(result) {
       return <ItemView key={result.id} name={result.name} desc={result.desc} author={result.author} anchor={result.src} update={result.update} rating={result.rating} resources={result.resources}/>
     });

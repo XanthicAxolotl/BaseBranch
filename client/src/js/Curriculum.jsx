@@ -12,10 +12,6 @@ var Paper = mui.Paper;
 
 injectTapEventPlugin();
 
-console.log(window.location.href);
-console.log(window.innerWidth);
-console.log(window.innerHeight);
-
 /*============ CREATE MAIN CONTAINER COMPONENT ============*/
 var Main = React.createClass({
   render: function(){
