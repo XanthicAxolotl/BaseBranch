@@ -7,18 +7,19 @@ var mui = require('material-ui');
 //Components
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
-var GraphView = require('./components/GraphView.jsx');
-var NodeView = require('./components/NodeView.jsx');
+var CurriculumView = require('./components/CurriculumView.jsx');
 var Paper = mui.Paper;
-
 
 injectTapEventPlugin();
 
 var Main = React.createClass({
   render: function(){
     return (
-      <div className="full">
-        <NodeView />
+      <div>
+        <div className="full">
+          <NavBar />
+          <CurriculumView />
+        </div>
       </div>
     );
   }

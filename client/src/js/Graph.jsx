@@ -8,7 +8,6 @@ var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
 var GraphView = require('./components/GraphView.jsx');
-var NodeView = require('./components/NodeView.jsx');
 var Paper = mui.Paper;
 
 
@@ -17,11 +16,21 @@ injectTapEventPlugin();
 var Main = React.createClass({
   render: function(){
     return (
-      <div className="full">
-        <NodeView />
+      <div>
+        <div className="full">
+          <NavBar />
+        </div>
+        <div className="button-nav-container">
+          <RaisedButton linkButton={true} href="./graph.html">
+            <span className="mui-raised-button-label">Nothing</span>
+          </RaisedButton>
+        </div>
+        <div className="full">
+          <GraphView />
+        </div>
       </div>
     );
   }
 });
 
-React.render(<Main />, document.getElementById('app'));
+React.render(<Main />, document.getElementById('graph'));

@@ -10,24 +10,52 @@ var server = require('gulp-server-livereload');
 var less = require('gulp-less');
 
 var path = {
-  HTML: './client/src/*',
+  INDEX_HTML: './client/src/index.html',
+  GRAPH_HTML: './client/src/graph.html',
+  CURRICULUM_HTML: './client/src/curriculum.html',
   CSS: './client/src/css/*.css',
-  MINIFIED_OUT: 'bundle.min.js',
+  INDEX_MINIFIED_OUT: 'index.min.js',
+  GRAPH_MINIFIED_OUT: 'graph.min.js',
+  CURRICULUM_MINIFIED_OUT: 'curriculum.min.js',
   OUT: 'bundle.js',
   DEST: './client/dist',
   DEST_BUILD: './client/dist/build',
   DEST_SRC: './client/dist/src',
-  ENTRY_POINT: './client/src/js/App.jsx'
+  INDEX_ENTRY_POINT: './client/src/js/App.jsx',
+  GRAPH_ENTRY_POINT: './client/src/js/Graph.jsx',
+  CURRICULUM_ENTRY_POINT: './client/src/js/Curriculum.jsx'
 };
 
 gulp.task('build', function(){
   browserify({
-    entries: [path.ENTRY_POINT],
+    entries: [path.INDEX_ENTRY_POINT],
     transform: [reactify],
   })
     .bundle()
-    .pipe(source(path.MINIFIED_OUT))
-    .pipe(streamify(uglify(path.MINIFIED_OUT)))
+    .pipe(source(path.INDEX_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.INDEX_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+gulp.task('buildGraph', function(){
+  browserify({
+    entries: [path.GRAPH_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.GRAPH_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.GRAPH_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+gulp.task('buildCurriculum', function(){
+  browserify({
+    entries: [path.CURRICULUM_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.CURRICULUM_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.CURRICULUM_MINIFIED_OUT)))
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
@@ -68,10 +96,28 @@ gulp.task('watchProd', function(){
 });
 
 gulp.task('replaceHTML', function(){
-  gulp.src(path.HTML)
+  gulp.src(path.INDEX_HTML)
     .pipe(htmlreplace({
-      'css': ['./css/main.css', './css/styles.css'],
-      'js': 'build/' + path.MINIFIED_OUT
+      'css': './css/main.css',
+      'js': 'build/' + path.INDEX_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
+gulp.task('replaceGraphHTML', function(){
+  gulp.src(path.GRAPH_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.GRAPH_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
+gulp.task('replaceCurriculumHTML', function(){
+  gulp.src(path.CURRICULUM_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.CURRICULUM_MINIFIED_OUT
     }))
     .pipe(gulp.dest(path.DEST));
 });
@@ -97,21 +143,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'copy', 'copyCSS', 'replaceHTML', 'build']);
+gulp.task('production', ['less', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'build', 'buildGraph', 'buildCurriculum']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
