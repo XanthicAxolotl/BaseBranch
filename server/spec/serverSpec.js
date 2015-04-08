@@ -28,20 +28,36 @@ describe('', function() {
   });
 
   describe('Resources', function(){
+
     it('should create new resource', function(done){
+
+      var nodeId;
+      //create Node for testing
       request(app)
-        .post('/api/resource')
+        .post('/api/node')
         .send({
-          'name': 'testresource',
-          'url': 'www.test.com',
-          'type': 'website',
-          'description': 'hello'
+          'name':'testnode'
         })
-        .expect(200)
         .expect(function(res){
-          expect(res.body.name).to.equal('testresource');
+          nodeId = res.body.id
+          request(app)
+            .post('/api/resource')
+            .send({
+              'name': 'testresource',
+              'url': 'www.test.com',
+              'type': 'website',
+              'description': 'hello',
+              'nodeId': nodeId
+            })
+            .expect(200)
+            .expect(function(res){
+              expect(res.body.name).to.equal('testresource');
+              expect(res.body.nodeId).to.equal(nodeId);
+            })
+            .end()
         })
         .end(done);
+
     });
   });
   
