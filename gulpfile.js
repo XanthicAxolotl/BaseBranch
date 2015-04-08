@@ -143,7 +143,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'build', 'buildGraph', 'buildCurriculum']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'build', 'buildGraph', 'buildCurriculum']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 
