@@ -10,7 +10,7 @@ module.exports = {
     msFlexPack: 'center',
     justifyContent: 'center',
     marginTop: '10px'
-  },
+  }
   list: {
     display: '-webkit-box',
     display: '-webkit-flex',

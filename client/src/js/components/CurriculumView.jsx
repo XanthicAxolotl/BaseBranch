@@ -1,6 +1,7 @@
 /*==================== REQUIRE MODULES ====================*/
-var mui = require('material-ui');
-var React = require('react');
+var mui             = require('material-ui'),
+    React           = require('react'),
+    CurriculumStore = require('../stores/CurriculumStore.jsx');
 //import JS stylesheet
 var Styles = require('../styles/CurriculumStyles.js');
 
