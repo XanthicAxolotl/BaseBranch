@@ -9,7 +9,8 @@ module.exports = {
       name: body.name,
       url: body.url,
       type: body.type,
-      description: body.description
+      description: body.description,
+      nodeId: body.nodeId
     })
     .then(function(resource) {
       console.log('Successfully created resource in database');
