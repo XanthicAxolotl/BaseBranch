@@ -7,7 +7,8 @@ module.exports = {
     // TODO: Implement
 
     Nodes.create({
-      name: req.body.name
+      name: req.body.name,
+      nodeId: req.body.nodeId
     })
     .then(function(node) {
       console.log('Successfully created node in database');
