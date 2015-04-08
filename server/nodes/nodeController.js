@@ -9,9 +9,16 @@ module.exports = {
     Nodes.create({
       name: req.body.name
     })
-    .then(function(resource) {
+    .then(function(node) {
       console.log('Successfully created node in database');
-      res.json(resource);
+      node.addNeighbor(req.body.neighbor)
+      .then(function(){
+        console.log('Successfully set neighbor');
+      })
+      .error(function(err){
+        console.error('Error in setting neighbor');
+      })
+      res.json(node);
     })
     .error(function(err){
       console.error('Error in creating instance of node: ', err);

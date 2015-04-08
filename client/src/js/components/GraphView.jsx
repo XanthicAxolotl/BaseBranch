@@ -1,49 +1,77 @@
 var mui = require('material-ui');
 var React = require('react');
+var GraphStore = require('../stores/GraphStore.jsx');
 
-//NavBar Components
-var Toolbar = mui.Toolbar;
-var ToolbarGroup = mui.ToolbarGroup;
-var DropDownMenu = mui.DropDownMenu;
-var FontIcon = mui.FontIcon;
-var RaisedButton = mui.RaisedButton;
-var DropDownIcon = mui.DropDownIcon;
+
 //Set Material-UI Vars
-var Tabs = mui.Tabs;
-var Tab = mui.Tab;
-var TextField = mui.TextField;
-var Paper = mui.Paper;
+var Menu = mui.Menu;
+
 var injectTapEventPlugin = require("react-tap-event-plugin");
 
 injectTapEventPlugin();
 
-// these should be populated by the database
-var menuItems = [
-  {payload: '1', text:'Example Framework 1'},
-  {payload: '2', text:'Example Framework 2'},
-];
+// get graph data from store
+// populate graph with data using d3
+// export the graph
+
+// d3 graph
+// var width = 960;
+// var height = 500;
+
+// var color = d3.scale.category20();
+
+// var force = d3.layout.force()
+//     .charge(-120)
+//     .linkDistance(30)
+//     .size([width, height]);
+
+// var svg = d3.select("body").append("svg")
+//     .attr("width", width)
+//     .attr("height", height);
+
+// d3.json("miserables.json", function(error, graph) {
+//   force
+//       .nodes(graph.nodes)
+//       .links(graph.links)
+//       .start();
+
+//   var link = svg.selectAll(".link")
+//       .data(graph.links)
+//     .enter().append("line")
+//       .attr("class", "link")
+//       .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+//   var node = svg.selectAll(".node")
+//       .data(graph.nodes)
+//     .enter().append("circle")
+//       .attr("class", "node")
+//       .attr("r", 5)
+//       .style("fill", function(d) { return color(d.group); })
+//       .call(force.drag);
+
+//   node.append("title")
+//       .text(function(d) { return d.name; });
+
+//   force.on("tick", function() {
+//     link.attr("x1", function(d) { return d.source.x; })
+//         .attr("y1", function(d) { return d.source.y; })
+//         .attr("x2", function(d) { return d.target.x; })
+//         .attr("y2", function(d) { return d.target.y; });
+
+//     node.attr("cx", function(d) { return d.x; })
+//         .attr("cy", function(d) { return d.y; });
+//   });
+// });
+
+// end d3 graph
 
 
 var GraphView = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <div className="full">
-          <NavBar />
-        </div>
-        <div className="button-nav-container">
-          <RaisedButton linkButton={true} href="https://pbs.twimg.com/profile_images/458794430200152064/XdQULww6_400x400.png">
-            <span className="mui-raised-button-label">(Store) Topics</span>
-          </RaisedButton>
-          <RaisedButton linkButton={true} href="http://images4.fanpop.com/image/quiz/689000/689423_1315079585116_350_300.jpg">
-            <span className="mui-raised-button-label">(Store) Curricula</span>
-          </RaisedButton>
-          <DropDownMenu menuItems={menuItems} />
-          <RaisedButton linkButton={true} href="http://walmart.com">
-            <span className="mui-raised-button-label">Add New Topic</span>
-          </RaisedButton>
-        </div>
+      <div className="left">
+        <svg width={GraphStore.width} height={GraphStore.height} color={GraphStore.color}></svg>
       </div>
     );
   }

@@ -5,19 +5,15 @@ var app = require('../serverSetup.js').app;
 var db = require('../config/db_models.js');
 
 beforeEach(function(done) {
-  // clear out all records in all tables for testing
+  // clear out resource so that we can create it during testing
   db.sequelize.sync().then(function(){
     db.Resources.destroy({ where: { name: 'testresource' }})
     .then(function(affectedRows) {
       console.log('Deleted record from Resources table. Number of rows affected: ', affectedRows);
       done();
     });    
-  })
-  // db.sequelize.sync({force: true})
-  // .then(function(){
-  //   console.log('Dropped and recreated all tables successfully');
-  //   done();
-  // });
+  });
+
 });
 
 describe('', function() {
@@ -32,20 +28,37 @@ describe('', function() {
   });
 
   describe('Resources', function(){
+
     it('should create new resource', function(done){
+
+      var nodeId;
+      //create Node for testing
       request(app)
-        .post('/api/resource')
+        .post('/api/node')
         .send({
-          'name': 'testresource',
-          'url': 'www.test.com',
-          'type': 'website',
-          'description': 'hello'
+          'name':'testnode',
+          'neighbor': 1
         })
-        .expect(200)
         .expect(function(res){
-          expect(res.body.name).to.equal('testresource');
+          nodeId = res.body.id
+          request(app)
+            .post('/api/resource')
+            .send({
+              'name': 'testresource',
+              'url': 'www.test.com',
+              'type': 'website',
+              'description': 'hello',
+              'nodeId': nodeId
+            })
+            .expect(200)
+            .expect(function(res){
+              expect(res.body.name).to.equal('testresource');
+              expect(res.body.nodeId).to.equal(nodeId);
+            })
+            .end()
         })
         .end(done);
+
     });
   });
   
