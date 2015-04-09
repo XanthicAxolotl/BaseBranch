@@ -32,9 +32,15 @@ module.exports = {
   },
 
   getCurriculum: function(req, res, next) {
-    // MVP
-    // TODO: Implement
-
+    // retrieve the curriculum that has the id passed in as a request parameter
+    Curricula.find({ where:{ id: req.params.curriculumId } })
+    .then(function(curriculum){
+      console.log('Successfully found curriculum ', curriculum.id);
+      res.json(curriculum);
+    })
+    .error(function(err){
+      console.error('Error in finding curriculum', err);
+    });
   },
 
   getRating: function(req, res, next) {
@@ -50,8 +56,7 @@ module.exports = {
   },
 
   getResources: function(req, res, next) {
-    // MVP
-    // TODO: Implement
-
+    // look up all resourceIds in the curricula_resources table that have the corresponding curriculaId
+    // retrieve all of the corresponding resources from the resources table and send back
   }
 };

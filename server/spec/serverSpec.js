@@ -94,40 +94,9 @@ describe('', function() {
 
   describe('Curricula', function(){
 
-    afterEach(function(done){
-      db.Curricula.destroy({ where: { name: 'testcurriculum' }})
-      .then(function(affectedRows){
-        console.log('Deleted testcurriculum from DB. Rows affected: ', affectedRows);
-        db.Resources.destroy({ where: { name: 'testresource1' }})
-        .then(function(affectedRows){
-          console.log('Deleted testresource1 from DB. Rows affected: ', affectedRows);
-          db.Resources.destroy({ where: { name: 'testresource2' }})
-          .then(function(affectedRows){
-            console.log('Deleted testresource2 from DB. Rows affected: ', affectedRows);
-            db.Resources.destroy({ where: { name: 'testresource3' }})
-            .then(function(affectedRows){
-              console.log('Deleted testresource3 from DB. Rows affected: ', affectedRows);
-              db.Nodes.destroy({ where: { name: 'testnode1' }})
-              .then(function(affectedRows){
-                console.log('Deleted testnode1 from DB. Rows affected: ', affectedRows);
-                db.Channels.destroy({ where: { name: 'testchannel' }})
-                .then(function(affectedRows){
-                  console.log('Deleted testchannel from DB. Rows affected: ', affectedRows);
-                  done();
-                });
-              });
-            });
-          });
-        });
-      });
-    });
+    var channelId, nodeId, res1, res2, res3, curriculumId;
 
-    it('should create new curriculum', function(done) {
-
-      console.log('Inside of curriculum tests');
-
-      var channelId, nodeId, res1, res2, res3;
-
+    beforeEach(function(done){
       db.sequelize.sync().then(function(){
         // create channel for curricula testing
         db.Channels.create({
@@ -177,32 +146,86 @@ describe('', function() {
                 .then(function(resource){
                   res3 = resource;
                   console.log('Created resource ', resource.name);
-                  
-                  // send the request to create the new curriculum
-                  request(app)
-                    .post('/api/curriculum')
-                    .send({
-                      'name': 'testcurriculum',
-                      'description': 'This is a test curriculum.',
-                      'channelId': channelId,
-                      'resources': [res1.id,res2.id,res3.id]
-                    })
-                    .expect(200)
-                    .expect(function(res){
-                      expect(res.body.name).to.equal('testcurriculum');
-                      expect(res.body.description).to.equal('This is a test curriculum.');
-                      expect(res.body.channelId).to.equal(channelId);
-                    })
-                    .end(function(){
-                      done();
-                    });
+                  done();
                 });
               });
             });
           });
         });
       });
-      
+    });
+
+    afterEach(function(done){
+      db.Curricula.destroy({ where: { name: 'testcurriculum' }})
+      .then(function(affectedRows){
+        console.log('Deleted testcurriculum from DB. Rows affected: ', affectedRows);
+        db.Resources.destroy({ where: { name: 'testresource1' }})
+        .then(function(affectedRows){
+          console.log('Deleted testresource1 from DB. Rows affected: ', affectedRows);
+          db.Resources.destroy({ where: { name: 'testresource2' }})
+          .then(function(affectedRows){
+            console.log('Deleted testresource2 from DB. Rows affected: ', affectedRows);
+            db.Resources.destroy({ where: { name: 'testresource3' }})
+            .then(function(affectedRows){
+              console.log('Deleted testresource3 from DB. Rows affected: ', affectedRows);
+              db.Nodes.destroy({ where: { name: 'testnode1' }})
+              .then(function(affectedRows){
+                console.log('Deleted testnode1 from DB. Rows affected: ', affectedRows);
+                db.Channels.destroy({ where: { name: 'testchannel' }})
+                .then(function(affectedRows){
+                  console.log('Deleted testchannel from DB. Rows affected: ', affectedRows);
+                  done();
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+
+    it('should create new curriculum', function(done) {     
+      // send the request to create the new curriculum
+      request(app)
+        .post('/api/curriculum')
+        .send({
+          'name': 'testcurriculum',
+          'description': 'This is a test curriculum.',
+          'channelId': channelId,
+          'resources': [res1.id,res2.id,res3.id]
+        })
+        .expect(200)
+        .expect(function(res){
+          expect(res.body.name).to.equal('testcurriculum');
+          expect(res.body.description).to.equal('This is a test curriculum.');
+          expect(res.body.channelId).to.equal(channelId);
+        })
+        .end(function(){
+          done();
+        });
+    });
+
+    it('should find an existing curriculum', function(done){
+      // create curriculum to retrieve
+      db.Curricula.create({
+        name: 'testcurriculum',
+        description: 'This is a test curriculum.',
+        channelId: channelId,
+        resources: [res1.id,res2.id,res3.id]
+      })
+      .then(function(curriculum){
+        // test GET request to /api/curriculum/:curriculumId
+        request(app)
+          .get('/api/curriculum/' + curriculum.id)
+          .expect(200)
+          .expect(function(res){
+            expect(res.body.name).to.equal('testcurriculum');
+            expect(res.body.description).to.equal('This is a test curriculum.');
+            expect(res.body.channelId).to.equal(channelId);
+          })
+          .end(function(){
+            done();
+          });
+      });
     });
 
   });
