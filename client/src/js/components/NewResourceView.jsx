@@ -7,15 +7,18 @@ var RaisedButton = mui.RaisedButton;
 var NewResourceView = React.createClass({
   render: function(){ 
     return (
-      <div className="full">
+      <div className="addResource">
         <h2>New Resource</h2>
-        <div className="addResource">
+        <div className="full">
           <h3>Name:</h3>
           <TextField
             hintText="Name" />
+          <h3>Author:</h3>
+          <TextField
+            hintText="Author"/>
           <h3>URL:</h3>
           <TextField
-            hintText="Hint Text"/>
+            hintText="URL"/>
           <div className="resourceType">
             <h3>Type:</h3>
             <Checkbox 

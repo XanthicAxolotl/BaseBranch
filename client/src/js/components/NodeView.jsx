@@ -10,6 +10,7 @@ var Checkbox = mui.Checkbox;
 var resources =[
  {
   'name':'Awesome Blog', 
+  'author': 'Tyler McGinnis',
   'rating': 37,
   'description':'Best blog ever, kids',
   'url':<a href='http://tmz.com'>TMZ</a>,
@@ -17,6 +18,7 @@ var resources =[
   },
   {
   'name':'Better Blog', 
+  'author': 'Fred Zirdung',
   'rating': 12,
   'description':'Okay now',
   'url':<a href='http://perezhilton.com'>Perez</a>,
@@ -24,6 +26,7 @@ var resources =[
   },
   {
   'name':'Okay Blog', 
+  'author': 'Scotch.io',
   'rating': 89,
   'description':'Well okay',
   'url':<a href='http://popsugar.com'>PopSugar</a>,
@@ -63,60 +66,12 @@ var NodeView = React.createClass({
             filterable={['name', 'rating', 'description']}
             columns={[
               {key: 'name', label: 'Name'},
+              {key: 'author', label: 'Author'},
               {key: 'rating', label: 'Rating'},
               {key: 'description', label: 'Description'},
               {key: 'url', label: 'View Resource'},
               {key: 'addresource'}
             ]} />
-        </div>
-        <div className="addResource">
-          <h2>Name:</h2>
-          <TextField
-            hintText="Name" />
-          <h2>URL:</h2>
-          <TextField
-            hintText="Hint Text"/>
-          <div className="resourceType">
-            <h2>Type:</h2>
-            <Checkbox 
-              name="typeName1"
-              value="typeValue1"
-              label="Tutorial"/>
-            <Checkbox 
-              name="typeName2"
-              value="typeValue2"
-              label="Other Text (i.e. Blog)"/>
-            <Checkbox 
-              name="typeName3"
-              value="typeValue3"
-              label="Video"/>
-            <Checkbox 
-              name="typeName4"
-              value="typeValue4"
-              label="Audio (i.e. Podcast)"/>
-            <Checkbox 
-              name="typeName5"
-              value="typeValue5"
-              label="Practice Problems"/>
-            <Checkbox 
-              name="typeName6"
-              value="typeValue6"
-              label="GitHub Repository"/>
-            <Checkbox 
-              name="typeName7"
-              value="typeValue7"
-              label="NPM Module"/>
-            <Checkbox 
-              name="typeName8"
-              value="typeValue8"
-              label="Other"/>
-          </div>
-          <div className="description">
-            <h2>Description:</h2>
-            <TextField
-              hintText="Description"
-              multiLine={true} />
-          </div>
         </div>
       </div>
     );
