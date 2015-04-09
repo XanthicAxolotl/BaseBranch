@@ -4,7 +4,6 @@ var Resources = require('../config/db_models.js').Resources;
 module.exports = {
 
   createNode: function(req, res, next) {
-
     Nodes.create({
       name: req.body.name
     })
