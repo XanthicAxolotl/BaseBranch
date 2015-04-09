@@ -36,6 +36,7 @@ var Nodes = sequelize.define('nodes', {
 // define Curricula model
 var Curricula = sequelize.define('curricula', {
   name: {type: Sequelize.STRING, allowNull: false},
+  description: Sequelize.STRING,
   rating: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0}
 });
 
