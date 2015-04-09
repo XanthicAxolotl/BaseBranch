@@ -27,18 +27,18 @@ module.exports = {
   getNode: function(req, res, next) {
     Nodes.find({ where:{ id: req.params.nodeId } })
     .then(function(node){
-      console.log('Successfully found node', node);
+      console.log('Successfully found node', node.id);
       res.json(node);
     })
     .error(function(err){
       console.error('Error in finding node', err);
-    })
+    });
   },
 
   getResources: function(req, res, next) {
     Resources.findAll({where:{ nodeId: req.params.nodeId }})
     .then(function(resources){
-      console.log('Successfully found all resources', resources);
+      console.log('Successfully found all resources');
       res.json(resources);
     })
     .error(function(err){
