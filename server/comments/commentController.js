@@ -3,8 +3,6 @@ var Comments = require('../config/db_models.js').Comments;
 module.exports = {
 
   createComment: function(req, res, next) {
-    // TODO: Implement
-
     Comments.create({
       text: req.body.text,
       resouceId: req.body.resouceId,
