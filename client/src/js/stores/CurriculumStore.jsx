@@ -2,15 +2,14 @@
 var Reflux = require('reflux');
 var mui = require('material-ui');
 var Toggle = mui.Toggle;
+var CurriculumActions = ('../actions/CurriculumActions.js')
 
 var _curricula = [];
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
+  listenables: CurriculumActions,
   init: function(){
     this.load();
-    // listen to curriculum actions here
-    this.listenTo(CurriculumActions.loadCurricula, this.load);
-    this.listenTo(CurriculumActions.editCurricula, this.onEdit);
   },
   load: function(){
     // use this to get the curricula data from the database
@@ -42,7 +41,10 @@ var CurriculumStore = Reflux.createStore({
     };
     http.send(JSON.stringify(curriculum));
   },
-  onEdit: function(curriculum) {
+  onChangeFramework: function(){
+    this.load();
+  },
+  onChangeRating: function(curriculum) {
     // console.log("from onEdit in jobStore.jsx");
     for (var i = 0; i < _curricula.length; i++) {
       if(_curricula[i]._id === curriculum._id) {
