@@ -57,6 +57,23 @@ module.exports = {
 
   getResources: function(req, res, next) {
     // look up all resourceIds in the curricula_resources table that have the corresponding curriculaId
+
+    Curricula.find({ where:{ id: req.params.curriculumId } })
+    .then(function(curriculum){
+      console.log('Found curriculum: ', curriculum.name);
+      curriculum.getResources()
+      .then(function(resources){
+        console.log('Successfully found all resources associated with curriculum');
+        console.log('resources associated with curriculum: ', resources);
+        res.json(resources);
+      })
+      .error(function(err){
+        console.error('Error in finding all resources associated with curriculum:', err);
+      });
+    })
+    .error(function(err){
+      console.error('Error in finding curriculum', err);
+    });
     // retrieve all of the corresponding resources from the resources table and send back
   }
 };

@@ -42,6 +42,6 @@ module.exports = {
     })
     .error(function(err){
       console.error('Error in finding all resources:', err);
-    })
+    });
   }
 };
