@@ -7,7 +7,7 @@ var mui = require('material-ui');
 /*============== DECLARE MATERIAL COMPONENTS ==============*/
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
-var CurriculumView = require('./components/CourseView.jsx');
+var CourseView = require('./components/CourseView.jsx');
 var Paper = mui.Paper;
 
 injectTapEventPlugin();

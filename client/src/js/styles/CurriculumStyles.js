@@ -54,16 +54,16 @@ module.exports = {
   },
   resources: {
     WebkitBoxFlex: 1,
-    WebkitFlexGrow: 1,
-    msFlexPositive: 1,
-    flexGrow: 1,
+    WebkitFlex: 1,
+    msFlex: 1,
+    flex: 1,
     paddingLeft: '5px'
   },
   information: {
-    WebkitBoxFlex: 2,
-    WebkitFlexGrow: 2,
-    msFlexPositive: 2,
-    flexGrow: 2,
+    WebkitBox: 2,
+    WebkitFlex: 2,
+    msFlex: 2,
+    flex: 2,
     paddingRight: '5px',
     borderRight: '1px solid #C0C0C0'
   }
