@@ -17,54 +17,76 @@ describe('', function() {
 
   describe('Resources', function(){
 
-    it('should create new resource and node, and get resources and node', function(done){
+    var nodeId, resourceId;
 
-      var nodeId;
-      //create Node for testing
+    beforeEach(function(done){
+      db.sequelize.sync().then(function(){
+          db.Nodes.create({
+            name: 'testnode1',
+            neighbor: 1
+          })
+          .then(function(node){
+            nodeId = node.id;
+            console.log('Created node ', nodeId);
+            db.Resources.create({
+              name: 'testresource',
+              url: 'www.test.com',
+              type: 'website',
+              description: 'hello',
+              nodeId: nodeId
+            })
+            .then(function(resource){
+              resourceId = resource.id;
+              console.log('Created resource ', resource.id);
+              done();
+            });
+          });
+      });
+    });
+
+    afterEach(function(done){
+        db.Resources.destroy({ where: { name: 'testresource' }})
+        .then(function(affectedRows){
+          console.log('Deleted testresource from DB. Rows affected: ', affectedRows);
+            db.Resources.destroy({ where: { name: 'testresource1' }})
+            .then(function(affectedRows){
+              console.log('Deleted testresource1 from DB. Rows affected: ', affectedRows);
+              db.Nodes.destroy({ where: { name: 'testnode1' }})
+              .then(function(affectedRows){
+                console.log('Deleted testnode1 from DB. Rows affected: ', affectedRows);
+                done();
+              });
+            });
+        });
+    });
+
+    it('should create a new resource', function(done){
       request(app)
-        .post('/api/node')
+        .post('/api/resource')
         .send({
-          'name':'testnode',
-          'neighbor': 1
+          'name': 'testresource1',
+          'url': 'www.test.com',
+          'type': 'website',
+          'description': 'hello',
+          'nodeId': nodeId
         })
+        .expect(200)
         .expect(function(res){
-          nodeId = res.body.id
-          request(app)
-            .post('/api/resource')
-            .send({
-              'name': 'testresource1',
-              'url': 'www.test.com',
-              'type': 'website',
-              'description': 'hello',
-              'nodeId': nodeId
-            })
-            .expect(200)
-            .expect(function(res){
-              console.log('res.body.name: ', res.body.name);
-              expect(res.body.name).to.equal('testresource');
-              expect(res.body.nodeId).to.equal(nodeId);
-            })
-            .expect(function(res){
-              request(app)
-                .get('/api/node/resources/' + nodeId)
-                .expect(function(res){
-                  expect(Array.isArray(res.body)).to.equal(true);
-                })
-                .end()  
-            })
-            .end()
-        })
-        .expect(function(res){
-          var nodeId = res.body.id
-          request(app)
-            .get('/api/node/' + nodeId)
-            .expect(function(res){
-              expect(res.body.id).to.equal(nodeId)
-            })
-            .end()
+          expect(res.body.name).to.equal('testresource1');
+          expect(res.body.nodeId).to.equal(nodeId);
         })
         .end(done);
+    });
 
+    it('should retrieve an existing resource', function(done){
+      request(app)
+        .get('/api/resource/' + resourceId)
+        .expect(200)
+        .expect(function(res){
+          expect(res.body.name).to.equal('testresource');
+          expect(res.body.nodeId).to.equal(nodeId);
+        })
+        .end(done);
     });
   });
 
@@ -94,7 +116,7 @@ describe('', function() {
 
   describe('Curricula', function(){
 
-    var channelId, nodeId, res1, res2, res3, curriculumId;
+    var channelId, nodeId, res1, res2, res3;
 
     beforeEach(function(done){
       db.sequelize.sync().then(function(){
@@ -204,7 +226,7 @@ describe('', function() {
         });
     });
 
-    it('should find an existing curriculum', function(done){
+    it('should retrieve an existing curriculum', function(done){
       // create curriculum to retrieve
       db.Curricula.create({
         name: 'testcurriculum',
@@ -228,44 +250,34 @@ describe('', function() {
       });
     });
 
-  });
-  
-/*
-  describe('Idea creation: ', function() {
-    it('Responds with the created idea', function(done) {
-      request(app)
-        .post('/api/ideas')
-        .send({
-          'title': 'Test Idea 1',
-          'text': 'This is a test.'
-        })
-        .expect(200)
-        .expect(function(res) {
-          expect(res.body.title).to.equal('Test Idea 1');
-          expect(res.body.text).to.equal('This is a test.');
-        })
-        .end(done);
-    });
+    // it('should find all resources associated with a curriculum', function(done){
+    //   // create curriculum
+    //   request(app)
+    //     .post('/api/curriculum')
+    //     .send({
+    //       'name': 'testcurriculum',
+    //       'description': 'This is a test curriculum.',
+    //       'channelId': channelId,
+    //       'resources': [res1.id,res2.id,res3.id]
+    //     })
+    //     .expect(function(curriculum){
+    //       request(app)
+    //         .get('/api/curriculum/resource/' + curriculum.id)
+    //         .expect(200)
+    //         .expect(function(res){
+    //           // expect response to be an array of resources
+    //           console.log('res.body: ', res.body);
+    //           console.log('res.body[0]: ', res.body[0]);
+    //           console.log('res.body[0].name: ', res.body[0].name);
+    //           expect(res.body[0].name).to.equal('testresource1');
+    //           expect(res.body[1].name).to.equal('testresource2');
+    //           expect(res.body[2].name).to.equal('testresource3');
+    //         })
+    //         .end(function(){
+    //           done();
+    //         });
+    //     });
+    // });
 
-    it('A new idea creates a database entry', function(done) {
-      request(app)
-        .post('/api/ideas')
-        .send({
-          'title': 'Test Idea 1',
-          'text': 'This is a test.'
-        })
-        .expect(200)
-        .expect(function(res) {
-          Idea.findOne({'title' : 'Test Idea 1'})
-            .exec(function(err, idea) {
-              if (err) {
-                console.log(err);
-              }
-              expect(idea.title).to.equal('Test Idea 1');
-            });
-        })
-        .end(done);
-    });
   });
-*/
 });
