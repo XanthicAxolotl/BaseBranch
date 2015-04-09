@@ -3,9 +3,9 @@ var Reflux = require('reflux');
 var mui = require('material-ui');
 var Toggle = mui.Toggle;
 
+var _curricula = [];
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
-  var _curricula = [];
   init: function(){
     this.load();
     // listen to curriculum actions here
