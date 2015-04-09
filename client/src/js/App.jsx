@@ -9,6 +9,7 @@ var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
 var GraphView = require('./components/GraphView.jsx');
 var NodeView = require('./components/NodeView.jsx');
+var NewResourceView = require('./components/NewResourceView.jsx');
 var Paper = mui.Paper;
 
 
@@ -18,7 +19,8 @@ var Main = React.createClass({
   render: function(){
     return (
       <div className="full">
-        <NodeView />
+        <NavBar />
+        <NewResourceView />
       </div>
     );
   }
