@@ -25,7 +25,7 @@ var NavBar = React.createClass({
     return (
       <Toolbar>
         <ToolbarGroup key={0} float="left">
-          <a className ="hidden-link" href="/"><h2 className="mui-app-bar-title">BaseBranch</h2></a>
+          <a className ="hidden-link" href="./"><h2 className="mui-app-bar-title">BaseBranch</h2></a>
         </ToolbarGroup>
         <ToolbarGroup key={1} float="left">
           <DropDownMenu menuItems={filterOptions} />
