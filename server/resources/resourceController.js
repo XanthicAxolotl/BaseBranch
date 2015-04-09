@@ -22,7 +22,6 @@ module.exports = {
   },
 
   getResource: function(req, res, next) {
-    // use :resourceID parameter from request URL
     var resourceId = req.params.resourceId;
 
     Resources.find({ where: { id: resourceId} })
