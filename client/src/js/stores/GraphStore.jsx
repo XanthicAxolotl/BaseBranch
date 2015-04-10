@@ -2,12 +2,47 @@ var Reflux = require('reflux');
 var mui = require('material-ui');
 var Toggle = mui.Toggle;
 
+var cuid = require('cuid');
+
 
 var GraphStore = Reflux.createStore({
-  color: "brown",
   width: 900,
   height: 560,
+  color: "Azure",
   channelName: 'placeholderName',
+  circleProperties: [{
+    id: 1,
+    channelName: 'placeholderName',
+    nodeCoordinates: {'x': 100, 'y': 200, 'r': 60}
+  }],
+
+  nodeData: [
+  {
+    id: 1,//cuid(),
+    nodeName: 'google',
+    nodeLink: 'http://google.com',
+    x: 20,
+    y: 50,
+    z: 10,
+  },
+  {
+    id: 2,//cuid(),
+    nodeName: 'sounds',
+    nodeLink: 'http://soundcoud.com',
+    x: 1,
+    y: 70,
+    z: 10,
+  },
+  {
+    id: 3,//cuid(),
+    nodeName: 'past fred place',
+    nodeLink: 'http://walmart.com',
+    x: 10,
+    y: 10,
+    z: 10,
+  }
+  ],
+
   init: function(){
     this.load();
     // listen to graph actions here
