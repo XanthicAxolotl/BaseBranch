@@ -57,7 +57,7 @@ module.exports = {
     marginBottom: '5px'
   },
   singleResourceI: {
-   	marginLeft: '10px',
+   	marginLeft: '20px',
     marginBottomI: '5px'
   },
   reset: {
@@ -76,6 +76,6 @@ module.exports = {
   	marginLeft: '5px'
   },
   item: {
-  	marginLeft: '10px'
+  	marginLeft: '20px'
   }
 }

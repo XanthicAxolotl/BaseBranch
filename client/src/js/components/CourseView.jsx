@@ -1,7 +1,7 @@
 /*==================== REQUIRE MODULES ====================*/
 var mui             = require('material-ui'),
     React           = require('react');
-    // CourseStore = require('../stores/CourseStore.jsx');
+    // CourseStore = require('../stores/CourseStore.js');
 //import JS stylesheet
 var Styles = require('../styles/CourseStyles.js');
 
@@ -58,6 +58,27 @@ var course = {
       description: 'Super Awesome Blog that will turn you into a seafood-eating taichi master along the way!',
       url: 'http://www.jasonchangloveskalev.com',
       type: 'blog',
+      isChecked: false
+    },
+    {
+      name: "Recreating WendyCoin with JavaScript Objects",
+      rating: '4 (capped at the max # of wendycoins owned by a single person)',
+      description: "Learn how to clone the world's most exclusive woo-woo currency in JS",
+      url: 'http://www.coolcutecoughingcats.com/billysboots',
+      type: 'video',
+      isChecked: false
+    },
+    {
+      name: 'Sneaky, sneaky Recursions!',
+      type: 'header',
+      isChecked: false
+    },
+    {
+      name: "Wizarding Recursion JavaScript Magic",
+      rating: '9 3/4',
+      description: "Make your computer work recursions while you take lunch naps in the park",
+      url: 'http://www.isvoldemortaterrorist.com/marvelousriddles',
+      type: 'horcrux',
       isChecked: false
     }
   ]
@@ -128,7 +149,7 @@ var ResourceView = React.createClass({
     } else {
       return(
         <li style={Styles.singleResourceI}>
-          <div><span style={Styles.bold}>{this.props.name}</span> - {this.props.rating}</div>
+          <div><span style={Styles.bold}>{this.props.name}</span> - Rating: {this.props.rating}</div>
           <div>{this.props.description}</div>
           <div>{this.props.url}</div>
         </li>
