@@ -23,7 +23,7 @@ var Main = React.createClass({
     return (
       <div className="full">
         <NavBar />
-        <UserProfileView />
+        <NewResourceView />
       </div>
     );
   }
