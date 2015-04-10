@@ -169,10 +169,9 @@ describe('', function() {
   });
 
   describe('Channels', function(){
-    var channelId,
+    var channelName = 'testchannel',
         nodeName = 'testnode',
-        curriculumName = 'testcurriculum',
-        channelName = 'testchannel';
+        curriculumName = 'testcurriculum';
 
     beforeEach(function(done){
       db.sequelize.sync().then(function(){
@@ -241,7 +240,7 @@ describe('', function() {
 
     it('should get all nodes for channel', function(done){
       request(app)
-        .get('/api/channel/nodes/' + channelId)
+        .get('/api/channel/nodes/' + channelName)
         .expect(200)
         .expect(function(res){
           expect(Array.isArray(res.body)).to.equal(true);
@@ -252,7 +251,7 @@ describe('', function() {
 
     it('should get all curricula for channel', function(done){
       request(app)
-        .get('/api/channel/curricula/' + channelId)
+        .get('/api/channel/curricula/' + channelName)
         .expect(200)
         .expect(function(res){
           expect(Array.isArray(res.body)).to.equal(true);
