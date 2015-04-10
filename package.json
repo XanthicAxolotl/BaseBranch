@@ -23,6 +23,8 @@
     "mysql": "^2.6.1",
     "object-assign": "^2.0.0",
     "react": "^0.12.2",
+    "react-avatar-editor": "^0.4.6",
+    "react-progressbar": "^1.0.0",
     "react-tap-event-plugin": "^0.1.6",
     "reactable": "^0.10.1",
     "reactify": "^1.1.0",

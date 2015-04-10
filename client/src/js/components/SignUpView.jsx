@@ -11,6 +11,8 @@ var LoginView = React.createClass({
         <TextField
           hintText="Username" /> <br />
         <TextField
+          hintText="Name" /> <br />
+        <TextField
           hintText="Email"/> <br />
         <TextField
           hintText="Password"/> <br />

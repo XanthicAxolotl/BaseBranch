@@ -34,28 +34,9 @@ var resources =[
   }
 ];
 
-var menuItems = [
-  {payload: '1', text: 'Tutorial'},
-  {payload: '2', text: 'Other Text'},
-  {payload: '3', text: 'Video'},
-  {payload: '4', text: 'Practice Problems'},
-  {payload: '5', text: 'Audio (Podcast)'},
-  {payload: '6', text: 'GitHub Repository'},
-  {payload: '7', text: 'NPM Module'},
-  {payload: '8', text: 'Other'}
-];
-
 var NodeView = React.createClass({
-  // getInitialState: function() {
-  //   return {
-  //     jobs: this.props.jobs
-  //   }
-  // },
-  // handleClick: function() {
-      
-  // },
-  render: function(){
   
+  render: function(){
     return (
       <div className="full">
         <div className="resourceTable">
