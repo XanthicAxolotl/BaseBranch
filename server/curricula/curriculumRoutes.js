@@ -15,5 +15,5 @@ module.exports = function(app) {
       .get(curriculumController.getUser);
 
     app.route('/resource/:curriculumId')
-      .get(curriculumController.getResources);
+      .get(curriculumController.getAllResources);
 };
