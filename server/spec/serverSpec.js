@@ -170,6 +170,7 @@ describe('', function() {
 
   describe('Channels', function(){
     var channelId,
+        testChannelRef,
         nodeName = 'testnode',
         curriculumName = 'testcurriculum',
         channelName = 'testchannel';
@@ -185,6 +186,7 @@ describe('', function() {
         name: channelName
       })
       .then(function(channel){
+        testChannelRef = channel;
         channelId = channel.id;
         console.log('Created channel for testing Channels');
         done();
@@ -195,13 +197,17 @@ describe('', function() {
       db.Channels.destroy({where: {name: channelName}})
       .then(function(affectedRows){
         console.log('Deleted testchannel from DB. Rows affected: ', affectedRows);
-        db.Curricula.destroy({where: {name: curriculumName }})
+        db.Channels.destroy({where: {name: 'testrelatedchannel'}})
         .then(function(affectedRows){
-          console.log('Deleted testcurriculum from DB. Rows affected: ', affectedRows);
-          db.Nodes.destroy({where: { name: nodeName }})
+          console.log('Deleted relatedtestchannel from DB. Rows affected: ', affectedRows);
+          db.Curricula.destroy({where: {name: curriculumName }})
           .then(function(affectedRows){
-            console.log('Deleted testnode from DB. Rows affected: ', affectedRows);
-            done();
+            console.log('Deleted testcurriculum from DB. Rows affected: ', affectedRows);
+            db.Nodes.destroy({where: { name: nodeName }})
+            .then(function(affectedRows){
+              console.log('Deleted testnode from DB. Rows affected: ', affectedRows);
+              done();
+            });
           });
         });
       });
@@ -260,6 +266,7 @@ describe('', function() {
         })
         .end(done);
     });
+
   });
 
   describe('Curricula', function(){
