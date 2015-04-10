@@ -65,6 +65,8 @@ Curricula.belongsTo(Channels);
 
 Nodes.belongsToMany(Nodes, {as: 'Neighbors', through:'nodes_nodes'});
 
+Channels.belongsToMany(Channels, {as: 'Neighbors', through: 'channels_channels'});
+
 Resources.belongsToMany(Curricula, {through: 'curricula_resources'});
 Curricula.belongsToMany(Resources, {through: 'curricula_resources'});
 
