@@ -136,6 +136,10 @@ sequelize.sync().success(function() {
                         curriculum.setResources([resource1, resource2, resource3])
                         .then(function(){
                           console.log('successfully related resources with curriculum');
+                          curriculum.setChannel(channel1)
+                          .then(function(){
+                            console.log('successfully related curriculum with channel');
+                          })
                         });
                       });
                     });
