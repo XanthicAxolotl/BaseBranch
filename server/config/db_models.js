@@ -76,6 +76,77 @@ Users.belongsToMany(Curricula, {through: 'subscriptions'});
 // sync tables to database
 sequelize.sync().success(function() {
     console.log('basebranch tables created successfully');
+
+    // create instances if they do not exist already
+    var channel1, channel2, node1, node2, resource1, resource2, resource3;
+
+    // create channel
+    Channels.findOrCreate({ where: {name: 'JavaScript'}})
+    .spread(function(channel, created){
+      channel1 = channel;
+      console.log('Found or created channel ', channel.name);
+      console.log('Created? ', created);
+      // create related channel
+      Channels.findOrCreate({ where: {name: 'Angular'}})
+      .spread(function(channel, created){
+        channel2 = channel;
+        console.log('Found or created channel ', channel.name);
+        console.log('Created? ', created);
+        channel1.addNeighbor(channel)
+        .then(function(){
+          console.log('successfully related JavaScript and Angular channels');
+          // create node in channel
+          Nodes.findOrCreate({ where: {name: 'Intro to JavaScript'}, defaults: {channelId: channel1.id}})
+          .spread(function(node, created){
+            node1 = node;
+            console.log('Found or created node ', node.name);
+            console.log('Created? ', created);
+            // create neighbor node in channel
+            Nodes.findOrCreate({ where: {name: 'JavaScript Objects'}, defaults: {channelId: channel1.id}})
+            .spread(function(node, created){
+              node2 = node;
+              console.log('Found or created node ', node.name);
+              console.log('Created? ', created);
+              node1.addNeighbor(node)
+              .then(function(){
+                console.log('successfully related Intro to JavaScript and JavaScript Objects nodes');
+                // create resource in node
+                Resources.findOrCreate({ where: {name: 'Eloquent JavaScript'}, defaults: {url: 'http://eloquentjavascript.net/', type: 'online book', description: 'An online book for learning the fundamentals of JavaScript.', nodeId: node1.id}})
+                .spread(function(resource, created){
+                  resource1 = resource;
+                  console.log('Found or created resource ', resource.name);
+                  console.log('Created? ', created);
+                  // create second resource in node
+                  Resources.findOrCreate({ where: {name: 'MDN JavaScript Reference'}, defaults: {url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript', type: 'website', description: 'An online reference for JavaScript.', nodeId: node1.id}})
+                  .spread(function(resource, created){
+                    resource2 = resource;
+                    console.log('Found or created resource ', resource.name);
+                    console.log('Created? ', created);
+                    // create resource in second node
+                    Resources.findOrCreate({ where: {name: 'Introduction to Object-Oriented JavaScript'}, defaults: {url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript', type: 'website', description: 'An online guide to objects in JavaScript.', nodeId: node2.id}})
+                    .spread(function(resource, created){
+                      resource3 = resource;
+                      console.log('Found or created resource ', resource.name);
+                      console.log('Created? ', created);
+                      // create curriculum
+                      Curricula.findOrCreate({ where: {name: 'Learn JavaScript'}, defaults: {description: 'This curriculum will get you started with coding in JavaScript.'}})
+                      .spread(function(curriculum, created){
+                        console.log('Found or created curriculum ', curriculum.name);
+                        console.log('Created? ', created);
+                        curriculum.setResources([resource1, resource2, resource3])
+                        .then(function(){
+                          console.log('successfully related resources with curriculum');
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      }); 
+    });
 });
 
 module.exports.sequelize = sequelize;
