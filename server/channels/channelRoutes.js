@@ -1,9 +1,12 @@
 var channelController = require('./channelController.js');
 
 module.exports = function(app) {
-    app.route('/nodes/:channelId')
+    app.route('/nodes/:name')
       .get(channelController.getAllNodes);
 
-    app.route('/curricula/:channelId')
+    app.route('/curricula/:name')
       .get(channelController.getAllCurricula);
+
+    app.route('/channels/:name')
+      .get(channelController.getRelatedChannels);
 };
