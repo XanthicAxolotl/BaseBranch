@@ -260,6 +260,7 @@ describe('', function() {
         })
         .end(done);
     });
+
   });
 
   describe('Curricula', function(){
