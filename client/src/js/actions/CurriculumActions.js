@@ -2,4 +2,4 @@
 var Reflux = require('reflux');
 
 /*==================== CREATE ACTIONS =====================*/
-module.exports = Reflux.createActions(['changeRating', 'changeFramework']);
+module.exports = Reflux.createActions(['upVote', 'downVote', 'changeFramework']);
