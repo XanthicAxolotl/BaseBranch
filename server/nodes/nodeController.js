@@ -5,7 +5,8 @@ module.exports = {
 
   createNode: function(req, res, next) {
     Nodes.create({
-      name: req.body.name
+      name: req.body.name,
+      channelId: req.body.channelId
     })
     .then(function(node) {
       console.log('Successfully created node in database');

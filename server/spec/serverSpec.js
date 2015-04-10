@@ -90,29 +90,177 @@ describe('', function() {
     });
   });
 
-  // describe('Nodes', function(){
-    
-  //   it('should find node', function(done){
+  describe('Nodes', function(){
+    var nodeId,
+        resourceId,
+        resourceName = 'testresource',
+        nodeName = 't3stn0d3';
 
-  //     //made node for testing
-  //     request(app)
-  //       .post('/api/node')
-  //       .send({
-  //         'name':'testnode',
-  //         'neighbor': 1
-  //       })
-  //       .expect(function(res){
-  //         var nodeId = res.body.id
-  //         request(app)
-  //           .get('/api/node/' + nodeId)
-  //           .expect(function(res){
-  //             expect(res.body.id).to.equal(nodeId)
-  //           })
-  //           .end()
-  //       })
-  //       .end(done);
-  //   });
-  // });
+    beforeEach(function(done){
+      db.sequelize.sync().then(function(){
+        done();
+      });
+    });
+
+    after(function(done){
+      db.Nodes.destroy({ where: { name: nodeName }})
+      .then(function(affectedRows){
+        console.log('Deleted testnode from DB. Rows affected: ', affectedRows);
+        db.Resources.destroy({where: {name: resourceName }})
+        .then(function(affectedRows){
+          console.log('Deleted testresource from DB. Rows affected: ', affectedRows);
+          done();
+        })
+      });
+    });
+
+    it('should create a new node', function(done){
+      request(app)
+        .post('/api/node')
+        .send({
+          'name':nodeName
+        })
+        .expect(200)
+        .expect(function(res){
+          nodeId = res.body.id;
+          expect(res.body.name).to.equal(nodeName);
+        })
+        .end(done);
+    });
+
+    it('should retrieve existing node', function(done){
+      request(app)
+        .get('/api/node/' + nodeId)
+        .expect(200)
+        .expect(function(res){     
+          expect(res.body.name).to.equal(nodeName);
+        })
+        .end(done);
+    });
+
+    it('should be able to create resource with nodeId', function(done){
+      request(app)
+        .post('/api/resource')
+        .send({
+          'name': resourceName,
+          'url': 'test.com',
+          'type': 'app',
+          'description': 'test',
+          'nodeId': nodeId
+        })
+        .expect(200)
+        .expect(function(res){
+          resourceId = res.body.id;
+          expect(res.body.nodeId).to.equal(nodeId);
+        })
+        .end(done);
+    })
+
+    it('should retrieve all resources belonging to node', function(done){
+      request(app)
+        .get('/api/node/resources/' + nodeId)
+        .expect(200)
+        .expect(function(res){
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(res.body[0].id).to.equal(resourceId);
+        })
+        .end(done);
+    });
+  });
+
+  describe('Channels', function(){
+    var channelId,
+        nodeName = 'testnode',
+        curriculumName = 'testcurriculum',
+        channelName = 'testchannel';
+
+    beforeEach(function(done){
+      db.sequelize.sync().then(function(){
+        done();
+      });
+    });
+
+    before(function(done){
+      db.Channels.create({
+        name: channelName
+      })
+      .then(function(channel){
+        channelId = channel.id;
+        console.log('Created channel for testing Channels');
+        done();
+      })
+    });
+
+    after(function(done){
+      db.Channels.destroy({where: {name: channelName}})
+      .then(function(affectedRows){
+        console.log('Deleted testchannel from DB. Rows affected: ', affectedRows);
+        db.Curricula.destroy({where: {name: curriculumName }})
+        .then(function(affectedRows){
+          console.log('Deleted testcurriculum from DB. Rows affected: ', affectedRows);
+          db.Nodes.destroy({where: { name: nodeName }})
+          .then(function(affectedRows){
+            console.log('Deleted testnode from DB. Rows affected: ', affectedRows);
+            done();
+          });
+        });
+      });
+    });
+
+    it('should create node with channelId', function(done){
+      request(app)
+        .post('/api/node')
+        .send({
+          'name': nodeName,
+          'channelId': channelId
+        })
+        .expect(200)
+        .expect(function(res){
+          console.log(res.body)
+
+          expect(res.body.channelId).to.equal(channelId);
+        })
+        .end(done);
+    });
+
+    it('should create curricula with channelId', function(done){
+      request(app)
+        .post('/api/curriculum')
+        .send({
+          'name': curriculumName,
+          'description': 'testing for channel',
+          'channelId': channelId,
+          'resources': []
+        })
+        .expect(200)
+        .expect(function(res){
+          expect(res.body.channelId).to.equal(channelId);
+        })  
+        .end(done);
+    });
+
+    it('should get all nodes for channel', function(done){
+      request(app)
+        .get('/api/channel/nodes/' + channelId)
+        .expect(200)
+        .expect(function(res){
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(res.body[0].name).to.equal(nodeName)
+        })
+        .end(done);
+    });
+
+    it('should get all curricula for channel', function(done){
+      request(app)
+        .get('/api/channel/curricula/' + channelId)
+        .expect(200)
+        .expect(function(res){
+          expect(Array.isArray(res.body)).to.equal(true);
+          expect(res.body[0].name).to.equal(curriculumName);
+        })
+        .end(done);
+    });
+  });
 
   describe('Curricula', function(){
 
