@@ -35,7 +35,7 @@ var course = {
       name: 'How To Even',
       rating: -20,
       description: 'For those who cannot even',
-      url: 'http://www.google.com',
+      url: 'http://www.howmetalisthis.com/notwiththatattitude',
       type: 'blog',
       isChecked: true
     },

@@ -35,10 +35,9 @@ _curricula = [{
                 }];
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
+  listenables: CurriculumActions,
   init: function(){
-    // this.load();
-    this.trigger(_curricula);
-    this.listenToMany(CurriculumActions);
+    this.load();
   },
   triggerMe: function(){
     this.trigger(_curricula);
@@ -48,20 +47,22 @@ var CurriculumStore = Reflux.createStore({
   },
   load: function(){
     // use this to get the curricula data from the database
+    console.log('hi');
     var context = this;
     var http = new XMLHttpRequest();
-    var url = "https://branchbase.herokuapp.com/api/curriculumview";
+    var url = "http://localhost:8000/api/channel/curricula/JavaScript"/*"https://branchbase.herokuapp.com/api/curriculumview"*/;
 
     http.open("GET", url, true);
-    http.setRequestHeader('X-code-lang', 'javascript'/*placeholder language for now*/);
+    // http.setRequestHeader('X-code-lang', 'javascript'/*placeholder language for now*/);
+    // http.setRequestHeader('Content-type', 'application/json');
     http.onreadystatechange = function() {
       if (http.readyState === 4) {
         console.log(http.response);
         _curricula = http.response;
-        this.trigger(_curricula);
+        //this.trigger(_curricula);
       }
     };
-    http.send(null);
+    http.send();
   },
   pushChanges: function(curriculum) {
     var http = new XMLHttpRequest();
