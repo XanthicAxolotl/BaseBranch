@@ -28,7 +28,7 @@ var Main = React.createClass({
       <div className="button-nav-container">
         <RaisedButton linkButton={true} href="./graph.html">
           <span className="mui-raised-button-label">Graph View Test Button</span>
-        </RaisedButton
+        </RaisedButton>
       </div>
       </div>
     );
