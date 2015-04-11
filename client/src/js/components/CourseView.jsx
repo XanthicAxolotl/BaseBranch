@@ -1,7 +1,9 @@
 /*==================== REQUIRE MODULES ====================*/
 var mui             = require('material-ui'),
-    React           = require('react');
-    // CourseStore = require('../stores/CourseStore.js');
+    React           = require('react'),
+    Reflux           = require('reflux'),
+    CourseStore     = require('../stores/CourseStore.js'),
+    CourseActions   = require('../actions/CourseActions.js');
 //import JS stylesheet
 var Styles = require('../styles/CourseStyles.js');
 
@@ -24,66 +26,6 @@ injectTapEventPlugin();
 
 /*======================== MOCK DATA ========================*/
 // these should be populated by the database
-var course = {
-  name: 'Super Xanthic JavaScript Course',
-  description: 'Awesome JS Course made by Yellow Amphibians',
-  creator: 'Team Xanthic Axolotl',
-  updated: new Date().getDate(),
-  rating: 9001,
-  resources: [
-    {
-      name: 'How To Even',
-      rating: -20,
-      description: 'For those who cannot even',
-      url: 'http://www.howmetalisthis.com/notwiththatattitude',
-      type: 'blog',
-      isChecked: true
-    },
-    {
-      name: 'Hey, enough of the jokes, on to the real stuff!',
-      type: 'header',
-      isChecked: false
-    },
-    {
-      name: 'Codecademy JavaScript Course',
-      rating: 10,
-      description: 'Codecademy interactive JavaScript intro course',
-      url: 'http://www.codecademy.com',
-      type: 'interactive tutorial',
-      isChecked: false
-    },
-    {
-      name: "Kalev Roomann-Kurrik's Awesome Blog for People who want to Learn JavaScript",
-      rating: 99,
-      description: 'Super Awesome Blog that will turn you into a seafood-eating taichi master along the way!',
-      url: 'http://www.jasonchangloveskalev.com',
-      type: 'blog',
-      isChecked: false
-    },
-    {
-      name: "Recreating WendyCoin with JavaScript Objects",
-      rating: '4 (capped at the max # of wendycoins owned by a single person)',
-      description: "Learn how to clone the world's most exclusive woo-woo currency in JS",
-      url: 'http://www.coolcutecoughingcats.com/billysboots',
-      type: 'video',
-      isChecked: false
-    },
-    {
-      name: 'Sneaky, sneaky Recursions!',
-      type: 'header',
-      isChecked: false
-    },
-    {
-      name: "Wizarding Recursion JavaScript Magic",
-      rating: '9 3/4',
-      description: "Make your computer work recursions while you take lunch naps in the park",
-      url: 'http://www.isvoldemortaterrorist.com/marvelousriddles',
-      type: 'horcrux',
-      isChecked: false
-    }
-  ]
-
-};
 
 /*================ CREATE CURRICULUM COMPONENTS ================*/
 //Create Header View
@@ -109,6 +51,9 @@ var Header = React.createClass({
 
 //Create CL Resource View
 var CheckListResource = React.createClass({
+  toggleCheck: function(){
+    this.props.toggleCheck(this.props.id);
+  },
   render: function(){
     if (this.props.type === 'header'){
       return(
@@ -116,7 +61,7 @@ var CheckListResource = React.createClass({
       )
     } else {
       return(
-        <li style={Styles.item}><span>{this.props.name}</span><input type="checkbox" checked={this.props.isChecked} /></li>
+        <li style={Styles.item}><span>{this.props.name}</span><input type="checkbox" checked={this.props.isChecked} onChange={this.toggleCheck}/></li>
       )
     }
   }
@@ -125,8 +70,9 @@ var CheckListResource = React.createClass({
 //Create Checklist View
 var CheckList = React.createClass({
   render: function(){
+    var check = this;
     var chResource = this.props.resources.map(function(result){
-      return <CheckListResource name={result.name} isChecked={result.isChecked} type={result.type}/>
+      return <CheckListResource name={result.name} isChecked={result.isChecked} type={result.type} toggleCheck={check.toggleCheck}/>
     });
     return(
       <div style={{paddingLeft: '10px'}}>
@@ -141,6 +87,12 @@ var CheckList = React.createClass({
 
 //Create Individual Resource View
 var ResourceView = React.createClass({
+  voteUp: function(){
+    this.props.handleVote(this.props.id, 'up');
+  },
+  voteDown: function(){
+    this.props.handleVote(this.props.id, 'down');
+  },
   render: function() {
     if (this.props.type === 'header'){
       return(
@@ -149,7 +101,7 @@ var ResourceView = React.createClass({
     } else {
       return(
         <li style={Styles.singleResourceI}>
-          <div><span style={Styles.bold}>{this.props.name}</span> - Rating: {this.props.rating}</div>
+          <div><span style={Styles.bold}>{this.props.name}</span><span> - Rating: {this.props.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
           <div>{this.props.description}</div>
           <div>{this.props.url}</div>
         </li>
@@ -160,10 +112,12 @@ var ResourceView = React.createClass({
 
 //Create Course View
 var CourseView = React.createClass({
+  mixins: [Reflux.connect(CourseStore, 'course')],
   getInitialState: function(){
     return {
       windowWidth: window.innerWidth,
-      isMobile: window.innerWidth < 1024
+      isMobile: window.innerWidth < 1024,
+      course:{resources:[]}
     };
   },
   handleResize: function(e) {
@@ -174,20 +128,32 @@ var CourseView = React.createClass({
   },
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
+    CourseStore.triggerMe();
   },
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize);
   },
+  handleCheck: function(resourceId){
+    CourseActions.toggleCheck(resourceId);
+  },
+  handleVote: function(id, dir){
+    if (dir === 'up'){
+      CourseActions.upVote(id);
+    } else if (dir === 'down'){
+      CourseActions.downVote(id);
+    }
+  },
   render: function() {
-    var resources = course.resources.map(function(result) {
-      return <ResourceView name={result.name} rating={result.rating} description={result.description} url={result.url} type={result.type}/>
+    var context = this;
+    var resources = this.state.course.resources.map(function(result) {
+      return <ResourceView id={result.id} name={result.name} rating={result.rating} description={result.description} url={result.url} type={result.type} handleVote={context.handleVote}/>
     });
     return (
       <div>
-        <Header name={course.name} desc={course.description} creator={course.creator} updated={course.updated} rating={course.rating}/>
+        <Header name={this.state.course.name} desc={this.state.course.description} creator={this.state.course.creator} updated={this.state.course.updated} rating={this.state.course.rating}/>
         <div style={Styles.resourceContainer}>
           <div style={Styles.checkList}>
-            <CheckList resources={course.resources} />
+            <CheckList resources={this.state.course.resources} toggleCheck={this.handleCheck} />
           </div>
           <div style={Styles.resources}>
             <h3 style={Styles.reset}>Resources</h3>
