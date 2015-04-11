@@ -43,16 +43,38 @@ module.exports = {
     });
   },
 
-  getRating: function(req, res, next) {
-    // TODO: Implement
+  upRating: function(req, res, next) {
+    Curricula.find({where: { id: req.params.curriculumId }})
+    .then(function(curriculum){
+      curriculum.increment('rating')
+        .then(function(newcurriculum){
+          newcurriculum.reload()
+          .then(function(newcurriculum) {
+            console.log('Successfully increase rating for curriculum', curriculum.id);
+            res.json(newcurriculum.rating);
+          });
+        });
+    })
+    .error(function(err){
+      console.error('Error in finding curriculum to increase rating',err);
+    });
   },
 
-  updateRating: function(req, res, next) {
-    // TODO: Implement
-  },
-
-  getUser: function(req, res, next) {
-    // TODO: Implement
+  downRating: function(req, res, next) {
+    Curricula.find({where: { id: req.params.curriculumId }})
+    .then(function(curriculum){
+      curriculum.decrement('rating')
+        .then(function(newcurriculum){
+          newcurriculum.reload()
+          .then(function(newcurriculum) {
+            console.log('Successfully decrease rating for curriculum', curriculum.id);
+            res.json(newcurriculum.rating);
+          });
+        });
+    })
+    .error(function(err){
+      console.error('Error in finding curriculum to decrease rating',err);
+    });
   },
 
   getAllResources: function(req, res, next) {

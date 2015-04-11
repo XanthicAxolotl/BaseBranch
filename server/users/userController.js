@@ -57,8 +57,9 @@ module.exports = {
     {
       where: { id: req.params.userId}
     })
-    .success(function(){
-      console.log('Successfully updated picture')
+    .then(function(user){
+      console.log('Successfully updated picture', user)
+      res.json(user);
     })
     .error(function(){
       console.log('Error to updating picture')
@@ -80,7 +81,7 @@ module.exports = {
     Users.find({ where:{ id: req.params.userId } })
     .then(function(user){
       console.log('Successfully found user to get subscriptions', user);
-      user.getCurriculas({where: {userId: req.body.userId }})
+      user.getCurriculas()
       .then(function(curricula){
         console.log('Successfully retrieve curricula user is subscribed to', curricula)
         res.json(curricula);
@@ -99,9 +100,9 @@ module.exports = {
     .then(function(user){
       console.log('Successfully found user for subscription', user);
       user.addCurricula(req.body.curriculaId)
-      .then(function(curricula){
-        console.log('Successfully add subscription for user');
-        res.json(curricula);
+      .then(function(subscription){
+        console.log('Successfully add subscription for user', subscription);
+        res.json(subscription);
       })
       .error(function(err){
         console.log('Error in adding subscription for user', err);
