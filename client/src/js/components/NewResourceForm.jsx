@@ -8,7 +8,7 @@ var RaisedButton = mui.RaisedButton;
 
 var NewResourceForm = React.createClass({
   getInitialState: function() {
-    return {resourceName: '', resourceAuthor: '', resourceURL: '', resourceDesc: ''}
+    return {resourceName: '', resourceAuthor: '', resourceRating: '0', resourceURL: '', resourceDesc: ''}
   },
 
   handleChangeName: function(event) {
@@ -39,6 +39,7 @@ var NewResourceForm = React.createClass({
     this.setState({
       resourceName: nextProps.resourceName,
       resourceAuthor: nextProps.resourceAuthor,
+      resourceRating: nextProps.resourceRating,
       resourceURL: nextProps.resourceURL,
       resourceDesc: nextProps.resourceDesc
     });

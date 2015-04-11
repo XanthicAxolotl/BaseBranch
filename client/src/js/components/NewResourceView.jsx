@@ -20,7 +20,7 @@ var NewResourceView = React.createClass({
 
     return(
       <div className="col-mid-8">
-        <NewResourceForm onSave={this.handleSave} id={this.props.id} resourceName={resource ? resource.name : ''} resourceAuthor={resource ? resource.author : ''} resourceURL={resource ? resource.url : ''} resourceDesc={resource ? resource.description : ''}/>
+        <NewResourceForm onSave={this.handleSave} id={this.props.id} resourceName={resource ? resource.name : ''} resourceAuthor={resource ? resource.author : ''} resourceRating={resource ? resourceRating: '0'} resourceURL={resource ? resource.url : ''} resourceDesc={resource ? resource.description : ''}/>
       </div>
     )
   }

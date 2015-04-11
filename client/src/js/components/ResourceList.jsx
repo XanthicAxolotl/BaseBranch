@@ -18,9 +18,8 @@ var ResourceList = React.createClass({
     var self = this;
     var resources = this.props.resources.concat();
     var resourceNodes = resources.map(function(resource) {
-      console.log('resource', resource);
+      resource.rating = '0';
       resource.url = <a href={resource.url}>View Resource</a>;
-      console.log('url', resource.url);
       return (
         <Resource key={resource._id} active={self.state.activeResourceId===resource._id} resource={resource} onEdit={self.props.onEdit} onSelect={self.setActiveResource}/>
       );

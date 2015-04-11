@@ -17,9 +17,6 @@ var Resource = React.createClass({
     var className = this.props.active ? 'active' : null;
     return (
       <div>
-    
-      <a href="#" className={'list-group-item' + className} onClick={this.handleEdit.bind(null, resource._id)}>{name}{author}{url}{description}</a><br/>
-
 
       </div>
     )

@@ -24,6 +24,7 @@ var Main = React.createClass({
       <div>
       <div className="full">
         <NavBar />
+        <NodeView />
       </div>
       <div className="button-nav-container">
         <RaisedButton linkButton={true} href="./graph.html">
