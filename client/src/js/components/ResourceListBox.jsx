@@ -18,13 +18,12 @@ var ResourceListBox = React.createClass({
 
   updateState: function(data) {
     this.setState({
-      resources: ResourceStore.getResources()
+      resources: data
     });
   },
 
   componentDidMount: function() {
     this.unsubscribe = ResourceStore.listen(this.onChange);
-    console.log('CDM current state:', this.state);
   },
 
   componentWillUnmount: function() {

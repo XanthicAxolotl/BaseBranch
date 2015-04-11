@@ -2,7 +2,8 @@ var Reflux = require('reflux');
 
 var NodeResourceActions = Reflux.createActions([
   "createResource", 
-  "editResource"
+  "editResource",
+  "setNodeId"
 ]);
 
 module.exports = NodeResourceActions;
