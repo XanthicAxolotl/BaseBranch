@@ -12,6 +12,7 @@ var ResourceStore = Reflux.createStore({
     this.listenTo(NodeResourceActions.createResource, this.onCreate);
     this.listenTo(NodeResourceActions.editResource, this.onEdit);
     this.listenTo(NodeResourceActions.setNodeId, this.updateNodeId);
+    this.listenTo(NodeResourceActions.nodeClick, this.nodeIsClicked);
   },
 
   load: function(){
@@ -36,6 +37,13 @@ var ResourceStore = Reflux.createStore({
     // this.trigger(nodeId);
   },
 
+<<<<<<< HEAD
+=======
+  nodeIsClicked: function(data) {
+    this.trigger(data);
+  },
+
+>>>>>>> (fix) fix graphStore AJAX to conform to new database query
   onCreate: function(resource) {
     _resources.push(resource); //create a new resource
     //Trigger an event once done so that our components can update

@@ -2,7 +2,6 @@
 var d3 = require('d3');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
-var GraphView = require('./GraphView.jsx');
 var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
 var ANIMATION_DURATION = 400;
@@ -125,8 +124,13 @@ ns._drawPoints = function(el, scales, data, prevScales) {
     .attr("id", function(d) {return d.id})
     .on("click", function(d) {
       NodeResourceActions.setNodeId(d.id);
+<<<<<<< HEAD
       GraphView.openModal();
       console.log('gv',GraphView);
+=======
+      // GraphView.openModal(); // trigger an action instead
+      // NodeResourceActions.nodeClick('asdf');
+>>>>>>> (fix) fix graphStore AJAX to conform to new database query
     });
     //.moveToFront();
 
