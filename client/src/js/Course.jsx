@@ -7,7 +7,7 @@ var mui = require('material-ui');
 /*============== DECLARE MATERIAL COMPONENTS ==============*/
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
-var CurriculumView = require('./components/CurriculumView.jsx');
+var CourseView = require('./components/CourseView.jsx');
 var Paper = mui.Paper;
 
 injectTapEventPlugin();
@@ -19,7 +19,7 @@ var Main = React.createClass({
       <div>
         <div className="full">
           <NavBar />
-          <CurriculumView />
+          <CourseView />
         </div>
       </div>
     );

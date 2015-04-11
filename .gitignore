@@ -1,3 +1,5 @@
 node_modules/
 bower_components/
 client/dist/
+client/.DS_Store
+.DS_Store

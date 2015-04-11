@@ -7,8 +7,10 @@ var mui = require('material-ui');
 //Components
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
+var GraphBar = require('./components/GraphBar.jsx');
+var GraphSideBar = require('./components/GraphSideBar.jsx');
 var GraphView = require('./components/GraphView.jsx');
-var Paper = mui.Paper;
+var GraphStore = require('./stores/GraphStore.jsx');
 
 
 injectTapEventPlugin();
@@ -19,13 +21,9 @@ var Main = React.createClass({
       <div>
         <div className="full">
           <NavBar />
-        </div>
-        <div className="button-nav-container">
-          <RaisedButton linkButton={true} href="./graph.html">
-            <span className="mui-raised-button-label">Nothing</span>
-          </RaisedButton>
-        </div>
-        <div className="full">
+          <span><h2>Channel: {GraphStore.channelName}</h2></span>
+          <GraphBar />
+          <GraphSideBar />
           <GraphView />
         </div>
       </div>
@@ -33,4 +31,5 @@ var Main = React.createClass({
   }
 });
 
-React.render(<Main />, document.getElementById('graph'));
+
+React.render(<Main />, document.getElementById('app'));

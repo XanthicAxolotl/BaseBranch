@@ -4,6 +4,9 @@ module.exports = function(app) {
     app.route('/')
       .post(curriculumController.createCurriculum);
 
+    app.route('/:curriculumId')
+      .get(curriculumController.getCurriculum);
+
     app.route('/rating/:curriculumId')
       .get(curriculumController.getRating)
       .post(curriculumController.updateRating);
@@ -12,5 +15,5 @@ module.exports = function(app) {
       .get(curriculumController.getUser);
 
     app.route('/resource/:curriculumId')
-      .get(curriculumController.getResources);
+      .get(curriculumController.getAllResources);
 };

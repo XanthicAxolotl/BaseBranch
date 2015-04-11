@@ -13,17 +13,20 @@ var path = {
   INDEX_HTML: './client/src/index.html',
   GRAPH_HTML: './client/src/graph.html',
   CURRICULUM_HTML: './client/src/curriculum.html',
+  COURSE_HTML: './client/src/course.html',
   CSS: ['./client/src/css/*.css', './node_modules/bootstrap/dist/css/*.css'],
   INDEX_MINIFIED_OUT: 'index.min.js',
   GRAPH_MINIFIED_OUT: 'graph.min.js',
   CURRICULUM_MINIFIED_OUT: 'curriculum.min.js',
+  COURSE_MINIFIED_OUT: 'course.min.js',
   OUT: 'bundle.js',
   DEST: './client/dist',
   DEST_BUILD: './client/dist/build',
   DEST_SRC: './client/dist/src',
   INDEX_ENTRY_POINT: './client/src/js/App.jsx',
   GRAPH_ENTRY_POINT: './client/src/js/Graph.jsx',
-  CURRICULUM_ENTRY_POINT: './client/src/js/Curriculum.jsx'
+  CURRICULUM_ENTRY_POINT: './client/src/js/Curriculum.jsx',
+  COURSE_ENTRY_POINT: './client/src/js/Course.jsx'
 };
 
 gulp.task('build', function(){
@@ -56,6 +59,17 @@ gulp.task('buildCurriculum', function(){
     .bundle()
     .pipe(source(path.CURRICULUM_MINIFIED_OUT))
     .pipe(streamify(uglify(path.CURRICULUM_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+gulp.task('buildCourse', function(){
+  browserify({
+    entries: [path.COURSE_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.COURSE_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.COURSE_MINIFIED_OUT)))
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
@@ -122,6 +136,15 @@ gulp.task('replaceCurriculumHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
+gulp.task('replaceCourseHTML', function(){
+  gulp.src(path.COURSE_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.COURSE_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
 gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
@@ -143,7 +166,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'build', 'buildGraph', 'buildCurriculum']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'build', 'buildGraph', 'buildCurriculum', 'buildCourse']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 
