@@ -21,9 +21,15 @@ injectTapEventPlugin();
 var Main = React.createClass({
   render: function(){
     return (
+      <div>
       <div className="full">
         <NavBar />
-        <NodeView />
+      </div>
+      <div className="button-nav-container">
+        <RaisedButton linkButton={true} href="./graph.html">
+          <span className="mui-raised-button-label">Graph View Test Button</span>
+        </RaisedButton
+      </div>
       </div>
     );
   }
