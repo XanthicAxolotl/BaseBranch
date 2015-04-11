@@ -13,7 +13,7 @@ var path = {
   INDEX_HTML: './client/src/index.html',
   GRAPH_HTML: './client/src/graph.html',
   CURRICULUM_HTML: './client/src/curriculum.html',
-  CSS: './client/src/css/*.css',
+  CSS: ['./client/src/css/*.css', './node_modules/bootstrap/dist/css/*.css'],
   INDEX_MINIFIED_OUT: 'index.min.js',
   GRAPH_MINIFIED_OUT: 'graph.min.js',
   CURRICULUM_MINIFIED_OUT: 'curriculum.min.js',
@@ -73,7 +73,7 @@ gulp.task('copy', function(){
 gulp.task('copyCSS', function(){
     gulp.src(path.CSS)
       .pipe(gulp.dest(path.DEST + '/css'));
-})
+});
 
 // gulp.task('build', function () {
 //   return gulp.src(path.ENTRY_POINT)
