@@ -71,6 +71,7 @@ var CheckListResource = React.createClass({
 //Create Checklist View
 var CheckList = React.createClass({
   render: function(){
+
     var context = this;
     var checkListResource = this.props.resources.map(function(result){
       return <CheckListResource key={result.id} name={result.name} isChecked={result.isChecked} type={result.type} toggleCheck={context.toggleCheck}/>
