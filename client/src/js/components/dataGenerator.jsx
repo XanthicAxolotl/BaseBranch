@@ -29,7 +29,7 @@ ns.generateDatum = function(domain, i) {
   // console.log(GraphStore.nodeData);
   return {
     id: this._uid(),
-    nodeName: GraphStore.nodeData[i].nodeName, //'asdf Name',
+    name: GraphStore.nodeData[i].name, //'asdf Name',
     nodeLink: GraphStore.nodeData[i].nodeLink, //'http://google.com',
     x: GraphStore.nodeData[i].x, //this._randomIntBetween(domain[0], domain[1]),
     y: GraphStore.nodeData[i].y, //this._randomIntBetween(Y_MIN, Y_MAX),
@@ -37,7 +37,7 @@ ns.generateDatum = function(domain, i) {
   };
   // return {
   //   id: this._uid(),
-  //   nodeName: 'asdf Name',
+  //   name: 'asdf Name',
   //   nodeLink: 'http://google.com',
   //   x: this._randomIntBetween(domain[0], domain[1]),
   //   y: this._randomIntBetween(Y_MIN, Y_MAX),
@@ -45,7 +45,7 @@ ns.generateDatum = function(domain, i) {
   // };
   // return {
   //   id: this._uid(),
-  //   nodeName: /*GraphStore.nodeData[n].nodeName, */'asdf Name',
+  //   name: /*GraphStore.nodeData[n].name, */'asdf Name',
   //   nodeLink: /*GraphStore.nodeData[n].nodeLink, */'http://google.com',
   //   x: /*GraphStore.nodeData[n].x,*/this._randomIntBetween(domain[0], domain[1]),
   //   y: /*GraphStore.nodeData[n].y, */this._randomIntBetween(Y_MIN, Y_MAX),

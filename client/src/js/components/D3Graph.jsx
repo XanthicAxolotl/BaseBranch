@@ -9,6 +9,14 @@ var ANIMATION_DURATION = 400;
 var TOOLTIP_WIDTH = 30;
 var TOOLTIP_HEIGHT = 30;
 
+
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};  
+
+
 var ns = {};
 
 ns.create = function(el, props, state) {
@@ -67,16 +75,8 @@ ns._drawPoints = function(el, scales, data, prevScales) {
     .data(data, function(d) { return d.id; });
 
   var text = g.selectAll("text")
-    .data(data, function(d) { return d.id; })
-    .enter()
-    .append("text");
+    .data(data, function(d) { return d.id; });
 
-  // Add link to circles
-  // var anchor = g.selectAll("a")
-  //   .data(data, function(d) { return d.nodeLink; })
-  //   .enter()
-  //   .append("svg:a")
-  //   .attr("xlink:href", function(d){return d.nodeLink;});
 
   // Draw the circle into the canvas
   point.enter().append('circle')
@@ -107,34 +107,20 @@ ns._drawPoints = function(el, scales, data, prevScales) {
 
 
   // Add text and link to circles
-  var textLabels = text
+  text.enter().append("text")
     .attr("x", function(d) { return scales.x(d.x); })
     .attr("y", function(d) { return scales.y(d.y); })
-    .text( function (d) { return d.nodeName; })
+    .attr('class', 'd3-point')
+    .text( function (d) { return d.name; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "20px")
     .attr("fill", "black")
     .attr("cursor", "pointer")
-    .on("click", function(d) {window.location.href = d.nodeLink;});
-
-  // Move links to circles
-  // var anchorLocation = anchor
-  //   .attr("x", function(d) { return scales.x(d.x); })
-  //   .attr("y", function(d) { return scales.y(d.y); })
-  //   .text( function (d) { return d.nodeName; })
-  //   .attr("font-family", "sans-serif")
-  //   .attr("font-size", "20px")
-  //   .attr("fill", "black");
+    .on("click", function(d) {window.location.href = d.nodeLink;})
+    .moveToFront();
 
 
-d3.selection.prototype.moveToFront = function() {
-  return this.each(function(){
-    this.parentNode.appendChild(this);
-  });
-};
 
-
-  textLabels.moveToFront();
 
   if (prevScales) {
     point.exit()

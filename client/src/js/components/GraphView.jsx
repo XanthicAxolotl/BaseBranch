@@ -1,6 +1,7 @@
 var mui = require('material-ui');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
+var Reflux = require('reflux');
 
 var d3 = require('d3');
 var AddRemoveDatum = require('./AddRemoveDatum.jsx');
@@ -16,6 +17,9 @@ React.initializeTouchEvents(true);
 
 
 var GraphView = React.createClass({
+  
+  mixins: [Reflux.listenTo(GraphStore, 'update')],
+
   getInitialState: function() {
     var domain = [0, 30];
     return {
@@ -28,7 +32,23 @@ var GraphView = React.createClass({
   },
   
   // this data is hard coded. refactor to retrieve from GraphStore.jsx
-  _allData: /*GraphStore.nodeData*/dataGenerator.generate(3),
+
+  update: function(data) {
+    // update this.state's data
+    var domain = [0, 30];
+    this.setState({
+      data: data,
+      domain: {x: domain, y: [0, 100]},
+      tooltip: null,
+      prevDomain: null,
+      showingAllTooltips: false,
+      // x: 20,
+      // y: 50,
+      // z: 10
+    });
+  },
+
+  _allData: /*GraphStore.nodeData*/dataGenerator.generate(GraphStore.nodeData.length),
 
   getData: function(domain) {
     return _.filter(this._allData, this.isInDomain.bind(null, domain));
@@ -55,7 +75,7 @@ var GraphView = React.createClass({
 
 
   render: function() {
-
+    console.log('state', this.state);
     return (
       <div className="left">
         <ReactGraph
