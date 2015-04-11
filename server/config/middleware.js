@@ -5,6 +5,11 @@
 
 // User authentication
 var passport = require('passport');
+<<<<<<< HEAD
+=======
+// Used for flash messages stored in session
+var flash = require('connect-flash');
+>>>>>>> (feature) In progress implementation of user authentication using Passport.js
 // Allows for parsing of cookies
 var cookieParser = require('cookie-parser');
 // Allows for parsing of POST request body.
@@ -28,6 +33,9 @@ module.exports = function (app, express) {
   var curriculumRouter = express.Router();
   var userRouter = express.Router();
 
+  // configure passport by sending to passport.js file
+  require('./passport.js')(passport);
+
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
@@ -35,6 +43,7 @@ module.exports = function (app, express) {
   app.use(session({secret: 'whatasecret'}));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
   app.use(express.static(__dirname + '/../../client/dist'));
   app.use(cors());
   app.use(morgan('dev'));

@@ -22,10 +22,17 @@ module.exports = function(app, passport) {
 
     // signup route
     app.route('/signup')
-      .post(/* placeholder */);
+      .post(passport.authenticate('local-signup', {
+        successRedirect: '/', // redirect to homepage
+        failureRedirect: '/api/user/signup', // redirect back to signup page
+        failureFlash: true // allows the use of flash messages
+      }));
 
     // login route
     app.route('/login')
-      .post(/* placeholder */);
-
+      .post(passport.authenticate('local-login', {
+        successRedirect: '/', // redirect to homepage
+        failureRedirect: '/api/user/login', // redirect back to the login page
+        failureFlash: true // allows the use of flash messages
+      }));
 };
