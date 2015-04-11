@@ -7,7 +7,7 @@ var ResourceStore = Reflux.createStore({
   nodeId: '1',
 
   init: function() {
-    this.load()
+    //this.load()
     //Here we listen to actions and register callbacks
     this.listenTo(NodeResourceActions.createResource, this.onCreate);
     this.listenTo(NodeResourceActions.editResource, this.onEdit);
