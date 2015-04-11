@@ -43,16 +43,44 @@ module.exports = {
     });
   },
 
-  getRating: function(req, res, next) {
-    // TODO: Implement
+  upRating: function(req, res, next) {
+    Curricula.find({where: { id: req.params.curriculumId }})
+    .then(function(curriculum){
+      console.log('Successfully found curriculum', curriculum.id);
+      var newRating = curriculum.rating + 1; 
+
+      Curricula.update({ rating: newRating}, { where:{ id: curriculum.id }})
+      .success(function(){
+        console.log('Successfully increase Rating', newRating)
+        res.json(newRating);
+      })
+      .error(function(){
+        console.log('Error from increasing Rating')
+      })
+    })
+    .error(function(err){
+      console.error('Error in finding curriculum',err);
+    });
   },
 
-  updateRating: function(req, res, next) {
-    // TODO: Implement
-  },
+  downRating: function(req, res, next) {
+    Curricula.find({where: { id: req.params.curriculumId }})
+    .then(function(curriculum){
+      console.log('Successfully found curriculum', curriculum.id);
+      var newRating = curriculum.rating - 1; 
 
-  getUser: function(req, res, next) {
-    // TODO: Implement
+      Curricula.update({ rating: newRating}, { where:{ id: curriculum.id }})
+      .success(function(){
+        console.log('Successfully decrease Rating', newRating)
+        res.json(newRating);
+      })
+      .error(function(){
+        console.log('Error from decreasing Rating')
+      })
+    })
+    .error(function(err){
+      console.error('Error in finding curriculum',err);
+    });
   },
 
   getAllResources: function(req, res, next) {

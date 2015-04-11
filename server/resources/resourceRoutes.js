@@ -7,8 +7,11 @@ module.exports = function(app) {
     app.route('/:resourceId')
       .get(resourceController.getResource);
 
-    app.route('/rating/:resourceId')
-      .post(resourceController.updateRating);
+    app.route('/rating/up/:resourceId')
+      .post(resourceController.upRating);
+
+    app.route('/rating/down/:resourceId')
+      .post(resourceController.downRating);
 
     app.route('/comment/:resourceId')
       .get(resourceController.getAllComments);
