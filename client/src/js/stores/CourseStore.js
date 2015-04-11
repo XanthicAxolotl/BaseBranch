@@ -1,59 +1,111 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
 var mui = require('material-ui');
+var CourseActions = require('../actions/CourseActions.js');
 var Toggle = mui.Toggle;
 
 var _course = {};
+
+_course = {
+  name: 'Super Xanthic JavaScript Course',
+  description: 'Awesome JS Course made by Yellow Amphibians',
+  creator: 'Team Xanthic Axolotl',
+  updated: new Date().getDate(),
+  rating: 9001,
+  resources: [
+    {
+      id: 1,
+      name: 'How To Even',
+      rating: -20,
+      description: 'For those who cannot even',
+      url: 'http://www.howmetalisthis.com/notwiththatattitude',
+      type: 'blog',
+      isChecked: true
+    },
+    {
+      name: 'Hey, enough of the jokes, on to the real stuff!',
+      type: 'header',
+      isChecked: false
+    },
+    {
+      id: 2,
+      name: 'Codecademy JavaScript Course',
+      rating: 10,
+      description: 'Codecademy interactive JavaScript intro course',
+      url: 'http://www.codecademy.com',
+      type: 'interactive tutorial',
+      isChecked: false
+    },
+    {
+      id: 3,
+      name: "Kalev Roomann-Kurrik's Awesome Blog for People who want to Learn JavaScript",
+      rating: 99,
+      description: 'Super Awesome Blog that will turn you into a seafood-eating taichi master along the way!',
+      url: 'http://www.jasonchangloveskalev.com',
+      type: 'blog',
+      isChecked: false
+    },
+    {
+      id: 4,
+      name: "Recreating WendyCoin with JavaScript Objects",
+      rating: '4 (capped at the max # of wendycoins owned by a single person)',
+      description: "Learn how to clone the world's most exclusive woo-woo currency in JS",
+      url: 'http://www.coolcutecoughingcats.com/billysboots',
+      type: 'video',
+      isChecked: false
+    },
+    {
+      name: 'Sneaky, sneaky Recursions!',
+      type: 'header',
+      isChecked: false
+    },
+    {
+      id: 5,
+      name: "Wizarding Recursion JavaScript Magic",
+      rating: '9 3/4',
+      description: "Make your computer work recursions while you take lunch naps in the park",
+      url: 'http://www.isvoldemortaterrorist.com/marvelousriddles',
+      type: 'horcrux',
+      isChecked: false
+    }
+  ]
+
+};
 /*================ CREATE CURRICULA STORE =================*/
 var CourseStore = Reflux.createStore({
+  listenables: CourseActions,
   init: function(){
     this.load();
     // listen to course actions here
-    this.listenTo(CourseActions.loadCourse, this.load);
-    this.listenTo(CourseActions.editCourse, this.onEdit);
+  },
+  triggerMe: function(){
+    this.trigger(_course);
   },
   load: function(){
-    // use this to get the curricula data from the database
+    // use this to get the curriculum data from the database
     var context = this;
     var http = new XMLHttpRequest();
-    var url = "https://branchbase.herokuapp.com/api/courseview";
+    var url = "http://localhost:8000/api/curriculum/1";
 
     http.open("GET", url, true);
-    http.setRequestHeader('X-code-lang', 'javascript'/*placeholder language for now*/);
     http.onreadystatechange = function() {
       if (http.readyState === 4) {
         console.log(http.response);
-        _course = http.response;
+        // _course = http.response;
+        //this.trigger(_course);
       }
     };
-    http.send(null);
+    http.send();
   },
-  pushChanges: function(course) {
-    var http = new XMLHttpRequest();
-    var url = "https://branchbase.herokuapp.com/api/courseview";
-    var context = this;
-
-    http.open("PUSH", url, true);
-    http.setRequestHeader('Content-type', 'application/json');
-    http.onreadystatechange = function() {
-      if (http.readyState === 4) {
-        context.trigger(_course);
-      }
-    };
-    http.send(JSON.stringify(course));
+  onDownVote: function(resource){
+    console.log('down');
   },
-  onEdit: function(course) {
-    // console.log("from onEdit in jobStore.jsx");
-    for (var i = 0; i < _course.resources.length; i++) {
-      if(_course.resoures[i]._id === course._id) {
-        _course.resources[i].rating = course.rating;
-        _course.resources[i].isChecked = course.isChecked;
-        this.trigger(_course);
-        break;
-      }
-    }
-    this.pushChanges(course);
+  onUpVote: function(resource) {
+    console.log('up');
+  },
+  onTogglecheck: function(course) {
+    console.log('toggle me silly');
   }
 });
 
-module.exports = Course;
+module.exports = CourseStore;
