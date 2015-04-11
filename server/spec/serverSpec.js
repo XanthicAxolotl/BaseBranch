@@ -33,6 +33,7 @@ describe('', function() {
               url: 'www.test.com',
               type: 'website',
               description: 'hello',
+              rating: 4,
               nodeId: nodeId
             })
             .then(function(resource){
@@ -58,6 +59,14 @@ describe('', function() {
               });
             });
         });
+    });
+
+    after(function(done){
+      db.Comments.destroy({where: {text: 'textcomment'}})
+      .then(function(affectedRows){
+        console.log('Deleted textcomment from DB. Rows affected: ', affectedRows);
+        done();
+      })
     });
 
     it('should create a new resource', function(done){
@@ -88,6 +97,44 @@ describe('', function() {
         })
         .end(done);
     });
+
+    it('should increase rating of resource', function(done){
+      request(app)
+        .post('/api/resource/rating/up/' + resourceId)
+        .expect(200)
+        .expect(function(res){
+          expect(res.body).to.equal(5);
+        })
+        .end(done);
+    });
+
+    it('should decrease rating of resource', function(done){
+      request(app)
+        .post('/api/resource/rating/down/' + resourceId)
+        .expect(200)
+        .expect(function(res){
+          expect(res.body).to.equal(3);
+        })
+        .end(done);
+    });
+
+    it('should retrieve all comments belonging to resource', function(done){
+      db.Comments.create({
+        text: 'textcomment',
+        resourceId: resourceId
+      })
+      .then(function(comment){
+        request(app)
+          .get('/api/resource/comment/' + resourceId)
+          .expect(200)
+          .expect(function(res){
+            expect(Array.isArray(res.body)).to.equal(true);
+            expect(res.body[0].id).to.equal(comment.id);
+          })
+          .end(done);   
+      });
+    });
+
   });
 
   describe('Nodes', function(){
@@ -163,6 +210,37 @@ describe('', function() {
         .expect(function(res){
           expect(Array.isArray(res.body)).to.equal(true);
           expect(res.body[0].id).to.equal(resourceId);
+        })
+        .end(done);
+    });
+  });
+
+  describe('Comments', function(){
+    var text = 'textcomment';
+
+    beforeEach(function(done){
+      db.sequelize.sync().then(function(){
+        done();
+      });
+    });
+
+    after(function(done){
+      db.Comments.destroy({where: {text: text }})
+      .then(function(affectedRows){
+        console.log('Deleted testcomment from DB. Rows affected: ', affectedRows);
+        done();
+      })
+    });
+
+    it('should create a comment', function(done){
+      request(app)
+        .post('/api/comment')
+        .send({
+          text: text
+        })
+        .expect(200)
+        .expect(function(res){
+          expect(res.body.text).to.equal(text);
         })
         .end(done);
     });
@@ -259,7 +337,6 @@ describe('', function() {
         })
         .end(done);
     });
-
   });
 
   describe('Curricula', function(){
@@ -365,6 +442,7 @@ describe('', function() {
         })
         .expect(200)
         .expect(function(res){
+          curriculumId = res.body.id;
           expect(res.body.name).to.equal('testcurriculum');
           expect(res.body.description).to.equal('This is a test curriculum.');
           expect(res.body.channelId).to.equal(channelId);
@@ -427,7 +505,128 @@ describe('', function() {
                 });
             });
       });
+
+      it('should increase rating of curriculum', function(done){
+         db.Curricula.create({
+          name: 'testcurriculum',
+          description: 'This is a test curriculum.',
+          channelId: channelId,
+        })
+        .then(function(curriculum){
+          request(app)
+            .post('/api/curriculum/rating/up/' + curriculum.id)
+            .expect(200)
+            .expect(function(res){
+              expect(res.body).to.equal(1);
+            })
+            .end(done);
+        });
+      });
+
+      it('should decrease rating of curriculum', function(done){
+         db.Curricula.create({
+          name: 'testcurriculum',
+          description: 'This is a test curriculum.',
+          channelId: channelId,
+          rating: 3
+        })
+        .then(function(curriculum){
+          request(app)
+            .post('/api/curriculum/rating/down/' + curriculum.id)
+            .expect(200)
+            .expect(function(res){
+              expect(res.body).to.equal(2);
+            })
+            .end(done);
+        });
+      });
+
+    });
+  });
+
+  describe('Authentication', function() {
+
+    beforeEach(function(done){
+      request(app)
+        .post('/api/user/signup')
+        .send({
+          'name': 'testuser1',
+          'password': 'testpassword1',
+          'email': 'test1@test.com',
+        })
+        .expect(302)
+        .end(done);
+    });
+
+    afterEach(function(done){
+      db.Users.destroy({ where: { name: 'testuser' }})
+      .then(function(affectedRows){
+        console.log('Deleted testuser from DB. Rows affected: ', affectedRows);
+        db.Users.destroy({ where: { name: 'testuser1' }})
+        .then(function(affectedRows){
+          console.log('Deleted testuser1 from DB. Rows affected: ', affectedRows);
+          done();
+        });
+      });
+    });
+
+    it('should signup a user who does not have an account yet', function (done) {
+      request(app)
+        .post('/api/user/signup')
+        .send({
+          'name': 'testuser',
+          'password': 'testpassword',
+          'email': 'test@test.com',
+        })
+        .expect(302)
+        .end(done);
+    });
+
+    it('should not signup a user who already has an account', function (done) {
+      request(app)
+      .post('/api/user/signup')
+      .send({
+        'name': 'testuser1',
+        'password': 'testpassword1',
+        'email': 'test@test.com',
+      })
+      .expect(302)
+      .end(done);
+    });
+
+    it('should login a user who has an account and supplied the correct password', function (done) {
+      request(app)
+        .post('/api/user/login')
+        .send({
+          'name': 'testuser1',
+          'password': 'testpassword1'
+        })
+        .expect(302)
+        .end(done);
+    });
+
+    it('should not login a user who has an account, but supplied the wrong password', function (done) {
+      request(app)
+        .post('/api/user/login')
+        .send({
+          'name': 'testuser1',
+          'password': 'wrongpassword'
+        })
+        .expect(302)
+        .end(done);
+    });
+
+    it('should not login a user who does not have an account', function (done) {
+      request(app)
+        .post('/api/user/login')
+        .send({
+          'name': 'wronguser',
+          'password': 'testpassword1'
+        })
+        .expect(302)
+        .end(done);
     });
 
   });
+
 });

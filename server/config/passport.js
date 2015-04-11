@@ -32,12 +32,12 @@ module.exports = function(passport){
       Users.find({ where: { name: name }})
       .then(function(user){
         if (user){
-          return done(null, false, req.flash('signupErrorMessage', 'Account already exists for that email address.'));
+          return done(null, false, req.flash('signupErrorMessage', 'Account already exists for that username.'));
         } else {
           var newAccount = Users.create({
             name: req.body.name,
             password: Users.generateHash(req.body.password),
-            email: body.email
+            email: req.body.email
           })
           .then(function(user) {
             console.log('Successfully created user in database');
@@ -62,12 +62,15 @@ module.exports = function(passport){
     .then(function(user){
       // if no user was found then flash a message
       if (!user){
+        console.log('User does not have account');
         return done(null, false, req.flash('loginErrorMessage', 'No account was found for that username.'));
-      } else if (!Users.validPassword(password)){
+      } else if (!user.validPassword(password)){
         // if the correct password was used then flash a message
-          return done(null, false, req.flash('incorrectPasswordMessage', 'Incorrect password supplied.'));
+        console.log('Incorrect password supplied');
+        return done(null, false, req.flash('incorrectPasswordMessage', 'Incorrect password supplied.'));
       } else {
         // if the login is successful then return the user
+        console.log('Successfully logged in user ', user.name);
         return done(null, user);
       }
 
