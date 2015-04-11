@@ -12,6 +12,7 @@ var ResourceStore = Reflux.createStore({
     this.listenTo(NodeResourceActions.createResource, this.onCreate);
     this.listenTo(NodeResourceActions.editResource, this.onEdit);
     this.listenTo(NodeResourceActions.setNodeId, this.updateNodeId);
+    this.listenTo(NodeResourceActions.nodeClick, this.nodeIsClicked);
   },
 
   load: function(){
@@ -34,6 +35,10 @@ var ResourceStore = Reflux.createStore({
     this.nodeId = id;
     this.load();
     // this.trigger(nodeId);
+  },
+
+  nodeIsClicked: function(data) {
+    this.trigger(data);
   },
 
   onCreate: function(resource) {
