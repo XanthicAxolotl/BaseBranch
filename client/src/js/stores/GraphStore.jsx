@@ -10,6 +10,7 @@ var GraphStore = Reflux.createStore({
   height: 560,
   color: "Azure",
   channelName: 'JavaScript',
+  channelId: 1,
   circleProperties: [{
     id: 1,
     channelName: 'placeholderName',
@@ -51,7 +52,6 @@ var GraphStore = Reflux.createStore({
     this.load();
     this.listenTo(GraphActions.loadNodes, this.load);
     this.listenTo(GraphActions.addNode, this.onCreate);
-    // this.listenTo(GraphActions.addNode, this.XXXX);
     // this.listenTo(GraphActions.editNode, this.XXXX);
     // this.listenTo(GraphActions.updateNodes, this.XXXX);
   },
@@ -66,11 +66,17 @@ var GraphStore = Reflux.createStore({
         url: './api/channel/nodes/' + language, //this.channelName,
       }).then(function(data){
           this.nodeData = data; //push data to store
+
+          // set the channelId
+          if (data.length > 0) {
+            context.channelId = data[0].channelId;
+          }
           for (var i = 0; i < this.nodeData.length; i++) {
-            this.nodeData[i].x = 8 * ( i + 1 );
+            this.nodeData[i].x = (8 * ( i + 1 )) % 25;
             this.nodeData[i].y = 8 * ( i + 1 );
             this.nodeData[i].z = 10;
           }
+          context.channelName = language;
           context.trigger(data);
       },function(error){
         console.log('Error on GraphStore.load\'s GET request');
@@ -95,9 +101,8 @@ var GraphStore = Reflux.createStore({
   },
   
   onCreate: function(topic) {
-    var data = {name: topic, channelId: 1};
     var context = this;
-    console.log('in the store', topic);
+    var data = {name: topic, channelId: context.channelId};
     $.ajax({
       type: 'POST',
       dataType: 'json',
