@@ -1,6 +1,6 @@
 var userController = require('./userController.js');
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
     app.route('/')
       .post(userController.createUser);
 
@@ -19,4 +19,13 @@ module.exports = function(app) {
     app.route('/curricula/subscribed/:userId')
       .get(userController.getSubscribedCurricula)
       .post(userController.subscribeToCurriculum);
+
+    // signup route
+    app.route('/signup')
+      .post(/* placeholder */);
+
+    // login route
+    app.route('/login')
+      .post(/* placeholder */);
+
 };

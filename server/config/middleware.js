@@ -3,12 +3,20 @@
 //
 // The middleware connects the Express server app with the Express routers and configures the Express app to use additional modules such as body-parser, and morgan.
 
+// User authentication
+var passport = require('passport');
+// Allows for parsing of cookies
+var cookieParser = require('cookie-parser');
 // Allows for parsing of POST request body.
 var bodyParser  = require('body-parser');
+// Allows for sessions in Express
+var session = require('express-session');
+// Allows for cross-origin requests
+var cors = require('cors');
 // Error logging and handling helper functions.
 var helpers = require('./helpers.js'); 
 // Logs requests sent from the client.
-var morgan = require('morgan'); 
+var morgan = require('morgan');
 
 module.exports = function (app, express) {
 
@@ -23,7 +31,12 @@ module.exports = function (app, express) {
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
+  app.use(cookieParser());
+  app.use(session({secret: 'whatasecret'}));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(express.static(__dirname + '/../../client/dist'));
+  app.use(cors());
   app.use(morgan('dev'));
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);
@@ -42,5 +55,5 @@ module.exports = function (app, express) {
   require('../resources/resourceRoutes.js')(resourceRouter);
   require('../comments/commentRoutes.js')(commentRouter);
   require('../curricula/curriculumRoutes.js')(curriculumRouter);
-  require('../users/userRoutes.js')(userRouter);
+  require('../users/userRoutes.js')(userRouter, passport);
 };
