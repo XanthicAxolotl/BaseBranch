@@ -5,11 +5,8 @@
 
 // User authentication
 var passport = require('passport');
-<<<<<<< HEAD
-=======
 // Used for flash messages stored in session
 var flash = require('connect-flash');
->>>>>>> (feature) In progress implementation of user authentication using Passport.js
 // Allows for parsing of cookies
 var cookieParser = require('cookie-parser');
 // Allows for parsing of POST request body.
