@@ -45,8 +45,8 @@ var GraphBar = React.createClass({
   },
 
   handleSave: function() {
-    console.log('handleSave', this.state.addedTopic);
-    GraphActions.addNode(this.state.addedTopic);
+    // console.log('handleSave', this.state.addedTopic);
+    GraphActions.addNode(this.state.addedTopic, this.state.topicId);
     this.closeModal();
   },
 
