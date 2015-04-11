@@ -15,6 +15,7 @@ var GraphStore = Reflux.createStore({
     nodeCoordinates: {'x': 100, 'y': 200, 'r': 60}
   }],
 
+  // hardcoded data is replaced on this.load()
   nodeData: [
     {
       id: 1,//cuid(),
@@ -44,7 +45,7 @@ var GraphStore = Reflux.createStore({
 
   init: function(){
     this.load();
-    this.listenTo(GraphActions.loadNodes, this.load)
+    this.listenTo(GraphActions.loadNodes, this.load);
     // this.listenTo(GraphActions.addNode, this.XXXX);
     // this.listenTo(GraphActions.editNode, this.XXXX);
     // this.listenTo(GraphActions.updateNodes, this.XXXX);
@@ -54,13 +55,12 @@ var GraphStore = Reflux.createStore({
   // 'loadNodes'
   },
   load: function(){
-    console.log('load function');
     // use this to get the graph data from the database
     var context = this;
     $.ajax({
       type: "GET",
       dataType: 'json',
-      url: 'http://localhost:8000/api/channel/nodes/1', //+ this.channelName, // localhost for local testing
+      url: 'http://localhost:8000/api/channel/nodes/' + this.channelName, // localhost for local testing
     }).then(function(data){
         this.nodeData = data; //push data to store
         for (var i = 0; i < this.nodeData.length; i++) {
@@ -70,8 +70,7 @@ var GraphStore = Reflux.createStore({
         }
         context.trigger(data);
     },function(error){
-      console.log('Error on load\'s GET request');
-      console.log('error console.log:', error);
+      console.log('Error on GraphStore.load\'s GET request');
       console.error(error);
     });
   },

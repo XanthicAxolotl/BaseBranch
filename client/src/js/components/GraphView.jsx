@@ -2,11 +2,12 @@ var mui = require('material-ui');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
 var Reflux = require('reflux');
-
+var Modal = require('react-modal');
 var d3 = require('d3');
 var AddRemoveDatum = require('./AddRemoveDatum.jsx');
 var dataGenerator = require('./dataGenerator.jsx');
 var ReactGraph = require('./ReactGraph.jsx');
+var NodeView = require('./NodeView.jsx');
 var _ = require('lodash');
 
 
@@ -16,9 +17,14 @@ injectTapEventPlugin();
 React.initializeTouchEvents(true);
 
 
+var appElement = document.getElementById('app');
+Modal.setAppElement(appElement);
+Modal.injectCSS();
+
+
 var GraphView = React.createClass({
   
-  mixins: [Reflux.listenTo(GraphStore, 'update')],
+  mixins: [Reflux.listenTo(GraphStore, 'updateData')],
 
   getInitialState: function() {
     var domain = [0, 30];
@@ -27,13 +33,12 @@ var GraphView = React.createClass({
       domain: {x: domain, y: [0, 100]},
       tooltip: null,
       prevDomain: null,
-      showingAllTooltips: false
+      showingAllTooltips: false,
+      modalIsOpen: false
     };
   },
-  
-  // this data is hard coded. refactor to retrieve from GraphStore.jsx
 
-  update: function(data) {
+  updateData: function(data) {
     // update this.state's data
     var domain = [0, 30];
     this.setState({
@@ -48,7 +53,7 @@ var GraphView = React.createClass({
     });
   },
 
-  _allData: /*GraphStore.nodeData*/dataGenerator.generate(GraphStore.nodeData.length),
+  _allData: dataGenerator.generate(GraphStore.nodeData.length),
 
   getData: function(domain) {
     return _.filter(this._allData, this.isInDomain.bind(null, domain));
@@ -70,14 +75,21 @@ var GraphView = React.createClass({
   isInDomain: function(domain, d) {
     return d.x >= domain[0] && d.x <= domain[1];
   },
+
+  openModal: function(){
+    this.setState({modalIsOpen: true});
+  },
+  closeModal: function(){
+    this.setState({modalIsOpen: false});
+  },
     
 
 
 
   render: function() {
-    console.log('state', this.state);
     return (
       <div className="left">
+        <button onClick={this.openModal}>asdf</button>
         <ReactGraph
           appState={this.state}
           setAppState={this.setAppState} />
@@ -86,6 +98,10 @@ var GraphView = React.createClass({
           setAppState={this.setAppState}
           addDatum={this.addDatum}
           removeDatum={this.removeDatum} />
+        <Modal isOpen={this.state.modalIsOpen}>
+          <button onClick={this.closeModal} className="waves-effect waves-light btn">Close</button>
+          <NodeView />
+        </Modal>
       </div>
     )
   },
