@@ -50,11 +50,9 @@ var CurriculumStore = Reflux.createStore({
     console.log('hi');
     var context = this;
     var http = new XMLHttpRequest();
-    var url = "http://localhost:8000/api/channel/curricula/JavaScript"/*"https://branchbase.herokuapp.com/api/curriculumview"*/;
+    var url = "http://localhost:8000/api/channel/curricula/JavaScript";
 
     http.open("GET", url, true);
-    // http.setRequestHeader('X-code-lang', 'javascript'/*placeholder language for now*/);
-    // http.setRequestHeader('Content-type', 'application/json');
     http.onreadystatechange = function() {
       if (http.readyState === 4) {
         console.log(http.response);
