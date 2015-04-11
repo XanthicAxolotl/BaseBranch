@@ -1,4 +1,5 @@
 var Sequelize = require("sequelize");
+var bcrypt = require("bcrypt-nodejs");
 
 // Get the correct MySQL connection depending on the environment. If the app is deployed to Heroku then we use the MySQL connection string stored in the environment variable to connect to the database. Otherwise, if the app is run locally then we connect to the locally running instance of MySQL. The local instance of MySQL must be started prior to starting the local server.
 
@@ -20,8 +21,16 @@ var Users = sequelize.define('users', {
   password: {type: Sequelize.STRING, allowNull: false},
   email: {type: Sequelize.STRING, allowNull: false},
   reputation: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
-  picture: Sequelize.TEXT
-});
+  picture: Sequelize.TEXT},
+  { classMethods: {
+      generateHash: function(password){
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+      },
+      validPassword: function(password){
+        return bcrypt.compareSync(password, this.password);
+      }
+    }
+  });
 
 // define Channels model
 var Channels = sequelize.define('channels', {
