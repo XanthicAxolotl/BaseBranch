@@ -13,6 +13,7 @@ var Resource = React.createClass({
     var name = resource.name.length >=20 ? resource.name.substring(0,20) : resource.name;
     var author = resource.author;
     var url = resource.url;
+    var type = resource.type;
     var description = resource.description;
     var className = this.props.active ? 'active' : null;
     return (

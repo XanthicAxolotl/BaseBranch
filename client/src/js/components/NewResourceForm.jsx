@@ -8,7 +8,7 @@ var RaisedButton = mui.RaisedButton;
 
 var NewResourceForm = React.createClass({
   getInitialState: function() {
-    return {resourceName: '', resourceAuthor: '', resourceRating: '0', resourceURL: '', resourceDesc: ''}
+    return {resourceName: '', resourceAuthor: '', resourceRating: '0', resourceType: '', resourceURL: '', resourceDesc: ''}
   },
 
   handleChangeName: function(event) {
@@ -17,6 +17,14 @@ var NewResourceForm = React.createClass({
 
   handleChangeAuthor: function(event) {
     this.setState({resourceAuthor: event.target.value});
+  },
+
+  handleChangeType: function(event, x) {
+    if (this.state.resourceType === '') {
+      this.setState({resourceType: event.target.name});
+    } else {
+      this.setState({resourceType: this.state.resourceType + ", " + event.target.name});
+    }
   },
 
   handleChangeURL: function(event) {
@@ -28,10 +36,10 @@ var NewResourceForm = React.createClass({
   },
 
   handleSave: function() {
-    this.props.onSave(this.state.resourceName, this.state.resourceAuthor, this.state.resourceURL, this.state.resourceDesc, this.props.id);
+    this.props.onSave(this.state.resourceName, this.state.resourceAuthor, this.state.resourceType, this.state.resourceURL, this.state.resourceDesc, this.props.id);
     if (!this.props.id) {
       this.refs.newResourceForm.getDOMNode().value = '';
-      this.setState({resourceName: '', resourceAuthor: '', resourceURL: '', resourceDesc: ''});
+      this.setState({resourceName: '', resourceAuthor: '', resourceType: '', resourceURL: '', resourceDesc: ''});
     }
   },
 
@@ -40,6 +48,7 @@ var NewResourceForm = React.createClass({
       resourceName: nextProps.resourceName,
       resourceAuthor: nextProps.resourceAuthor,
       resourceRating: nextProps.resourceRating,
+      resourceType: nextProps.resourceType,
       resourceURL: nextProps.resourceURL,
       resourceDesc: nextProps.resourceDesc
     });
@@ -73,36 +82,44 @@ var NewResourceForm = React.createClass({
             <div className="resourceType">
               <h3>Type:</h3>
               <Checkbox 
-                name="typeName1"
-                value={this.state.resourceCheckTutorial}
+                name="Tutorial"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="Tutorial"/>
               <Checkbox 
-                name="typeName2"
-                value={this.state.resourceCheckOtherText}
+                name="Other Text (i.e. Blog)"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="Other Text (i.e. Blog)"/>
               <Checkbox 
-                name="typeName3"
-                value={this.state.resourceCheckVideo}
+                name="Video"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="Video"/>
               <Checkbox 
-                name="typeName4"
-                value={this.state.resourceCheckAudio}
+                name="Audio (i.e. Podcast)"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="Audio (i.e. Podcast)"/>
               <Checkbox 
-                name="typeName5"
-                value={this.state.resourceCheckProblems}
+                name="Practice Problems"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="Practice Problems"/>
               <Checkbox 
-                name="typeName6"
-                value={this.state.resourceCheckGitHub}
+                name="GitHub Repository"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="GitHub Repository"/>
               <Checkbox 
-                name="typeName7"
-                value={this.state.resourceCheckNPM}
+                name="NPM Module"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="NPM Module"/>
               <Checkbox 
-                name="typeName8"
-                value={this.state.resourceCheckOther}
+                name="Other"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
                 label="Other"/>
             </div>
             <div className="description">
