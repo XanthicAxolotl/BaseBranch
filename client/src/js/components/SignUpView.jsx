@@ -23,8 +23,7 @@ var SignUpView = React.createClass({
       username: this.state.username,
       name: this.state.name,
       email: this.state.email,
-      password: this.state.password,
-      cPassword: this.state.cPassword
+      password: this.state.password
     });
   },
   userInput: function(e){
