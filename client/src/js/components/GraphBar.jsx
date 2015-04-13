@@ -61,7 +61,7 @@ var GraphBar = React.createClass({
           </RaisedButton>
           <DropDownMenu menuItems={menuItems} />
 
-        <RaisedButton linkButton={true} onClick={this.openModal}<span className="mui-raised-button-label">Add New Topic</span></RaisedButton>
+        <RaisedButton linkButton={true} onClick={this.openModal}><span className="mui-raised-button-label">Add New Topic</span></RaisedButton>
         <Modal isOpen={this.state.modalIsOpen}>
           <button onClick={this.closeModal} className="waves-effect waves-light btn">Close</button>
           <NewTopicForm />
