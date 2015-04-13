@@ -99,6 +99,17 @@ gulp.task('buildLogin', function(){
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
+gulp.task('buildSignup', function(){
+  browserify({
+    entries: [path.SIGNUP_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.SIGNUP_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.SIGNUP_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
 /*================== BUILD MATERIAL UI CSS ==================*/
 gulp.task('less', function(){
   return gulp.src('./client/src/css/main.less')
@@ -183,6 +194,15 @@ gulp.task('replaceLoginHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
+gulp.task('replaceSignupHTML', function(){
+  gulp.src(path.SIGNUP_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.SIGNUP_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
 gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
@@ -204,7 +224,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 
