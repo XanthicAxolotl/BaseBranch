@@ -587,27 +587,23 @@ describe('', function() {
         description: 'This is a test curriculum.',
         channelId: channelId,
       })
-      .then(function(curriculum){
-          console.log('Created testcurriculum in serverSpec. curriculum ', curriculum.id);
-          
-          // create records in curricula_resources table for new curricula and associated resources
-          curriculum.setResources([res1, res2, res3])
-            .then(function(){
-              console.log('successfully set resources on curriculum in serverSpec');
-              // make request to get resources associated with curricula
-              request(app)
-                .get('/api/curriculum/resource/' + curriculum.id)
-                .expect(200)
-                .expect(function(res){
-                  // expect response to be an array of resources
-                  expect(res.body[0].name).to.equal('testresource1');
-                  expect(res.body[1].name).to.equal('testresource2');
-                  expect(res.body[2].name).to.equal('testresource3');
-                })
-                .end(function(){
-                  done();
-                });
-            });
+      .then(function(curriculum){  
+        // create records in curricula_resources table for new curricula and associated resources
+        curriculum.setResources([res1, res2, res3])
+          .then(function(){
+            request(app)
+              .get('/api/curriculum/resource/' + curriculum.id)
+              .expect(200)
+              .expect(function(res){
+                // expect response to be an array of resources
+                expect(res.body[0].name).to.equal('testresource1');
+                expect(res.body[1].name).to.equal('testresource2');
+                expect(res.body[2].name).to.equal('testresource3');
+              })
+              .end(function(){
+                done();
+              });
+          });
       });
 
       it('should increase rating of curriculum', function(done){
