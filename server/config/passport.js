@@ -98,9 +98,9 @@ module.exports = function(passport){
   // * GITHUB STRATEGY *
   // *******************
   passport.use(new GithubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID, //|| auth.githubAuth.clientID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET, //|| auth.githubAuth.clientSecret,
-    callbackURL: process.env.GITHUB_CLIENT_CALLBACK //|| auth.githubAuth.callbackURL
+    clientID: process.env.GITHUB_CLIENT_ID || 12345, //|| auth.githubAuth.clientID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET || 'secret', //|| auth.githubAuth.clientSecret,
+    callbackURL: process.env.GITHUB_CLIENT_CALLBACK || 'http://localhost:8000' //|| auth.githubAuth.callbackURL
   }, function(accessToken, refreshToken, profile, done) {
 
     process.nextTick(function() {
