@@ -7,13 +7,13 @@ var GithubStrategy = require('passport-github').Strategy;
 var Users = require('./db_models.js').Users;
 
 // load the Github authentication details if run locally
-if (!process.env.NODE_ENV) {
-  var auth = require('./auth.js');
-} else {
-  auth.githubAuth.clientID = null;
-  auth.githubAuth.clientSecret = null;
-  auth.githubAuth.callbackURL = null;
-}
+// if (!process.env.NODE_ENV) {
+//   var auth = require('./auth.js');
+// } else {
+//   auth.githubAuth.clientID = null;
+//   auth.githubAuth.clientSecret = null;
+//   auth.githubAuth.callbackURL = null;
+//}
 
 module.exports = function(passport){
   
@@ -98,9 +98,9 @@ module.exports = function(passport){
   // * GITHUB STRATEGY *
   // *******************
   passport.use(new GithubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID || auth.githubAuth.clientID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET || auth.githubAuth.clientSecret,
-    callbackURL: process.env.GITHUB_CLIENT_CALLBACK || auth.githubAuth.callbackURL
+    clientID: process.env.GITHUB_CLIENT_ID, //|| auth.githubAuth.clientID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET, //|| auth.githubAuth.clientSecret,
+    callbackURL: process.env.GITHUB_CLIENT_CALLBACK //|| auth.githubAuth.callbackURL
   }, function(accessToken, refreshToken, profile, done) {
 
     process.nextTick(function() {
