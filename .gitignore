@@ -3,3 +3,4 @@ bower_components/
 client/dist/
 client/.DS_Store
 .DS_Store
+server/config/auth.js
