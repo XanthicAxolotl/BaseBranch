@@ -1,8 +1,11 @@
 var React = require('react');
+var Reflux = require('reflux');
 var ResourceList = require('./ResourceList.jsx');
 var ResourceStore = require('../stores/ResourceStore.jsx');
 
 var ResourceListBox = React.createClass({
+  mixins: [Reflux.listenTo(ResourceStore, 'updateState')],
+
   getInitialState: function() {
     return { resources: ResourceStore.getResources() };
   },
@@ -13,8 +16,15 @@ var ResourceListBox = React.createClass({
     });
   },
 
+  updateState: function(data) {
+    this.setState({
+      resources: ResourceStore.getResources()
+    });
+  },
+
   componentDidMount: function() {
     this.unsubscribe = ResourceStore.listen(this.onChange);
+    console.log('CDM current state:', this.state);
   },
 
   componentWillUnmount: function() {
