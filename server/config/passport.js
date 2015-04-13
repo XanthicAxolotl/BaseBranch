@@ -7,7 +7,7 @@ var GithubStrategy = require('passport-github').Strategy;
 var Users = require('./db_models.js').Users;
 
 // load the Github authentication details if run locally
-if (!process.env.GITHUB_CLIENT_ID) {
+if (!process.env.NODE_ENV) {
   var auth = require('./auth.js');
 }
 
