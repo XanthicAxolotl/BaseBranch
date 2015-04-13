@@ -1,8 +1,13 @@
 // load the Passport.js local strategy to authenticate based on username and password
 var LocalStrategy = require('passport-local').Strategy;
+// load the Passport.js Github strategy to authenticate based on Github account
+var GithubStrategy = require('passport-github').Strategy;
 
 // load the Users model, so that we can use the class methods for generating a hashed password and checking for a valid password
 var Users = require('./db_models.js').Users;
+
+// load the Github authentication details
+var auth = require('./auth.js');
 
 module.exports = function(passport){
   
@@ -18,7 +23,9 @@ module.exports = function(passport){
     });
   });
 
-  // local signup
+  // ****************
+  // * LOCAL SIGNUP *
+  // ****************
   passport.use('local-signup', new LocalStrategy({
     usernameField: 'name',
     passwordField: 'password',
@@ -50,7 +57,9 @@ module.exports = function(passport){
   }
   ));
 
-  // local login
+  // ***************
+  // * LOCAL LOGIN *
+  // ***************
   passport.use('local-login', new LocalStrategy({
     usernameField: 'name',
     passwordField: 'password',
@@ -76,6 +85,24 @@ module.exports = function(passport){
 
     });
     
+  }));
+
+
+  // *******************
+  // * GITHUB STRATEGY *
+  // *******************
+  passport.use(new GithubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID || auth.githubAuth.clientID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET || auth.githubAuth.clientSecret,
+    callbackURL: process.env.GITHUB_CLIENT_CALLBACK || auth.githubAuth.callbackURL
+  }, function(accessToken, refreshToken, profile, done) {
+
+    process.nextTick(function() {
+      // lookup user in database based on Github ID
+      Users.findOrCreate({ githubId: profile.id }, function(err, user){
+        return done(err, user);
+      });
+    });
   }));
 
 };
