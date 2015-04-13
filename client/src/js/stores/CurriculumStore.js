@@ -79,7 +79,6 @@ var CurriculumStore = Reflux.createStore({
         if (http.readyState === 4) {
           _curricula[index].resources = JSON.parse(http.response);
           if (index === _curricula.length - 1){
-            console.log(_curricula);
             context.trigger(_curricula);
           }
         }

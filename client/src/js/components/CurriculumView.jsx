@@ -47,7 +47,7 @@ var ItemView = React.createClass({
             <li style={Styles.title}><div>{this.props.curriculum.name}</div><a href={curriculumUrl}>View Curriculum</a></li>
             <li>{this.props.curriculum.desc}</li>
             <li>Created By: {this.props.curriculum.author}</li>
-            <li>Last Updated: {this.props.curriculum.update}</li>
+            <li>Last Updated: {this.props.curriculum.createdAt}</li>
             <li>Rating: {this.props.curriculum.rating}<div onClick={this.voteUp}> up</div><div onClick={this.voteDown}> down</div></li>
           </ul>
         </div>
