@@ -11,7 +11,8 @@ module.exports = {
       url: body.url,
       type: body.type,
       description: body.description,
-      nodeId: body.nodeId
+      nodeId: body.nodeId,
+      userId: body.userId
     })
     .then(function(resource) {
       console.log('Successfully created resource in database');
