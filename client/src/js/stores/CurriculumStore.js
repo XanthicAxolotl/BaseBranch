@@ -6,33 +6,33 @@ var CurriculumActions = require('../actions/CurriculumActions.js');
 
 var _curricula = [];
 
-_curricula = [{
-                  id: '1',
-                  name: 'Super Xanthic Curriculum!',
-                  desc:'Example Framework 1',
-                  author:'Xanthic Axolotl',
-                  src:'http://www.walmart.com',
-                  update: new Date().getDate,
-                  rating: 20,
-                  resources: [{id: 1, name: 'Super Awesome Javascript Blog!'}]
-                },
-                {
-                  id: '2',
-                  name: 'Super Xanthic Curriculum!',
-                  desc:'Example Framework 1',
-                  author:'Xanthic Axolotl',
-                  src:'http://www.walmart.com',
-                  update: new Date().getDate,
-                  rating: 20,
-                  resources: [{id: 1, name: 'Super Awesome Javascript Blog!'},
-                              {id: 2, name: 'Super Awesome Javascript Blog!'},
-                              {id: 3, name: 'Super Awesome Javascript Blog!'},
-                              {id: 4, name: 'Super Awesome Javascript Blog!'},
-                              {id: 5, name: 'Super Awesome Javascript Blog!'},
-                              {id: 6, name: 'Super Awesome Javascript Blog!'},
-                              {id: 7, name: 'Super Awesome Javascript Blog!'},
-                              {id: 8, name: 'Super Awesome Javascript Blog!'}]
-                }];
+// _curricula = [{
+//                   id: '1',
+//                   name: 'Super Xanthic Curriculum!',
+//                   desc:'Example Framework 1',
+//                   author:'Xanthic Axolotl',
+//                   src:'http://www.walmart.com',
+//                   update: new Date().getDate,
+//                   rating: 20,
+//                   resources: [{id: 1, name: 'Super Awesome Javascript Blog!'}]
+//                 },
+//                 {
+//                   id: '2',
+//                   name: 'Super Xanthic Curriculum!',
+//                   desc:'Example Framework 1',
+//                   author:'Xanthic Axolotl',
+//                   src:'http://www.walmart.com',
+//                   update: new Date().getDate,
+//                   rating: 20,
+//                   resources: [{id: 1, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 2, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 3, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 4, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 5, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 6, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 7, name: 'Super Awesome Javascript Blog!'},
+//                               {id: 8, name: 'Super Awesome Javascript Blog!'}]
+//                 }];
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
   listenables: CurriculumActions,
@@ -47,34 +47,44 @@ var CurriculumStore = Reflux.createStore({
   },
   load: function(){
     // use this to get the curricula data from the database
-    console.log('hi');
+    var language = window.location.href.split('#')[1];
     var context = this;
     var http = new XMLHttpRequest();
-    var url = "http://localhost:8000/api/channel/curricula/JavaScript";
-
-    http.open("GET", url, true);
-    http.onreadystatechange = function() {
-      if (http.readyState === 4) {
-        console.log(http.response);
-        _curricula = http.response;
-        //this.trigger(_curricula);
-      }
-    };
-    http.send();
+    var url = "./api/channel/curricula/" + language;
+    
+    if (language !== undefined && language.length > 0){
+      http.open("GET", url, true);
+      http.onreadystatechange = function() {
+        if (http.readyState === 4) {
+          _curricula = JSON.parse(http.response);
+          for (var i = 0; i < _curricula.length; i++){
+            context.loadResource(i);
+          }
+        }
+      };
+      http.send();      
+    } else {
+      window.location.replace('./')
+    }
   },
-  pushChanges: function(curriculum) {
-    var http = new XMLHttpRequest();
-    var url = "https://branchbase.herokuapp.com/api/curriculumview";
+  loadResource: function(index) {
     var context = this;
+    var http = new XMLHttpRequest();
+    var curId = _curricula[index].id;
+    var url = "./api/curriculum/resource/" + curId;
 
-    http.open("POST", url, true);
-    http.setRequestHeader('Content-type', 'application/json');
-    http.onreadystatechange = function() {
-      if (http.readyState === 4) {
-        context.trigger(_curricula);
-      }
-    };
-    http.send(JSON.stringify(curriculum));
+    if (curId !== undefined) {
+      http.open("GET", url, true);
+      http.onreadystatechange = function(){
+        if (http.readyState === 4) {
+          _curricula[index].resources = JSON.parse(http.response);
+          if (index === _curricula.length - 1){
+            context.trigger(_curricula);
+          }
+        }
+      };
+      http.send();
+    }
   },
   onChangeFramework: function(){
     this.load();

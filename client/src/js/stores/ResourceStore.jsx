@@ -1,20 +1,41 @@
 var Reflux = require('reflux');
 var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
-var _resources = []; //This is a private resources array
+  var _resources = [{name: 'asdf'},{name: "asdf2"}]; //This is a private resources array
 
 var ResourceStore = Reflux.createStore({
+  nodeId: '1',
+
   init: function() {
+    this.load()
     //Here we listen to actions and register callbacks
-   this.listenTo(NodeResourceActions.createResource, this.onCreate);
-   this.listenTo(NodeResourceActions.editResource, this.onEdit);
+    this.listenTo(NodeResourceActions.createResource, this.onCreate);
+    this.listenTo(NodeResourceActions.editResource, this.onEdit);
+  },
+
+  load: function(){
+    // use this to get the resources data from the database
+    var context = this;
+    $.ajax({
+      type: "GET",
+      dataType: 'json',
+      url: 'http://localhost:8000/api/node/resources/' + this.nodeId, // localhost for local testing
+    }).then(function(data){
+      console.log('a thing',data);
+      _resources = data; //push data to store
+      console.log('these are the resources', _resources);
+      context.trigger(data);
+    },function(error){
+      console.log('Error on ResourceStore.load\'s GET request');
+      console.error(error);
+    });
   },
 
   onCreate: function(resource) {
     _resources.push(resource); //create a new resource
     //Trigger an event once done so that our components can update
     //Also pass the modified list of resources
-    this.trigger(_resources); 
+    this.trigger(_resources);
   },
 
   onEdit: function(note) {

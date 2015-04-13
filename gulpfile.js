@@ -1,3 +1,4 @@
+/*==================== REQUIRE MODULES ====================*/
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var htmlreplace = require('gulp-html-replace');
@@ -9,26 +10,40 @@ var streamify = require('gulp-streamify');
 var server = require('gulp-server-livereload');
 var less = require('gulp-less');
 
+/*================= SET PATHS FOR BUILDING =================*/
 var path = {
+  //SRC HTML Files
   INDEX_HTML: './client/src/index.html',
   GRAPH_HTML: './client/src/graph.html',
   CURRICULUM_HTML: './client/src/curriculum.html',
   COURSE_HTML: './client/src/course.html',
+  LOGIN_HTML: './client/src/login.html',
+  SIGNUP_HTML: './client/src/signup.html',
+  //SRC CSS Files
   CSS: ['./client/src/css/*.css', './node_modules/bootstrap/dist/css/*.css'],
+  //Target Minified JS File Names
   INDEX_MINIFIED_OUT: 'index.min.js',
   GRAPH_MINIFIED_OUT: 'graph.min.js',
   CURRICULUM_MINIFIED_OUT: 'curriculum.min.js',
   COURSE_MINIFIED_OUT: 'course.min.js',
+  LOGIN_MINIFIED_OUT: 'login.min.js',
+  SIGNUP_MINIFIED_OUT: 'signup.min.js',
   OUT: 'bundle.js',
+  //Production Build Destination Directories
   DEST: './client/dist',
   DEST_BUILD: './client/dist/build',
+  //Source File Directory
   DEST_SRC: './client/dist/src',
+  //Target JSX Files for Browserify
   INDEX_ENTRY_POINT: './client/src/js/App.jsx',
   GRAPH_ENTRY_POINT: './client/src/js/Graph.jsx',
   CURRICULUM_ENTRY_POINT: './client/src/js/Curriculum.jsx',
-  COURSE_ENTRY_POINT: './client/src/js/Course.jsx'
+  COURSE_ENTRY_POINT: './client/src/js/Course.jsx',
+  LOGIN_ENTRY_POINT: './client/src/js/Login.jsx',
+  SIGNUP_ENTRY_POINT: './client/src/js/SignUp.jsx'
 };
 
+/*===================== BUILD JSX TO JS =====================*/
 gulp.task('build', function(){
   browserify({
     entries: [path.INDEX_ENTRY_POINT],
@@ -73,17 +88,41 @@ gulp.task('buildCourse', function(){
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
+gulp.task('buildLogin', function(){
+  browserify({
+    entries: [path.LOGIN_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.LOGIN_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.LOGIN_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+gulp.task('buildSignup', function(){
+  browserify({
+    entries: [path.SIGNUP_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.SIGNUP_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.SIGNUP_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+/*================== BUILD MATERIAL UI CSS ==================*/
 gulp.task('less', function(){
   return gulp.src('./client/src/css/main.less')
     .pipe(less({path: '/'}))
     .pipe(gulp.dest(path.DEST + '/css'))
 });
 
-gulp.task('copy', function(){
-  gulp.src(path.HTML)
-    .pipe(gulp.dest(path.DEST));
-});
+// gulp.task('copy', function(){
+//   gulp.src(path.HTML)
+//     .pipe(gulp.dest(path.DEST));
+// });
 
+/*=================== COPY CSS TO DIST DIR ===================*/
 gulp.task('copyCSS', function(){
     gulp.src(path.CSS)
       .pipe(gulp.dest(path.DEST + '/css'));
@@ -109,6 +148,7 @@ gulp.task('watchProd', function(){
   gulp.watch(['client/src/index.html', 'client/src/styles.css', 'client/src/js/*.jsx', 'client/src/js/components/*.jsx'], ['production'])
 });
 
+/*=================== BUILD HTML TO DIST DIR ===================*/
 gulp.task('replaceHTML', function(){
   gulp.src(path.INDEX_HTML)
     .pipe(htmlreplace({
@@ -145,6 +185,24 @@ gulp.task('replaceCourseHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
+gulp.task('replaceLoginHTML', function(){
+  gulp.src(path.LOGIN_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.LOGIN_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
+gulp.task('replaceSignupHTML', function(){
+  gulp.src(path.SIGNUP_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.SIGNUP_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
 gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
@@ -166,7 +224,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'build', 'buildGraph', 'buildCurriculum', 'buildCourse']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 

@@ -7,12 +7,11 @@ module.exports = function(app) {
     app.route('/:curriculumId')
       .get(curriculumController.getCurriculum);
 
-    app.route('/rating/:curriculumId')
-      .get(curriculumController.getRating)
-      .post(curriculumController.updateRating);
+    app.route('/rating/up/:curriculumId')
+      .post(curriculumController.upRating);
 
-    app.route('/user/:curriculumId')
-      .get(curriculumController.getUser);
+    app.route('/rating/down/:curriculumId')
+      .post(curriculumController.downRating);    
 
     app.route('/resource/:curriculumId')
       .get(curriculumController.getAllResources);

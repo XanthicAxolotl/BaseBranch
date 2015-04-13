@@ -25,9 +25,6 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 
 injectTapEventPlugin();
 
-/*======================== MOCK DATA ========================*/
-// these should be populated by the database
-console.log(CurriculumActions);
 /*================ CREATE CURRICULUM COMPONENTS ================*/
 //Create Individual Curriculum View
 var ItemView = React.createClass({
@@ -38,24 +35,25 @@ var ItemView = React.createClass({
     this.props.editRating(this.props.curriculum.id, 'down');
   },
   render: function() {
-    var resources = this.props.curriculum.resources.map(function(resource){
+    var resourceItems = this.props.curriculum.resources.map(function(resource){
       return <li key={resource.id}>{resource.name}</li>
     });
     Styles.curriculum.width = '100%';
+    var curriculumUrl = "./Course.html#" + this.props.curriculum.id;
     return(
       <li style={Styles.curriculum}>
         <div style={Styles.information}>
           <ul>
-            <li style={Styles.title}><div>{this.props.curriculum.name}</div><a href={this.props.curriculum.src}>View Curriculum</a></li>
+            <li style={Styles.title}><div>{this.props.curriculum.name}</div><a href={curriculumUrl}>View Curriculum</a></li>
             <li>{this.props.curriculum.desc}</li>
             <li>Created By: {this.props.curriculum.author}</li>
-            <li>Last Updated: {this.props.curriculum.update}</li>
+            <li>Last Updated: {this.props.curriculum.createdAt}</li>
             <li>Rating: {this.props.curriculum.rating}<div onClick={this.voteUp}> up</div><div onClick={this.voteDown}> down</div></li>
           </ul>
         </div>
         <div style={Styles.resources}>
           <ul>
-            {resources}
+            {resourceItems}
           </ul>
         </div>
       </li>

@@ -21,16 +21,21 @@ var Users = sequelize.define('users', {
   password: {type: Sequelize.STRING, allowNull: false},
   email: {type: Sequelize.STRING, allowNull: false},
   reputation: {type: Sequelize.INTEGER, allowNull: false, defaultValue: 0},
-  picture: Sequelize.TEXT},
+  picture: Sequelize.TEXT,
+  githubId: {type: Sequelize.INTEGER, allowNull: true}
+  },
   { classMethods: {
       generateHash: function(password){
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-      },
+      }
+    },
+    instanceMethods: {
       validPassword: function(password){
         return bcrypt.compareSync(password, this.password);
       }
     }
-  });
+  }
+);
 
 // define Channels model
 var Channels = sequelize.define('channels', {

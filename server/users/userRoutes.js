@@ -20,7 +20,7 @@ module.exports = function(app, passport) {
       .get(userController.getSubscribedCurricula)
       .post(userController.subscribeToCurriculum);
 
-    // signup route
+    // local strategy signup route
     app.route('/signup')
       .post(passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to homepage
@@ -28,11 +28,23 @@ module.exports = function(app, passport) {
         failureFlash: true // allows the use of flash messages
       }));
 
-    // login route
+    // local strategy login route
     app.route('/login')
       .post(passport.authenticate('local-login', {
         successRedirect: '/', // redirect to homepage
         failureRedirect: '/api/user/login', // redirect back to the login page
         failureFlash: true // allows the use of flash messages
       }));
+
+    // Github strategy authentication route
+    app.route('/auth/github')
+      .get(passport.authenticate('github'));
+
+    // Github strategy callback route
+    app.route('/auth/github/callback')
+      .get(passport.authenticate('github', {
+        successRedirect: '/', // redirect to homepage
+        failureRedirect: '/api/user/login' // redirect back to the login page
+      }));
+
 };
