@@ -41,7 +41,7 @@ var GraphBar = React.createClass({
             <span className="mui-raised-button-label">(Store) Curricula</span>
           </RaisedButton>
           <DropDownMenu menuItems={menuItems} />
-          <RaisedButton linkButton={true} href="http://walmart.com">
+          <RaisedButton linkButton={true} href="/">
             <span className="mui-raised-button-label">Add New Topic</span>
           </RaisedButton>
         </div>

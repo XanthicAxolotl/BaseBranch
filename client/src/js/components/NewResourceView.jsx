@@ -1,6 +1,6 @@
 var React = require('react');
 var NewResourceForm = require('./NewResourceForm.jsx');
-var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
+var NodeResourceActions = require('../actions/NodeResourceActions.js');
 var ResourceStore = require('../stores/ResourceStore.jsx');
 
 var NewResourceView = React.createClass({

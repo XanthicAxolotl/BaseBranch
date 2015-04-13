@@ -1,5 +1,5 @@
 var Reflux = require('reflux');
-var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
+var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
 var _resources = []; //This is a private resources array
 
