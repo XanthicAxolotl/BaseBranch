@@ -22,7 +22,6 @@ var Main = React.createClass({
       <div>
       <div className="full">
         <NavBar />
-        <NewTopicForm />
       </div>
       <div className="button-nav-container">
         <RaisedButton linkButton={true} href="./graph.html">
