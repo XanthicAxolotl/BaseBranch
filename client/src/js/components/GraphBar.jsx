@@ -10,12 +10,14 @@ var RaisedButton = mui.RaisedButton;
 var DropDownIcon = mui.DropDownIcon;
 //Set Material-UI Vars
 var LeftNav = mui.LeftNav;
+var Modal = require('react-modal');
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
 var TextField = mui.TextField;
 var Paper = mui.Paper;
 var injectTapEventPlugin = require("react-tap-event-plugin");
 var GraphStore = require('../stores/GraphStore.jsx');
+var NewTopicForm = require('./NewTopicForm.jsx');
 
 injectTapEventPlugin();
 
@@ -25,10 +27,27 @@ var menuItems = [
   {payload: '2', text:'Example Framework 2'},
 ];
 
+var appElement = document.getElementById('app');
+Modal.setAppElement(appElement);
+Modal.injectCSS();
 
 
 
 var GraphBar = React.createClass({
+ 
+  getInitialState: function() {
+    return {
+      modalIsOpen: false
+    };
+  },
+
+  openModal: function(){
+    this.setState({modalIsOpen: true});
+  },
+
+  closeModal: function(){
+    this.setState({modalIsOpen: false});
+  },
 
   render: function() {
     return (
@@ -41,9 +60,13 @@ var GraphBar = React.createClass({
             <span className="mui-raised-button-label">(Store) Curricula</span>
           </RaisedButton>
           <DropDownMenu menuItems={menuItems} />
-          <RaisedButton linkButton={true} href="/">
-            <span className="mui-raised-button-label">Add New Topic</span>
-          </RaisedButton>
+
+        <RaisedButton linkButton={true} onClick={this.openModal}<span className="mui-raised-button-label">Add New Topic</span></RaisedButton>
+        <Modal isOpen={this.state.modalIsOpen}>
+          <button onClick={this.closeModal} className="waves-effect waves-light btn">Close</button>
+          <NewTopicForm />
+        </Modal>
+
         </div>
       </div>
     );

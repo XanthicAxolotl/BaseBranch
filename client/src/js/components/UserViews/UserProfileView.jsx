@@ -1,7 +1,7 @@
 var React = require('react');
 var mui = require('material-ui');
 var UserProfileBox = require('./UserProfileBox.jsx');
-var SignUpView = require('./SignUpView.jsx');
+var SignUpView = require('../SignUpView.jsx');
 
 var UserProfileView = React.createClass({
   getInitialState: function() {
