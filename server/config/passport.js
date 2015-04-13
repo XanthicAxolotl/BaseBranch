@@ -6,8 +6,10 @@ var GithubStrategy = require('passport-github').Strategy;
 // load the Users model, so that we can use the class methods for generating a hashed password and checking for a valid password
 var Users = require('./db_models.js').Users;
 
-// load the Github authentication details
-var auth = require('./auth.js');
+// load the Github authentication details if run locally
+if (!process.env.GITHUB_CLIENT_ID) {
+  var auth = require('./auth.js');
+}
 
 module.exports = function(passport){
   
