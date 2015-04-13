@@ -5,7 +5,7 @@ module.exports = {
   createComment: function(req, res, next) {
     Comments.create({
       text: req.body.text,
-      resouceId: req.body.resouceId,
+      resourceId: req.body.resourceId,
       userId: req.body.userId
     })
     .then(function(comments) {

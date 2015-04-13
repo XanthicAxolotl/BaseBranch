@@ -9,6 +9,10 @@ var Users = require('./db_models.js').Users;
 // load the Github authentication details if run locally
 if (!process.env.NODE_ENV) {
   var auth = require('./auth.js');
+} else {
+  auth.githubAuth.clientID = null;
+  auth.githubAuth.clientSecret = null;
+  auth.githubAuth.callbackURL = null;
 }
 
 module.exports = function(passport){

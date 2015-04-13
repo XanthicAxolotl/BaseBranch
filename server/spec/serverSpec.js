@@ -17,29 +17,39 @@ describe('', function() {
 
   describe('Resources', function(){
 
-    var nodeId, resourceId;
+    var nodeId, resourceId, userId;
 
     beforeEach(function(done){
       db.sequelize.sync().then(function(){
-          db.Nodes.create({
-            name: 'testnode1',
-            neighbor: 1
-          })
-          .then(function(node){
-            nodeId = node.id;
-            console.log('Created node ', nodeId);
-            db.Resources.create({
-              name: 'testresource',
-              url: 'www.test.com',
-              type: 'website',
-              description: 'hello',
-              rating: 4,
-              nodeId: nodeId
+        db.Users.create({
+          name: 'testuser',
+          password: '12345',
+          email: 'testuser@test.com'
+        })
+        .then(function(user){
+          userId = user.id;
+          console.log('Created user ', userId);
+            db.Nodes.create({
+              name: 'testnode1',
+              neighbor: 1
             })
-            .then(function(resource){
-              resourceId = resource.id;
-              console.log('Created resource ', resource.id);
-              done();
+            .then(function(node){
+              nodeId = node.id;
+              console.log('Created node ', nodeId);
+              db.Resources.create({
+                name: 'testresource',
+                url: 'www.test.com',
+                type: 'website',
+                description: 'hello',
+                rating: 4,
+                nodeId: nodeId,
+                userId: userId
+              })
+              .then(function(resource){
+                resourceId = resource.id;
+                console.log('Created resource ', resource.id);
+                done();
+              });
             });
           });
       });
@@ -55,7 +65,11 @@ describe('', function() {
               db.Nodes.destroy({ where: { name: 'testnode1' }})
               .then(function(affectedRows){
                 console.log('Deleted testnode1 from DB. Rows affected: ', affectedRows);
-                done();
+                db.Users.destroy({where: {name: 'testuser'}})
+                .then(function(affectedRows){
+                  console.log('Deleted testuser from DB. Rows affected: ', affectedRows);
+                  done();
+                });
               });
             });
         });
@@ -66,7 +80,7 @@ describe('', function() {
       .then(function(affectedRows){
         console.log('Deleted textcomment from DB. Rows affected: ', affectedRows);
         done();
-      })
+      });
     });
 
     it('should create a new resource', function(done){
@@ -77,12 +91,14 @@ describe('', function() {
           'url': 'www.test.com',
           'type': 'website',
           'description': 'hello',
-          'nodeId': nodeId
+          'nodeId': nodeId,
+          'userId': userId
         })
         .expect(200)
         .expect(function(res){
           expect(res.body.name).to.equal('testresource1');
           expect(res.body.nodeId).to.equal(nodeId);
+          expect(res.body.userId).to.equal(userId);
         })
         .end(done);
     });
