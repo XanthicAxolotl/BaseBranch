@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
     app.route('/signup')
       .post(passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to homepage
-        failureRedirect: '/api/user/signup', // redirect back to signup page
+        failureRedirect: '/signup.html', // redirect back to signup page
         failureFlash: true // allows the use of flash messages
       }));
 
@@ -32,7 +32,7 @@ module.exports = function(app, passport) {
     app.route('/login')
       .post(passport.authenticate('local-login', {
         successRedirect: '/', // redirect to homepage
-        failureRedirect: '/api/user/login', // redirect back to the login page
+        failureRedirect: '/login.html', // redirect back to the login page
         failureFlash: true // allows the use of flash messages
       }));
 
@@ -44,7 +44,7 @@ module.exports = function(app, passport) {
     app.route('/auth/github/callback')
       .get(passport.authenticate('github', {
         successRedirect: '/', // redirect to homepage
-        failureRedirect: '/api/user/login' // redirect back to the login page
+        failureRedirect: '/login.html' // redirect back to the login page
       }));
 
 };
