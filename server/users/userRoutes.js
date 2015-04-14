@@ -20,25 +20,33 @@ module.exports = function(app, passport) {
       .get(userController.getSubscribedCurricula)
       .post(userController.subscribeToCurriculum);
 
-    // local strategy signup route
-    app.route('/signup')
-      .post(passport.authenticate('local-signup', {
-        failureFlash: true // allows the use of flash messages
-      }), function(req, res){
-        // send back 200 status code on successful signup
-        console.log('Signup was successful.');
-        res.sendStatus(200);
-      });
+    // alternative local strategy signup route
+    app.post('/signup', function(req, res, next){
+      passport.authenticate('local-signup', function(err, user, info){
+        if (err) {
+          return res.status(404).send(err);
+        }
+        if (!user) {
+          return res.sendStatus(404);
+        } else {
+          res.status(200).send(JSON.stringify(user));
+        }
+      })(req, res, next);
+    });
 
     // local strategy login route
-    app.route('/login')
-      .post(passport.authenticate('local-login', {
-        failureFlash: true // allows the use of flash messages
-      }), function(req, res){
-        // send back 200 status code on successful login
-        console.log('Login was successful.');
-        res.sendStatus(200);
-      });
+    app.post('/login', function(req, res, next){
+      passport.authenticate('local-login', function(err, user, info){
+        if (err) {
+          return res.status(404).send(err);
+        }
+        if (!user) {
+          return res.sendStatus(404);
+        } else {
+          res.status(200).send(JSON.stringify(user));
+        }
+      })(req, res, next);
+    });
 
     // Github strategy authentication route
     app.route('/auth/github')

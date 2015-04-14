@@ -705,7 +705,7 @@ describe('', function() {
         'password': 'testpassword1',
         'email': 'test@test.com',
       })
-      .expect(1)
+      .expect(404)
       .end(done);
     });
 
@@ -727,7 +727,7 @@ describe('', function() {
           'name': 'testuser1',
           'password': 'wrongpassword'
         })
-        .expect(1)
+        .expect(404)
         .end(done);
     });
 
@@ -738,7 +738,7 @@ describe('', function() {
           'name': 'wronguser',
           'password': 'testpassword1'
         })
-        .expect(1)
+        .expect(404)
         .end(done);
     });
   });
