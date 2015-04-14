@@ -57,10 +57,6 @@ module.exports = function(passport){
             return done(null, user);
           });
         }
-      })
-      .catch(function(err){
-        console.log('Error in signing up new user');
-        res.status(500).json({'error': err});
       });
     });
   }
@@ -94,10 +90,6 @@ module.exports = function(passport){
           console.log('Successfully logged in user ', user.name);
           return done(null, user);
         }
-      })
-      .catch(function(err){
-        console.log('Error in logging in existing user');
-        res.status(500).json({'error': err});
       });
     });
   }));

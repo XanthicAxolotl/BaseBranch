@@ -670,7 +670,6 @@ describe('', function() {
           'password': 'testpassword1',
           'email': 'test1@test.com',
         })
-        .expect(302)
         .end(done);
     });
 
@@ -694,7 +693,7 @@ describe('', function() {
           'password': 'testpassword',
           'email': 'test@test.com',
         })
-        .expect(302)
+        .expect(200)
         .end(done);
     });
 
@@ -706,7 +705,7 @@ describe('', function() {
         'password': 'testpassword1',
         'email': 'test@test.com',
       })
-      .expect(302)
+      .expect(1)
       .end(done);
     });
 
@@ -717,7 +716,7 @@ describe('', function() {
           'name': 'testuser1',
           'password': 'testpassword1'
         })
-        .expect(302)
+        .expect(200)
         .end(done);
     });
 
@@ -728,7 +727,7 @@ describe('', function() {
           'name': 'testuser1',
           'password': 'wrongpassword'
         })
-        .expect(302)
+        .expect(1)
         .end(done);
     });
 
@@ -739,7 +738,7 @@ describe('', function() {
           'name': 'wronguser',
           'password': 'testpassword1'
         })
-        .expect(302)
+        .expect(1)
         .end(done);
     });
   });
