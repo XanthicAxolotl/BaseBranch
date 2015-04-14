@@ -4,7 +4,7 @@ var bcrypt = require("bcrypt-nodejs");
 // Get the correct MySQL connection depending on the environment. If the app is deployed to Heroku then we use the MySQL connection string stored in the environment variable to connect to the database. Otherwise, if the app is run locally then we connect to the locally running instance of MySQL. The local instance of MySQL must be started prior to starting the local server.
 
 var connectionString = process.env.CLEARDB_DATABASE_URL || 'mysql://admin:password@localhost:3306/basebranch';
-var sequelize = new Sequelize(connectionString);
+var sequelize = new Sequelize(connectionString, {logging: false});
 
 // Check the database connection status
 sequelize.authenticate().complete(function (err) {

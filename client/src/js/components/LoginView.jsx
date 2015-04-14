@@ -26,7 +26,7 @@ var LoginView = React.createClass({
   },
   login: function(){
     LoginActions.login({
-      username: this.state.username,
+      name: this.state.username,
       password: this.state.password
     });
   },

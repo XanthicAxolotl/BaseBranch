@@ -39,7 +39,7 @@ module.exports = function(passport){
   },
   function(req, name, password, done) {
 
-    // Users.findOne won't fire unless data is returned
+    // Users.find won't fire unless data is returned
     process.nextTick(function(){
       // check to see if the user already has an account
       Users.find({ where: { name: name }})
@@ -57,9 +57,12 @@ module.exports = function(passport){
             return done(null, user);
           });
         }
+      })
+      .catch(function(err){
+        console.log('Error in signing up new user');
+        res.status(500).json({'error': err});
       });
     });
-
   }
   ));
 
@@ -72,25 +75,31 @@ module.exports = function(passport){
     passReqToCallback: true
   },
   function(req, name, password, done) {
-    // check to see if the user has an account
-    Users.find({ where: { name: name }})
-    .then(function(user){
-      // if no user was found then flash a message
-      if (!user){
-        console.log('User does not have account');
-        return done(null, false, req.flash('loginErrorMessage', 'No account was found for that username.'));
-      } else if (!user.validPassword(password)){
-        // if the correct password was used then flash a message
-        console.log('Incorrect password supplied');
-        return done(null, false, req.flash('incorrectPasswordMessage', 'Incorrect password supplied.'));
-      } else {
-        // if the login is successful then return the user
-        console.log('Successfully logged in user ', user.name);
-        return done(null, user);
-      }
 
+    // Users.find won't fire unless data is returned
+    process.nextTick(function(){
+      // check to see if the user has an account
+      Users.find({ where: { name: name }})
+      .then(function(user){
+        // if no user was found then flash a message
+        if (!user){
+          console.log('User does not have account');
+          return done(null, false, req.flash('loginErrorMessage', 'No account was found for that username.'));
+        } else if (!user.validPassword(password)){
+          // if the correct password was used then flash a message
+          console.log('Incorrect password supplied');
+          return done(null, false, req.flash('incorrectPasswordMessage', 'Incorrect password supplied.'));
+        } else {
+          // if the login is successful then return the user
+          console.log('Successfully logged in user ', user.name);
+          return done(null, user);
+        }
+      })
+      .catch(function(err){
+        console.log('Error in logging in existing user');
+        res.status(500).json({'error': err});
+      });
     });
-    
   }));
 
 
