@@ -4,8 +4,8 @@ var mui = require('material-ui');
 var LoginActions = require('../actions/LoginActions.js');
 var Toggle = mui.Toggle;
 
-/*================ CREATE CURRICULA STORE =================*/
-var CourseStore = Reflux.createStore({
+/*================ CREATE LOGIN STORE =================*/
+var LoginStore = Reflux.createStore({
   listenables: LoginActions,
   newUser: function(user){
     // send login info to the server
@@ -22,4 +22,4 @@ var CourseStore = Reflux.createStore({
   }
 });
 
-module.exports = CourseStore;
+module.exports = LoginStore;
