@@ -1,8 +1,6 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
-var mui = require('material-ui');
 var SignUpActions = require('../actions/SignUpActions.js');
-var Toggle = mui.Toggle;
 
 var _newUser = {};
 
@@ -16,6 +14,16 @@ var SignUpStore = Reflux.createStore({
 
     http.open("POST", url, true);
     http.setRequestHeader('Content-Type', 'application/json');
+    http.onreadystatechange = function(){
+      console.log('hi', http.status);
+      if (http.readyState === 4){
+        if (http.status === 200){
+          window.location.replace('./');
+        } else {
+          alert('Login failed!');
+        }
+      }
+    };
     http.send(JSON.stringify(user));
   },
   onSignup: function(info){

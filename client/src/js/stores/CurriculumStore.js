@@ -1,38 +1,9 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
-var mui = require('material-ui');
-var Toggle = mui.Toggle;
 var CurriculumActions = require('../actions/CurriculumActions.js');
 
 var _curricula = [];
 
-// _curricula = [{
-//                   id: '1',
-//                   name: 'Super Xanthic Curriculum!',
-//                   desc:'Example Framework 1',
-//                   author:'Xanthic Axolotl',
-//                   src:'http://www.walmart.com',
-//                   update: new Date().getDate,
-//                   rating: 20,
-//                   resources: [{id: 1, name: 'Super Awesome Javascript Blog!'}]
-//                 },
-//                 {
-//                   id: '2',
-//                   name: 'Super Xanthic Curriculum!',
-//                   desc:'Example Framework 1',
-//                   author:'Xanthic Axolotl',
-//                   src:'http://www.walmart.com',
-//                   update: new Date().getDate,
-//                   rating: 20,
-//                   resources: [{id: 1, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 2, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 3, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 4, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 5, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 6, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 7, name: 'Super Awesome Javascript Blog!'},
-//                               {id: 8, name: 'Super Awesome Javascript Blog!'}]
-//                 }];
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
   listenables: CurriculumActions,
