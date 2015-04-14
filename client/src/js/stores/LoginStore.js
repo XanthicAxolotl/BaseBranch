@@ -17,8 +17,7 @@ var LoginStore = Reflux.createStore({
     http.send(user);
   },
   onLogin: function(user){
-    var userInfo = JSON.stringify(user);
-    this.newUser(userInfo);
+    this.newUser(JSON.stringify(user));
   }
 });
 

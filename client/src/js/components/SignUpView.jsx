@@ -11,13 +11,11 @@ var SignUpView = React.createClass({
   getInitialState: function(){
     return {
       username: ['', false],
-      name: ['', false],
       email: ['', false],
       password: ['', false],
       cPassword: ['', false],
       errorEmail: '',
       errorUser: '',
-      errorName: '',
       errorPass: '',
       errorCPass: '',
       disable: true
@@ -25,10 +23,9 @@ var SignUpView = React.createClass({
   },
   newUser: function(){
     SignUpActions.signup({
-      username: this.state.username,
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password
+      name: this.state.username[0],
+      email: this.state.email[0],
+      password: this.state.password[0]
     });
   },
   userInput: function(e){
@@ -46,23 +43,6 @@ var SignUpView = React.createClass({
     this.setState({
       username: [inputUser, status],
       errorUser: errorMsg
-    }, context.buttonEnable());
-  },
-  nameInput: function(e){
-    var inputName = e.target.value;
-    var status;
-    var context = this;
-    //if name exists, set status to true
-    if (inputName.length > 0){
-      status = true;
-    } else {
-      status = false;
-    }
-    var errorMsg = status === false ? 'Please enter your name' : '';
-    //update the state name
-    this.setState({
-      name: [inputName, status],
-      errorName: errorMsg
     }, context.buttonEnable());
   },
   emailInput: function(e){
@@ -123,13 +103,12 @@ var SignUpView = React.createClass({
     var context = this;
     setTimeout(function(){
       var username = context.state.username[1];
-      var name = context.state.name[1];
       var email = context.state.email[1];
       var password = context.state.password[1];
       var cPassword = context.state.cPassword[1];
       var disable;
 
-      if (username && name && email && password && cPassword){
+      if (username && email && password && cPassword){
         disable = false;
       } else {
         disable = true;
@@ -146,8 +125,6 @@ var SignUpView = React.createClass({
           <h1>Sign Up</h1>
           <TextField
             hintText="Username" value={this.state.username[0]} errorText={this.state.errorUser} onChange={this.userInput}/> <br />
-          <TextField
-            hintText="Name" value={this.state.name[0]} errorText={this.state.errorName} onChange={this.nameInput}/> <br />
           <TextField
             hintText="Email" value={this.state.email[0]} errorText={this.state.errorEmail} onChange={this.emailInput}/> <br />
           <TextField
