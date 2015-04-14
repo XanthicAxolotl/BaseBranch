@@ -1,8 +1,6 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
-var mui = require('material-ui');
 var CourseActions = require('../actions/CourseActions.js');
-var Toggle = mui.Toggle;
 
 var _course = {};
 
