@@ -87,7 +87,6 @@ var GraphView = React.createClass({
   render: function() {
     return (
       <div className="left">
-        <button onClick={this.openModal}>asdf</button>
         <ReactGraph
           appState={this.state}
           setAppState={this.setAppState} />

@@ -2,7 +2,8 @@
 var d3 = require('d3');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
-var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
+var GraphView = require('./GraphView.jsx');
+var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
 var ANIMATION_DURATION = 400;
 var TOOLTIP_WIDTH = 30;
@@ -124,6 +125,8 @@ ns._drawPoints = function(el, scales, data, prevScales) {
     .attr("id", function(d) {return d.id})
     .on("click", function(d) {
       NodeResourceActions.setNodeId(d.id);
+      GraphView.openModal();
+      console.log('gv',GraphView);
     });
     //.moveToFront();
 
