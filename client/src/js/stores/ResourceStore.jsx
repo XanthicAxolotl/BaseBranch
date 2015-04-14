@@ -1,7 +1,7 @@
 var Reflux = require('reflux');
-var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
+var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
-  var _resources = [{name: 'asdf'},{name: "asdf2"}]; //This is a private resources array
+var _resources = [{name: 'asdf'},{name: "asdf2"}]; //This is a private resources array
 
 var ResourceStore = Reflux.createStore({
   nodeId: '1',

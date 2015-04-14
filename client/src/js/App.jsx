@@ -10,10 +10,8 @@ var NavBar = require('./components/NavBar.jsx');
 var GraphView = require('./components/GraphView.jsx');
 var NodeView = require('./components/NodeView.jsx');
 var NewResourceView = require('./components/NewResourceView.jsx');
-var LoginView = require('./components/LoginView.jsx');
-var SignUpView = require('./components/SignUpView.jsx');
-var UserProfileView = require('./components/UserProfileView.jsx');
 var Paper = mui.Paper;
+var NewTopicForm = require('./components/NewTopicForm.jsx');
 
 
 injectTapEventPlugin();

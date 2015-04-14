@@ -79,13 +79,11 @@ var GraphView = React.createClass({
   openModal: function(){
     this.setState({modalIsOpen: true});
   },
+
   closeModal: function(){
     this.setState({modalIsOpen: false});
   },
     
-
-
-
   render: function() {
     return (
       <div className="left">

@@ -1,5 +1,5 @@
 var React = require('react');
-var Resource = require('./Resource.jsx');
+var Resource = require('./UserResource.jsx');
 var Reactable = require('reactable');
 var mui = require('material-ui');
 var Table = Reactable.Table;
@@ -7,11 +7,11 @@ var Tr = Reactable.Tr;
 
 var ResourceList = React.createClass({
   getInitialState: function() {
-    return{activeResourceId: null}
+    return{activeUserId: null}
   },
 
   setActiveResource: function(id) {
-    this.setState({activeResourceId: id});
+    this.setState({activeUserId: id});
   },
 
   render: function() {
@@ -28,20 +28,15 @@ var ResourceList = React.createClass({
       <div className="list-group">
         {resourceNodes}
 
-      <Table 
-          className="node-table" 
-          data={resources}
-          sortable={true} 
-          filterable={['name', 'author', 'rating', 'type', 'description']}
-          columns={[
-            {key: 'name', label: 'Name'},
-            {key: 'author', label: 'Author'},
-            {key: 'rating', label: 'Rating'},
-            {key: 'type', label: 'Type'},
-            {key: 'description', label: 'Description'},
-            {key: 'url', label: 'View Resource'},
-            {key: 'addresource'}
-          ]} />
+      <div className="myCurricula" float="right">
+          <h3>My Curricula</h3>
+          <h4>JavaScript: Introduction to JavaScript</h4>
+          <Progress completed={50} color="#00FFFF" />
+          <h4>JavaScript: Recursion</h4>
+          <Progress completed={90} color="#8B008B" />
+          <h4>JavaScript: For Loops</h4>
+          <Progress completed={20} color="#FF1493" />
+        </div>
       </div>
     )
   }
