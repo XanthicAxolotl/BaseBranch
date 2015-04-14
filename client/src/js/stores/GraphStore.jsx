@@ -2,7 +2,7 @@ var Reflux = require('reflux');
 var mui = require('material-ui');
 var cuid = require('cuid');
 var GraphActions = require('../actions/GraphActions.js');
-var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
+var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
 
 var GraphStore = Reflux.createStore({
