@@ -19,10 +19,12 @@ module.exports = function(passport){
   
   // Passport session setup
   passport.serializeUser(function(user, done){
+    console.log('Inside of serializeUser');
     done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done){
+    console.log('Inside of deserializeUser');
     Users.find({ where: {id: id}})
     .then(function(user){
         done(user);
