@@ -129,7 +129,7 @@ var CourseView = React.createClass({
   },
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
-    CourseStore.triggerMe();
+    // CourseStore.getResources();
   },
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.handleResize);
