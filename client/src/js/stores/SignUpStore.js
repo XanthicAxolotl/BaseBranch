@@ -12,16 +12,15 @@ var SignUpStore = Reflux.createStore({
   newUser: function(user){
     // send signup info to the server
     var http = new XMLHttpRequest();
-    var url = "./api/user/";
+    var url = "./api/user/signup";
 
     http.open("POST", url, true);
     http.setRequestHeader('Content-Type', 'application/json');
-    http.send(user);
+    http.send(JSON.stringify(user));
   },
   onSignup: function(info){
-    var user = JSON.stringify(info);
-    console.log();
-    this.newUser(user);
+    info.reputation = 0;
+    this.newUser(info);
   }
 });
 
