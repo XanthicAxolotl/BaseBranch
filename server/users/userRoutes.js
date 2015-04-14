@@ -23,18 +23,22 @@ module.exports = function(app, passport) {
     // local strategy signup route
     app.route('/signup')
       .post(passport.authenticate('local-signup', {
-        successRedirect: '/', // redirect to homepage
-        failureRedirect: '/signup.html', // redirect back to signup page
         failureFlash: true // allows the use of flash messages
-      }));
+      }), function(req, res){
+        // send back 200 status code on successful signup
+        console.log('Signup was successful.');
+        res.sendStatus(200);
+      });
 
     // local strategy login route
     app.route('/login')
       .post(passport.authenticate('local-login', {
-        successRedirect: '/', // redirect to homepage
-        failureRedirect: '/login.html', // redirect back to the login page
         failureFlash: true // allows the use of flash messages
-      }));
+      }), function(req, res){
+        // send back 200 status code on successful login
+        console.log('Login was successful.');
+        res.sendStatus(200);
+      });
 
     // Github strategy authentication route
     app.route('/auth/github')
@@ -42,9 +46,10 @@ module.exports = function(app, passport) {
 
     // Github strategy callback route
     app.route('/auth/github/callback')
-      .get(passport.authenticate('github', {
-        successRedirect: '/', // redirect to homepage
-        failureRedirect: '/login.html' // redirect back to the login page
-      }));
+      .get(passport.authenticate('github'), function(req, res){
+        // send back 200 status code on successful Github authentication
+        console.log('Github authentication was successful.');
+        res.sendStatus(200);
+      });
 
 };
