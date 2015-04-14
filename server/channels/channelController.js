@@ -10,7 +10,7 @@ module.exports = {
       console.log('Found channel');
       Nodes.findAll({where:{ channelId: channel.id }})
       .then(function(nodes){
-        console.log('Successfully found all nodes', nodes);
+        console.log('Successfully found all nodes');
         res.json(nodes);
       })
       .error(function(err){
@@ -27,7 +27,7 @@ module.exports = {
       console.log('Found channel');
       Curricula.findAll({where:{ channelId: channel.id }})
       .then(function(curricula){
-        console.log('Successfully found all curricula', curricula);
+        console.log('Successfully found all curricula');
         res.json(curricula);
       })
       .error(function(err){
