@@ -11,6 +11,7 @@ var ResourceStore = Reflux.createStore({
     //Here we listen to actions and register callbacks
     this.listenTo(NodeResourceActions.createResource, this.onCreate);
     this.listenTo(NodeResourceActions.editResource, this.onEdit);
+    this.listenTo(NodeResourceActions.setNodeId, this.updateNodeId);
   },
 
   load: function(){
@@ -21,14 +22,18 @@ var ResourceStore = Reflux.createStore({
       dataType: 'json',
       url: 'http://localhost:8000/api/node/resources/' + this.nodeId, // localhost for local testing
     }).then(function(data){
-      console.log('a thing',data);
       _resources = data; //push data to store
-      console.log('these are the resources', _resources);
       context.trigger(data);
     },function(error){
       console.log('Error on ResourceStore.load\'s GET request');
       console.error(error);
     });
+  },
+
+  updateNodeId: function(id) {
+    this.nodeId = id;
+    this.load();
+    // this.trigger(nodeId);
   },
 
   onCreate: function(resource) {

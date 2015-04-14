@@ -2,6 +2,7 @@ var Reflux = require('reflux');
 var mui = require('material-ui');
 var cuid = require('cuid');
 var GraphActions = require('../actions/GraphActions.js');
+var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
 
 
 var GraphStore = Reflux.createStore({
@@ -16,8 +17,9 @@ var GraphStore = Reflux.createStore({
   }],
 
   // hardcoded data is replaced on this.load()
+  // uncomment hardcoded data for svg text deletion testing later
   nodeData: [
-    {
+    /*{
       id: 1,//cuid(),
       name: 'google',
       nodeLink: 'http://google.com',
@@ -40,19 +42,18 @@ var GraphStore = Reflux.createStore({
       x: 10,
       y: 10,
       z: 10,
-    }
+    }*/
   ],
+
+  listenables: [NodeResourceActions, GraphActions],
 
   init: function(){
     this.load();
     this.listenTo(GraphActions.loadNodes, this.load);
+    this.listenTo(NodeResourceActions.setNodeId, this.load);
     // this.listenTo(GraphActions.addNode, this.XXXX);
     // this.listenTo(GraphActions.editNode, this.XXXX);
     // this.listenTo(GraphActions.updateNodes, this.XXXX);
-  // 'addNode',
-  // 'editNode',
-  // 'updateNodes',
-  // 'loadNodes'
   },
   load: function(){
     // use this to get the graph data from the database

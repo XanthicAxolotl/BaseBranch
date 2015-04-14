@@ -2,19 +2,18 @@
 var d3 = require('d3');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
-
-//require('./d3Chart.less');
+var NodeResourceActions = require('../actions/NodeResourceActions.jsx');
 
 var ANIMATION_DURATION = 400;
 var TOOLTIP_WIDTH = 30;
 var TOOLTIP_HEIGHT = 30;
 
 
-d3.selection.prototype.moveToFront = function() {
-  return this.each(function(){
-    this.parentNode.appendChild(this);
-  });
-};  
+// d3.selection.prototype.moveToFront = function() {
+//   return this.each(function(){
+//     this.parentNode.appendChild(this);
+//   });
+// };  
 
 
 var ns = {};
@@ -31,6 +30,9 @@ ns.create = function(el, props, state) {
 
   svg.append('g')
       .attr('class', 'd3-tooltips');
+
+  svg.append('g')
+      .attr('class', 'd3-text');
 
   //var dispatcher = new EventEmitter();
   this.update(el, state, null);
@@ -71,10 +73,12 @@ ns._scales = function(el, domain) {
 ns._drawPoints = function(el, scales, data, prevScales) {
   var g = d3.select(el).selectAll('.d3-points');
 
+  var gt = d3.select(el).selectAll('.d3-text');
+
   var point = g.selectAll('.d3-point')
     .data(data, function(d) { return d.id; });
 
-  var text = g.selectAll("text")
+  var text = gt.selectAll('.d3-text')
     .data(data, function(d) { return d.id; });
 
 
@@ -110,17 +114,18 @@ ns._drawPoints = function(el, scales, data, prevScales) {
   text.enter().append("text")
     .attr("x", function(d) { return scales.x(d.x); })
     .attr("y", function(d) { return scales.y(d.y); })
-    .attr('class', 'd3-point')
+    .attr("z", 11)
+    .attr('class', 'd3-text')
     .text( function (d) { return d.name; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "20px")
     .attr("fill", "black")
     .attr("cursor", "pointer")
-    .on("click", function(d) {window.location.href = d.nodeLink;})
-    .moveToFront();
-
-
-
+    .attr("id", function(d) {return d.id})
+    .on("click", function(d) {
+      NodeResourceActions.setNodeId(d.id);
+    });
+    //.moveToFront();
 
   if (prevScales) {
     point.exit()
