@@ -19,7 +19,7 @@ var NewResourceForm = React.createClass({
     this.setState({resourceAuthor: event.target.value});
   },
 
-  handleChangeType: function(event, x) {
+  handleChangeType: function(event) {
     if (this.state.resourceType === '') {
       this.setState({resourceType: event.target.name});
     } else {

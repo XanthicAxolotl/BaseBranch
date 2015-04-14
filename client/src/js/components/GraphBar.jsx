@@ -37,8 +37,18 @@ var GraphBar = React.createClass({
  
   getInitialState: function() {
     return {
+      addedTopic: '',
       modalIsOpen: false
     };
+  },
+
+  handleSave: function() {
+    console.log('handleSave', this.state.addedTopic);
+    this.closeModal();
+  },
+
+  handleTopic: function(component, event) {
+    this.setState({addedTopic: event.target.value});
   },
 
   openModal: function(){
@@ -63,8 +73,9 @@ var GraphBar = React.createClass({
 
         <RaisedButton linkButton={true} onClick={this.openModal}><span className="mui-raised-button-label">Add New Topic</span></RaisedButton>
         <Modal isOpen={this.state.modalIsOpen}>
-          <button onClick={this.closeModal} className="waves-effect waves-light btn">Close</button>
-          <NewTopicForm />
+          <NewTopicForm handleTopic={this.handleTopic} /> <br />
+          <button onClick={this.handleSave} className="waves-effect waves-light btn">Add Topic</button>
+          <button onClick={this.closeModal} className="waves-effect waves-light btn">Cancel</button>
         </Modal>
 
         </div>
