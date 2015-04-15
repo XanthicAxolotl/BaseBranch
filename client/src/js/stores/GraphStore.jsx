@@ -50,7 +50,7 @@ var GraphStore = Reflux.createStore({
   init: function(){
     this.load();
     this.listenTo(GraphActions.loadNodes, this.load);
-    this.listenTo(NodeResourceActions.setNodeId, this.load);
+    this.listenTo(GraphActions.addNode, this.onCreate);
     // this.listenTo(GraphActions.addNode, this.XXXX);
     // this.listenTo(GraphActions.editNode, this.XXXX);
     // this.listenTo(GraphActions.updateNodes, this.XXXX);
@@ -88,11 +88,24 @@ var GraphStore = Reflux.createStore({
     //     context.trigger(_jobs);
     // });
   },
-  onCreate: function(job) {
-    // _jobs.push(job);
-    // this.trigger(_jobs);
-    // this.pushChanges();
+  
+  onCreate: function(topic) {
+    var data = {name: topic, channelId: 1};
+    var context = this;
+    console.log('in the store', topic);
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: './api/node',
+      data: data
+    }).then(function() {
+      context.load();
+    }, function(error){
+      console.log('Error on GraphStore.onCreate');
+      console.error(error);
+    });
   },
+
   onEdit: function(job) {
     // console.log("from onEdit in jobStore.jsx");
     // for (var i = 0; i < _jobs.length; i++) {

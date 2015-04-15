@@ -61,22 +61,18 @@ var NewResourceForm = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="addResource">
+        <div className="addResource" ref="newResourceForm">
           <h2>New Resource</h2>
           <div className="full">
             <h3>Name:</h3>
-            <TextField
-              hintText="Name" 
               value={this.state.resourceName} 
               onChange={this.handleChangeName} />
             <h3>Author:</h3>
             <TextField
-              hintText="Author"
               value={this.state.resourceAuthor} 
               onChange={this.handleChangeAuthor} />
             <h3>URL:</h3>
             <TextField
-              hintText="URL"
               value={this.state.resourceURL} 
               onChange={this.handleChangeURL} />
             <div className="resourceType">
@@ -125,7 +121,6 @@ var NewResourceForm = React.createClass({
             <div className="description">
               <h3>Description:</h3>
               <TextField
-                hintText="Description"
                 multiLine={true} 
                 value={this.state.resourceDesc} 
               onChange={this.handleChangeDesc} />
