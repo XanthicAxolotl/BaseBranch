@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-var Toolbar = require('material-ui').Toolbar;
-=======
->>>>>>> (feat) Add new method getAllChannels for channelController.
 var React = require('react');
 var Reflux = require('reflux');
 var LanguageStore = require('../stores/LanguageStore.js')
