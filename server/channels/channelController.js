@@ -4,6 +4,17 @@ var Channels = require('../config/db_models.js').Channels;
 
 module.exports = {
 
+  getAllChannels: function(req, res, next){
+    Channels.findAll()
+    .then(function(channels){
+      console.log('Successfully found all channels')
+      res.json(channels);
+    })
+    .error(function(err){
+      console.error('Error in finding all channels')
+    })
+  },
+
   getAllNodes: function(req, res, next) {
     Channels.find({where: { name: req.params.name }})
     .then(function(channel){

@@ -10,11 +10,13 @@ var NavBar = require('./components/NavBar.jsx');
 var GraphView = require('./components/GraphView.jsx');
 var NodeView = require('./components/NodeView.jsx');
 var NewResourceView = require('./components/NewResourceView.jsx');
+var SearchBarView = require('./components/SearchBarView.jsx');
 var Paper = mui.Paper;
 var NewTopicForm = require('./components/NewTopicForm.jsx');
 
 
 injectTapEventPlugin();
+
 
 var Main = React.createClass({
   render: function(){
@@ -28,6 +30,7 @@ var Main = React.createClass({
           <span className="mui-raised-button-label">Graph View Test Button</span>
         </RaisedButton>
       </div>
+        <SearchBarView />
       </div>
     );
   }
