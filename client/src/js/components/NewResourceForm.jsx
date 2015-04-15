@@ -65,6 +65,7 @@ var NewResourceForm = React.createClass({
           <h2>New Resource</h2>
           <div className="full">
             <h3>Name:</h3>
+            <TextField
               value={this.state.resourceName} 
               onChange={this.handleChangeName} />
             <h3>Author:</h3>
