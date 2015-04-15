@@ -8,9 +8,9 @@ var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
 var SearchBarView = require('./components/SearchBarView.jsx');
+var PopularView = require('./components/PopularView.jsx');
 
 injectTapEventPlugin();
-
 
 var Main = React.createClass({
   render: function(){
@@ -19,10 +19,9 @@ var Main = React.createClass({
       <div className="full">
         <NavBar />
       </div>
-      <div className="button-nav-container">
-        <RaisedButton linkButton={true} href="./graph.html">
-          <span className="mui-raised-button-label">Graph View Test Button</span>
-        </RaisedButton>
+      <div className="index">
+        <PopularView />
+        <SearchBarView />
       </div>
         <SearchBarView />
       </div>
