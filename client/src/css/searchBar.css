@@ -1,0 +1,39 @@
+input[type=text] {
+  width: 40%;
+}
+
+.searchBar{
+    display: block;
+}
+
+.searchList{
+    list-style: none;
+    display: inline-block;
+    width: 40%;
+    text-align: left;
+}
+
+.searchItem{
+    display: block;
+    padding: 15px 20px;
+    background-color: #F8F8F8;
+    font-size: 15px;
+    color: #7B8585;
+    margin-bottom: 3px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.graphLink{
+  position: absolute;
+  left: 43%;
+}
+
+.curriculumLink{
+  position: absolute;
+  left: 75%;
+}
+
+.searchItem:hover{
+    background-color:#d8f2f1;
+}
