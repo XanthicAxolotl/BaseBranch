@@ -16,14 +16,13 @@ var Main = React.createClass({
   render: function(){
     return (
       <div>
-      <div className="full">
-        <NavBar />
-      </div>
-      <div className="index">
-        <PopularView />
-        <SearchBarView />
-      </div>
-        <SearchBarView />
+        <div className="full">
+          <NavBar />
+        </div>
+        <div className="index">
+          <PopularView />
+          <SearchBarView />
+        </div>
       </div>
     );
   }
