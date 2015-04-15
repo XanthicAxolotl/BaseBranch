@@ -1,4 +1,3 @@
-
 var d3 = require('d3');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
@@ -51,6 +50,8 @@ ns._scales = function(el, domain) {
   if (!domain) {
     return null;
   }
+  console.log('offSetWidth', el.offsetWidth);
+  console.log('offSetHeight', el.offsetHeight);
 
   var width = el.offsetWidth;
   var height = el.offsetHeight;

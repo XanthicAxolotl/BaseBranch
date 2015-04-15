@@ -14,8 +14,9 @@ injectTapEventPlugin();
 
 
 var filterOptions = [
-  {payload: '1', text:'About'},
-  {payload: '2', text:'Contact'}
+  {payload: '1', text:'Home'},
+  {payload: '2', text:'About'},
+  {payload: '3', text:'Contact'}
 ];
 
 
