@@ -1,6 +1,7 @@
 var mui = require('material-ui');
 var React = require('react');
 var GraphStore = require('../stores/GraphStore.jsx');
+var ResourceStore = require('../stores/ResourceStore.jsx');
 var Reflux = require('reflux');
 var Modal = require('react-modal');
 var d3 = require('d3');
@@ -24,7 +25,7 @@ Modal.injectCSS();
 
 var GraphView = React.createClass({
   
-  mixins: [Reflux.listenTo(GraphStore, 'updateData')],
+  mixins: [Reflux.listenTo(GraphStore, 'updateData'), Reflux.listenTo(ResourceStore, 'openModal')],
 
   getInitialState: function() {
     var domain = [0, 30];
