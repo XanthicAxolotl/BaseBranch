@@ -56,24 +56,29 @@ var GraphStore = Reflux.createStore({
     // this.listenTo(GraphActions.updateNodes, this.XXXX);
   },
   load: function(){
+    var language = window.location.href.split('#')[1];
     // use this to get the graph data from the database
-    var context = this;
-    $.ajax({
-      type: "GET",
-      dataType: 'json',
-      url: 'http://localhost:8000/api/channel/nodes/' + this.channelName, // localhost for local testing
-    }).then(function(data){
-        this.nodeData = data; //push data to store
-        for (var i = 0; i < this.nodeData.length; i++) {
-          this.nodeData[i].x = 10 * ( i + 1 );
-          this.nodeData[i].y = 10 * ( i + 1 );
-          this.nodeData[i].z = 10;
-        }
-        context.trigger(data);
-    },function(error){
-      console.log('Error on GraphStore.load\'s GET request');
-      console.error(error);
-    });
+    if (language !== undefined && language.length > 0) {
+      var context = this;
+      $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: './api/channel/nodes/' + language, //this.channelName,
+      }).then(function(data){
+          this.nodeData = data; //push data to store
+          for (var i = 0; i < this.nodeData.length; i++) {
+            this.nodeData[i].x = 8 * ( i + 1 );
+            this.nodeData[i].y = 8 * ( i + 1 );
+            this.nodeData[i].z = 10;
+          }
+          context.trigger(data);
+      },function(error){
+        console.log('Error on GraphStore.load\'s GET request');
+        console.error(error);
+      });
+    } else {
+      window.location.replace('./');
+    }
   },
   pushChanges: function() {
     // use this to push updates to database

@@ -7,13 +7,7 @@ var mui = require('material-ui');
 //Components
 var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
-var GraphView = require('./components/GraphView.jsx');
-var NodeView = require('./components/NodeView.jsx');
-var NewResourceView = require('./components/NewResourceView.jsx');
 var SearchBarView = require('./components/SearchBarView.jsx');
-var Paper = mui.Paper;
-var NewTopicForm = require('./components/NewTopicForm.jsx');
-
 
 injectTapEventPlugin();
 
