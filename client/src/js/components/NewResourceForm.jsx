@@ -79,6 +79,16 @@ var NewResourceForm = React.createClass({
             <div className="resourceType">
               <h3>Type:</h3>
               <Checkbox 
+                name="Documentation"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
+                label="Documentation"/>
+              <Checkbox 
+                name="Textbook"
+                value={this.state.resourceType}
+                onCheck={this.handleChangeType}
+                label="Textbook"/>
+              <Checkbox 
                 name="Tutorial"
                 value={this.state.resourceType}
                 onCheck={this.handleChangeType}

@@ -1,5 +1,9 @@
 var mui = require('material-ui');
 var React = require('react');
+var Reflux = require('reflux');
+var GraphSideBarStore = require('../stores/GraphSideBarStore.jsx');
+var GraphActions = require('../actions/GraphActions.js');
+var RaisedButton = mui.RaisedButton;
 
 
 //Set Material-UI Vars
@@ -22,11 +26,33 @@ var numberMenuItems = [
 
 
 var GraphSideBar = React.createClass({
+  mixins: [Reflux.connect(GraphSideBarStore, 'curriculum')],
+  
+  getInitialState: function() {
+    return {
+      curriculum: []
+    }
+  },
+
+  saveNewCurriculum: function() {
+    var resources = [];
+    for (var i = 0; i<this.state.curriculum.length; i++) {
+      resources.push(this.state.curriculum[i].id); 
+    }
+    GraphActions.saveCurriculum(resources, this.props.channelId);
+  },
 
   render: function() {
+    var index = 0;
+    var resources = this.state.curriculum.map(function(resource) {
+      index++;
+      return {payload: index, text: resource.name, data: 'test'};
+    });
+
     return (
       <div className="right">
-        <Menu menuItems={numberMenuItems} />
+        <Menu menuItems={resources} />
+        <RaisedButton label="Add" secondary={true} onClick={this.saveNewCurriculum} />
       </div>
     );
   }

@@ -4,7 +4,9 @@ var GraphActions = Reflux.createActions([
   'addNode',
   'editNode',
   'updateNodes',
-  'loadNodes'
+  'loadNodes',
+  'resourceToSide',
+  'saveCurriculum'
 ]);
 
 
