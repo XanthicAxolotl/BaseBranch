@@ -21,7 +21,7 @@ var ResourceStore = Reflux.createStore({
     $.ajax({
       type: "GET",
       dataType: 'json',
-      url: 'http://localhost:8000/api/node/resources/' + this.nodeId, // localhost for local testing
+      url: './api/node/resources/' + this.nodeId, // localhost for local testing
     }).then(function(data){
       _resources = data; //push data to store
       // set this.nodeId here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
