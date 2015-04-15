@@ -50,7 +50,6 @@ var ReactGraph = React.createClass({
   },
 
   render: function() {
-    console.log(this.props);
     return (
       <div className="ReactGraph"></div>
     );

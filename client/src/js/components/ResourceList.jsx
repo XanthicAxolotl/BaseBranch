@@ -18,6 +18,7 @@ var ResourceList = React.createClass({
     var self = this;
     var resources = this.props.resources.concat();
     var resourceNodes = resources.map(function(resource) {
+      console.log('resource!', resource);
       resource.rating = '0';
       resource.url = <a href={resource.url}>View Resource</a>;
       return (

@@ -24,6 +24,7 @@ var ResourceStore = Reflux.createStore({
       url: 'http://localhost:8000/api/node/resources/' + this.nodeId, // localhost for local testing
     }).then(function(data){
       _resources = data; //push data to store
+      // set this.nodeId here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       context.trigger(data);
     },function(error){
       console.log('Error on ResourceStore.load\'s GET request');
@@ -43,9 +44,36 @@ var ResourceStore = Reflux.createStore({
 
   onCreate: function(resource) {
     _resources.push(resource); //create a new resource
+
+    //AJAX POST request to save to database
+    var context = this;
+    var data = {name: resource.name,
+      //userId: context.nodeId,//resource.author, // change this in a later tier
+      description: resource.description,
+      author: resource.author,
+      rating: 0,
+      type: resource.type,
+      url: resource.url,
+      nodeId: context.nodeId
+    };
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: './api/resource',
+      data: data
+    }).then(function(data) {
+      // console.log('.then from ResourceStore POST', data);
+      _resources.push(data);
+      // context.trigger(data);
+      context.load();
+      }, function(error){
+      console.log('Error on ResourceStore.onCreate');
+      console.error(error);
+    });
+
     //Trigger an event once done so that our components can update
     //Also pass the modified list of resources
-    this.trigger(_resources);
+    // this.trigger(_resources);
   },
 
   onEdit: function(note) {
