@@ -31,10 +31,10 @@ var NavBar = React.createClass({
           <DropDownMenu menuItems={filterOptions} />
         </ToolbarGroup>
         <ToolbarGroup className="signup" key={2} float="right">
-          <FlatButton secondary={true} label="Sign Up" linkButton={true} />
+          <FlatButton secondary={true} label="Sign Up" linkButton={true} href="./signup.html"/>
         </ToolbarGroup>
         <ToolbarGroup className="login" key={3} float="right">
-          <FlatButton secondary={true} label="Log In" linkButton={true} />
+          <FlatButton secondary={true} label="Log In" linkButton={true} href="./login.html"/>
         </ToolbarGroup>
       </Toolbar>
     );
