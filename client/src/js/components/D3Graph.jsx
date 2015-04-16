@@ -46,8 +46,8 @@ ns._scales = function(el, domain) {
   if (!domain) {
     return null;
   }
-  console.log('offSetWidth', el.offsetWidth);
-  console.log('offSetHeight', el.offsetHeight);
+  // console.log('offSetWidth', el.offsetWidth);
+  // console.log('offSetHeight', el.offsetHeight);
 
   var width = el.offsetWidth;
   var height = el.offsetHeight;
