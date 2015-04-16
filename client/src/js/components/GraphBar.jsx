@@ -37,11 +37,20 @@ Modal.injectCSS();
 
 var GraphBar = React.createClass({
  
+  mixins: [Reflux.listenTo(GraphStore, 'updateData')],
+
   getInitialState: function() {
     return {
       addedTopic: '',
-      modalIsOpen: false
+      modalIsOpen: false,
+      channelName: GraphStore.channelName
     };
+  },
+
+  updateData: function(data) {
+    this.setState({
+      channelName: GraphStore.channelName
+    });
   },
 
   handleSave: function() {
@@ -63,21 +72,21 @@ var GraphBar = React.createClass({
   },
 
   render: function() {
-    var curriculumLink = "./curriculum.html#" + GraphStore.channelName;
+    var curriculumLink = "./curriculum.html#" + this.state.channelName;
     return (
       <div className="full">
         <Toolbar className="button-nav-container bar-div">
           <ToolbarGroup key={0} float="left">
-            <h3 className="light-font">Channel: {GraphStore.channelName}</h3>
+            <h3 className="light-font">Channel: {this.state.channelName}</h3>
           </ToolbarGroup>
           <ToolbarGroup key={1} float="left" className="nav-bar-title">
             <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} href="https://pbs.twimg.com/profile_images/458794430200152064/XdQULww6_400x400.png">
-              <span className="mui-raised-button-label light-font">{GraphStore.channelName} Topics</span>
+              <span className="mui-raised-button-label light-font">{this.state.channelName} Topics</span>
             </FlatButton>
           </ToolbarGroup>
           <ToolbarGroup key={2} float="left" className="nav-bar-title">
             <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} href={curriculumLink}>
-              <span className="mui-raised-button-label light-font">{GraphStore.channelName} Curricula</span>
+              <span className="mui-raised-button-label light-font">{this.state.channelName} Curricula</span>
             </FlatButton>
           </ToolbarGroup>
           <ToolbarGroup key={3} float="left">

@@ -27,7 +27,8 @@ var menuItems = [
 
 var CurriculumBar = React.createClass({
   render: function() {
-    var graphLink = "./graph.html#JavaScript";
+    var language = window.location.href.split('#')[1];
+    var graphLink = "./graph.html#" + language;
     return (
       <Toolbar className="indigo">
         <ToolbarGroup key={0} float="left" className="nav-bar-title">
