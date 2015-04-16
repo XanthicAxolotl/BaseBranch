@@ -19,6 +19,7 @@ var path = {
   COURSE_HTML: './client/src/course.html',
   LOGIN_HTML: './client/src/login.html',
   SIGNUP_HTML: './client/src/signup.html',
+  PROFILE_HTML: './client/src/profile.html',
   //SRC CSS Files
   CSS: ['./client/src/css/*.css', './node_modules/bootstrap/dist/css/*.css'],
   //Target Minified JS File Names
@@ -28,6 +29,7 @@ var path = {
   COURSE_MINIFIED_OUT: 'course.min.js',
   LOGIN_MINIFIED_OUT: 'login.min.js',
   SIGNUP_MINIFIED_OUT: 'signup.min.js',
+  PROFILE_MINIFIED_OUT: 'profile.min.js',
   OUT: 'bundle.js',
   //Production Build Destination Directories
   DEST: './client/dist',
@@ -40,7 +42,8 @@ var path = {
   CURRICULUM_ENTRY_POINT: './client/src/js/Curriculum.jsx',
   COURSE_ENTRY_POINT: './client/src/js/Course.jsx',
   LOGIN_ENTRY_POINT: './client/src/js/Login.jsx',
-  SIGNUP_ENTRY_POINT: './client/src/js/SignUp.jsx'
+  SIGNUP_ENTRY_POINT: './client/src/js/SignUp.jsx',
+  PROFILE_ENTRY_POINT: './client/src/js/Profile.jsx'
 };
 
 /*===================== BUILD JSX TO JS =====================*/
@@ -107,6 +110,17 @@ gulp.task('buildSignup', function(){
     .bundle()
     .pipe(source(path.SIGNUP_MINIFIED_OUT))
     .pipe(streamify(uglify(path.SIGNUP_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
+gulp.task('buildProfile', function(){
+  browserify({
+    entries: [path.PROFILE_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.PROFILE_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.PROFILE_MINIFIED_OUT)))
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
@@ -203,6 +217,15 @@ gulp.task('replaceSignupHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
+gulp.task('replaceProfileHTML', function(){
+  gulp.src(path.PROFILE_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.PROFILE_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
 gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
@@ -224,7 +247,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','replaceProfileHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup', 'buildProfile']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 
