@@ -5,7 +5,6 @@ var ResourceStore = require('../stores/ResourceStore.jsx');
 var Reflux = require('reflux');
 var Modal = require('react-modal');
 var d3 = require('d3');
-var AddRemoveDatum = require('./AddRemoveDatum.jsx');
 var dataGenerator = require('./dataGenerator.jsx');
 var ReactGraph = require('./ReactGraph.jsx');
 var NodeView = require('./NodeView.jsx');
@@ -91,11 +90,6 @@ var GraphView = React.createClass({
         <ReactGraph
           appState={this.state}
           setAppState={this.setAppState} />
-        <AddRemoveDatum
-          appState={this.state}
-          setAppState={this.setAppState}
-          addDatum={this.addDatum}
-          removeDatum={this.removeDatum} />
         <Modal isOpen={this.state.modalIsOpen}>
           <button onClick={this.closeModal} className="waves-effect waves-light btn">Close</button>
           <NodeView />
