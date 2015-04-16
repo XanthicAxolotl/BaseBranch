@@ -1,7 +1,13 @@
+// Curriculum Controller
+// ---------------------
+//
+// The methods in the Curriculum Controller are invoked when requests are sent to specific paths with specific HTTP request methods. The methods use Sequelize to interact with Curriculum instances in the database.
+
 var Curricula = require('../config/db_models.js').Curricula;
 
 module.exports = {
 
+  // Create a new Curriculum instance in the database based on the data sent in on the request.
   createCurriculum: function(req, res, next) {
     var body = req.body;
 
@@ -14,8 +20,7 @@ module.exports = {
     .then(function(curriculum) {
       console.log('Successfully created curriculum in database');
 
-      // associate curriculum with associated resources
-      // will receive an array of resourceIds in the req body
+      // Associate the newly created Curriculum instance with the passed in Resources. The request body contains an array of resourceIds to associate with the Curriculum instance.
       curriculum.setResources(body.resources).then(function(){
         console.log('Successfully associated resources with curriculum in database');
       })
@@ -23,7 +28,7 @@ module.exports = {
         console.error('Error in associating resources with curriculum: ', err);
       });
 
-      // send back the newly created curriculum as a JSON object
+      // Send back to the client the Curriculum instance as a JSON object.
       res.json(curriculum);
     })
     .error(function(err){
@@ -31,11 +36,12 @@ module.exports = {
     });
   },
 
+  // Retrieve a specific Curriculum instance.
   getCurriculum: function(req, res, next) {
-    // retrieve the curriculum that has the id passed in as a request parameter
     Curricula.find({ where:{ id: req.params.curriculumId } })
     .then(function(curriculum){
       console.log('Successfully found curriculum ', curriculum.id);
+      // Send back to the client the Curriculum instance as a JSON object.
       res.json(curriculum);
     })
     .error(function(err){
@@ -43,6 +49,7 @@ module.exports = {
     });
   },
 
+  // Increment the rating of a Curriculum instance.
   upRating: function(req, res, next) {
     Curricula.find({where: { id: req.params.curriculumId }})
     .then(function(curriculum){
@@ -51,6 +58,7 @@ module.exports = {
           newcurriculum.reload()
           .then(function(newcurriculum) {
             console.log('Successfully increase rating for curriculum', curriculum.id);
+            // Send back to the client the updated rating value.
             res.json(newcurriculum.rating);
           });
         });
@@ -60,6 +68,7 @@ module.exports = {
     });
   },
 
+  // Decrement the rating of a Curriculum instance.
   downRating: function(req, res, next) {
     Curricula.find({where: { id: req.params.curriculumId }})
     .then(function(curriculum){
@@ -68,6 +77,7 @@ module.exports = {
           newcurriculum.reload()
           .then(function(newcurriculum) {
             console.log('Successfully decrease rating for curriculum', curriculum.id);
+            // Send back to the client the updated rating value.
             res.json(newcurriculum.rating);
           });
         });
@@ -77,14 +87,15 @@ module.exports = {
     });
   },
 
+  // Retrieve all of the Resources for a specific Curriculum from the database and send back to the client.
   getAllResources: function(req, res, next) {
-    // look up all resourceIds in the curricula_resources table that have the corresponding curriculaId
     Curricula.find({ where:{ id: req.params.curriculumId } })
     .then(function(curriculum){
       console.log('Found curriculum: ', curriculum.name);
       curriculum.getResources()
       .then(function(resources){
         console.log('Successfully found all resources associated with curriculum');
+        // Send back to the client the Resource instances as a JSON object.
         res.json(resources);
       })
       .error(function(err){
@@ -94,6 +105,5 @@ module.exports = {
     .error(function(err){
       console.error('Error in finding curriculum', err);
     });
-    // retrieve all of the corresponding resources from the resources table and send back
   }
 };

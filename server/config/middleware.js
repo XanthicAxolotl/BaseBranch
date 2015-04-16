@@ -1,7 +1,7 @@
 // Server-Side Middleware
 // ----------------------
 //
-// The middleware connects the Express server app with the Express routers and configures the Express app to use additional modules such as body-parser, and morgan.
+// The middleware connects the Express server app with the Express routers and configures the Express app to use additional modules.
 
 // User authentication
 var passport = require('passport');
@@ -30,7 +30,7 @@ module.exports = function (app, express) {
   var curriculumRouter = express.Router();
   var userRouter = express.Router();
 
-  // configure passport by sending to passport.js file
+  // Configure Passport by sending to passport.js file
   require('./passport.js')(passport);
 
   // Associate the Express server app with the different modules that it should use.

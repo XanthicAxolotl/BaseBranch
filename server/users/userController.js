@@ -1,8 +1,14 @@
+// User Controller
+// ---------------
+//
+// The methods in the User Controller are invoked when requests are sent to specific paths with specific HTTP request methods. The methods use Sequelize to interact with User instances in the database.
+
 var Users = require('../config/db_models.js').Users;
 var Curricula = require('../config/db_models.js').Curricula;
 
 module.exports = {
 
+  // Create a new User instance in the database based on the data sent in on the request.
   createUser: function(req, res, next) {
     var body = req.body;
 
@@ -15,6 +21,7 @@ module.exports = {
     })
     .then(function(user) {
       console.log('Successfully created user in database');
+      // Send back to the client the User instance as a JSON object.
       res.json(user);
     })
     .error(function(err){
@@ -22,10 +29,12 @@ module.exports = {
     });
   },
 
+  // Retrieve a specific User instance.
   getUser: function(req, res, next) {
     Users.find({ where:{ id: req.params.userId } })
     .then(function(user){
       console.log('Successfully found user', user);
+      // Send back to the client the User instance as a JSON object.
       res.json(user);
     })
     .error(function(err){
@@ -33,6 +42,7 @@ module.exports = {
     })
   },
 
+  // Update the rating of a User instance.
   updateReputation: function(req, res, next) {
     Users.update(
     {
@@ -42,13 +52,14 @@ module.exports = {
       where: { id: req.params.userId}
     })
     .success(function(){
-      console.log('Successfully updated reputation')
+      console.log('Successfully updated reputation');
     })
     .error(function(){
-      console.log('Error to updating reputation')
+      console.log('Error in updating reputation');
     });
   },
 
+  // Update the profile picture of a User instance.
   uploadPicture: function(req, res, next) {
     Users.update(
     {
@@ -58,18 +69,21 @@ module.exports = {
       where: { id: req.params.userId}
     })
     .then(function(user){
-      console.log('Successfully updated picture', user)
+      console.log('Successfully updated picture');
+      // Send back to the client the User instance as a JSON object.
       res.json(user);
     })
     .error(function(){
-      console.log('Error to updating picture')
+      console.log('Error in updating picture:', err);
     });
   },
 
+  // Retrieve all of the Curricula that were created by a specific User from the database and send back to the client.
   getCreatedCurricula: function(req, res, next) {
     Curricula.findAll({where:{ userId: req.params.userId }})
     .then(function(curricula){
       console.log('Successfully found all curricula', curricula);
+      // Send back to the client the Curricula instances as a JSON object.
       res.json(curricula);
     })
     .error(function(err){
@@ -77,6 +91,7 @@ module.exports = {
     })
   },
 
+  // Retrieve all of the Curricula that were subscribed to by a specific User from the database and send back to the client.
   getSubscribedCurricula: function(req, res, next) {
     Users.find({ where:{ id: req.params.userId } })
     .then(function(user){
@@ -84,6 +99,7 @@ module.exports = {
       user.getCurriculas()
       .then(function(curricula){
         console.log('Successfully retrieve curricula user is subscribed to', curricula)
+        // Send back to the client the Curricula instances as a JSON object.
         res.json(curricula);
       })
       .error(function(err){
@@ -95,6 +111,7 @@ module.exports = {
     })
   },
 
+  // Associate a curriculum to the User instance.
   subscribeToCurriculum: function(req, res, next) {
     Users.find({ where:{ id: req.params.userId } })
     .then(function(user){
@@ -102,6 +119,7 @@ module.exports = {
       user.addCurricula(req.body.curriculaId)
       .then(function(subscription){
         console.log('Successfully add subscription for user', subscription);
+        // Send back to the client the subscribed to Curriculum instance as a JSON object.
         res.json(subscription);
       })
       .error(function(err){
