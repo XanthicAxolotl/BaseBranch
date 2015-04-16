@@ -10,8 +10,6 @@ var NavBar = require('./components/NavBar.jsx');
 var GraphBar = require('./components/GraphBar.jsx');
 var GraphSideBar = require('./components/GraphSideBar.jsx');
 var GraphView = require('./components/GraphView.jsx');
-var GraphStore = require('./stores/GraphStore.jsx');
-
 
 injectTapEventPlugin();
 
@@ -21,7 +19,6 @@ var Main = React.createClass({
       <div>
         <div className="full">
           <NavBar />
-          <span><h2>Channel: {GraphStore.channelName}</h2></span>
           <GraphBar />
           <GraphSideBar channelId='1'/>
           <GraphView />

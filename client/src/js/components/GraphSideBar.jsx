@@ -2,8 +2,9 @@ var mui = require('material-ui');
 var React = require('react');
 var Reflux = require('reflux');
 var GraphSideBarStore = require('../stores/GraphSideBarStore.jsx');
+var GraphStore = require('../stores/GraphStore.jsx');
 var GraphActions = require('../actions/GraphActions.js');
-var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 
 
 //Set Material-UI Vars
@@ -40,6 +41,7 @@ var GraphSideBar = React.createClass({
       resources.push(this.state.curriculum[i].id); 
     }
     GraphActions.saveCurriculum(resources, this.props.channelId);
+    window.location.href = "./curriculum.html#" + GraphStore.channelName;
   },
 
   render: function() {
@@ -51,8 +53,9 @@ var GraphSideBar = React.createClass({
 
     return (
       <div className="right">
+        <h3 className="center">Add Resources</h3>
         <Menu menuItems={resources} />
-        <RaisedButton label="Add" secondary={true} onClick={this.saveNewCurriculum} />
+        <FlatButton label="Create Curriculum" className="center full-button" secondary={true} onClick={this.saveNewCurriculum} />
       </div>
     );
   }

@@ -6,7 +6,7 @@ var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
 var DropDownMenu = mui.DropDownMenu;
 var FontIcon = mui.FontIcon;
-var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 var DropDownIcon = mui.DropDownIcon;
 //Set Material-UI Vars
 var LeftNav = mui.LeftNav;
@@ -66,23 +66,34 @@ var GraphBar = React.createClass({
     var curriculumLink = "./curriculum.html#" + GraphStore.channelName;
     return (
       <div className="full">
-        <div className="button-nav-container">
-          <RaisedButton linkButton={true} href="https://pbs.twimg.com/profile_images/458794430200152064/XdQULww6_400x400.png">
-            <span className="mui-raised-button-label">(Store) Topics</span>
-          </RaisedButton>
-          <RaisedButton linkButton={true} href={curriculumLink}>
-            <span className="mui-raised-button-label">{GraphStore.channelName} Curricula</span>
-          </RaisedButton>
-          <DropDownMenu menuItems={menuItems} />
-
-        <RaisedButton linkButton={true} onClick={this.openModal}><span className="mui-raised-button-label">Add New Topic</span></RaisedButton>
-        <Modal className="topic" isOpen={this.state.modalIsOpen}>
-          <NewTopicForm handleTopic={this.handleTopic} /> <br /> <br />
-          <button onClick={this.handleSave} className="waves-effect waves-light btn-flat">Add Topic</button>
-          <button onClick={this.closeModal} className="waves-effect waves-light btn-flat">Cancel</button>
-        </Modal>
-
-        </div>
+        <Toolbar className="button-nav-container bar-div">
+          <ToolbarGroup key={0} float="left">
+            <h3 className="light-font">Channel: {GraphStore.channelName}</h3>
+          </ToolbarGroup>
+          <ToolbarGroup key={1} float="left" className="nav-bar-title">
+            <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} href="https://pbs.twimg.com/profile_images/458794430200152064/XdQULww6_400x400.png">
+              <span className="mui-raised-button-label light-font">{GraphStore.channelName} Topics</span>
+            </FlatButton>
+          </ToolbarGroup>
+          <ToolbarGroup key={2} float="left" className="nav-bar-title">
+            <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} href={curriculumLink}>
+              <span className="mui-raised-button-label light-font">{GraphStore.channelName} Curricula</span>
+            </FlatButton>
+          </ToolbarGroup>
+          <ToolbarGroup key={3} float="left">
+            <DropDownMenu className="light-font" menuItems={menuItems} />
+          </ToolbarGroup>
+          <ToolbarGroup key={4} float="left">
+            <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} onClick={this.openModal}><span className="light-font mui-raised-button-label">Add New Topic</span></FlatButton>
+          </ToolbarGroup>
+          <ToolbarGroup key={5} float="left">
+            <Modal className="topic" isOpen={this.state.modalIsOpen}>
+              <NewTopicForm handleTopic={this.handleTopic} /> <br /> <br />
+              <button onClick={this.handleSave} className="waves-effect waves-light btn-flat light-font">Add Topic</button>
+              <button onClick={this.closeModal} className="waves-effect waves-light btn-flat light-font">Cancel</button>
+            </Modal>
+          </ToolbarGroup>
+        </Toolbar>
       </div>
     );
   }
