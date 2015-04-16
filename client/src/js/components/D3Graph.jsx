@@ -28,10 +28,7 @@ ns.create = function(el, props, state) {
       .attr('class', 'd3-points');
 
   svg.append('g')
-      .attr('class', 'd3-tooltips');
-
-  svg.append('g')
-      .attr('class', 'd3-text');
+      .attr('class', 'd3-texts');
 
   //var dispatcher = new EventEmitter();
   this.update(el, state, null);
@@ -43,7 +40,6 @@ ns.update = function(el, state) {
   var scales = this._scales(el, state.domain);
   var prevScales = this._scales(el, state.prevDomain);
   this._drawPoints(el, scales, state.data, prevScales);
-  this._drawTooltips(el, scales, state.tooltips, prevScales);
 };
 
 ns._scales = function(el, domain) {
@@ -74,7 +70,7 @@ ns._scales = function(el, domain) {
 ns._drawPoints = function(el, scales, data, prevScales) {
   var g = d3.select(el).selectAll('.d3-points');
 
-  var gt = d3.select(el).selectAll('.d3-text');
+  var gt = d3.select(el).selectAll('.d3-texts');
 
   var point = g.selectAll('.d3-point')
     .data(data, function(d) { return d.id; });
@@ -134,83 +130,16 @@ ns._drawPoints = function(el, scales, data, prevScales) {
         .duration(ANIMATION_DURATION)
         .attr('cx', function(d) { return scales.x(d.x); })
         .remove();
+
+    text.exit()
+      .remove();
   }
   else {
     point.exit()
-        .remove();
-  }
-};
+      .remove();
 
-ns._drawTooltips = function(el, scales, tooltips, prevScales) {
-  var g = d3.select(el).selectAll('.d3-tooltips');
-
-  var tooltipRect = g.selectAll('.d3-tooltip-rect')
-    .data(tooltips, function(d) { return d.id; });
-
-  tooltipRect.enter().append('rect')
-      .attr('class', 'd3-tooltip-rect')
-      .attr('width', TOOLTIP_WIDTH)
-      .attr('height', TOOLTIP_HEIGHT)
-      .attr('x', function(d) {
-        if (prevScales) {
-          return prevScales.x(d.x) - TOOLTIP_WIDTH/2;
-        }
-        return scales.x(d.x) - TOOLTIP_WIDTH/2;
-      })
-    .transition()
-      .duration(ANIMATION_DURATION)
-      .attr('x', function(d) { return scales.x(d.x) - TOOLTIP_WIDTH/2; });
-
-  tooltipRect.attr('y', function(d) { return scales.y(d.y) - scales.z(d.z)/2 - TOOLTIP_HEIGHT; })
-    .transition()
-      .duration(ANIMATION_DURATION)
-      .attr('x', function(d) { return scales.x(d.x) - TOOLTIP_WIDTH/2; });
-
-  if (prevScales) {
-    tooltipRect.exit()
-      .transition()
-        .duration(ANIMATION_DURATION)
-        .attr('x', function(d) { return scales.x(d.x) - TOOLTIP_WIDTH/2; })
-        .remove();
-  }
-  else {
-    tooltipRect.exit()
-        .remove();
-  }
-
-  var tooltipText = g.selectAll('.d3-tooltip-text')
-    .data(tooltips, function(d) { return d.id; });
-
-  tooltipText.enter().append('text')
-      .attr('class', 'd3-tooltip-text')
-      .attr('dy', '0.35em')
-      .attr('text-anchor', 'middle')
-      .text(function(d) { return d.z; })
-      .attr('x', function(d) {
-        if (prevScales) {
-          return prevScales.x(d.x);
-        }
-        return scales.x(d.x);
-      })
-    .transition()
-      .duration(ANIMATION_DURATION)
-      .attr('x', function(d) { return scales.x(d.x); });
-
-  tooltipText.attr('y', function(d) { return scales.y(d.y) - scales.z(d.z)/2 - TOOLTIP_HEIGHT/2; })
-    .transition()
-      .duration(ANIMATION_DURATION)
-      .attr('x', function(d) { return scales.x(d.x); });
-
-  if (prevScales) {
-    tooltipText.exit()
-      .transition()
-        .duration(ANIMATION_DURATION)
-        .attr('x', function(d) { return scales.x(d.x); })
-        .remove();
-  }
-  else {
-    tooltipText.exit()
-        .remove();
+    text.exit()
+      .remove();
   }
 };
 
