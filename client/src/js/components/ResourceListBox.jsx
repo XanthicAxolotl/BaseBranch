@@ -17,6 +17,7 @@ var ResourceListBox = React.createClass({
   },
 
   updateState: function(data) {
+    console.log('list box data', data);
     this.setState({
       resources: data
     });
@@ -40,7 +41,7 @@ var ResourceListBox = React.createClass({
     return (
       <div className="col-md-4">
         <div className="centered"><a href="" onClick={this.onAdd}>Add New</a></div>
-        <ResourceList ref="resourceListView" resources={this.state.resources} onEdit={this.props.onEdit} />
+        <ResourceList ref="resourceList" resources={this.state.resources} onEdit={this.props.onEdit} />
       </div>
     )
   }

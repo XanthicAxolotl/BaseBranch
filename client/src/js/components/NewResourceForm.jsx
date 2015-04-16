@@ -36,8 +36,10 @@ var NewResourceForm = React.createClass({
   },
 
   handleSave: function() {
+    // this call's NewResourceView's onSave method
     this.props.onSave(this.state.resourceName, this.state.resourceAuthor, this.state.resourceType, this.state.resourceURL, this.state.resourceDesc, this.props.id);
     if (!this.props.id) {
+      // this is then called since there is no id
       this.refs.newResourceForm.getDOMNode().value = '';
       this.setState({resourceName: '', resourceAuthor: '', resourceType: '', resourceURL: '', resourceDesc: ''});
     }

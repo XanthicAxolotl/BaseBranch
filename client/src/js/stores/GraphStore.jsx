@@ -128,18 +128,6 @@ var GraphStore = Reflux.createStore({
     // this.pushChanges();
   },
 
-  getJobs: function() {
-    // this.load(); //req to /api/listings
-    // return _jobs;
-  },
-
-  getJob: function(id) {
-    // for (var i = 0; i < _jobs.length; i++) {
-    //   if(_jobs._id === id) {
-    //     return jobs[i];
-    //   }
-    // }
-  }
 });
 
 module.exports = GraphStore;
