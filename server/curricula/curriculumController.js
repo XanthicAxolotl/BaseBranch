@@ -4,6 +4,7 @@
 // The methods in the Curriculum Controller are invoked when requests are sent to specific paths with specific HTTP request methods. The methods use Sequelize to interact with Curriculum instances in the database.
 
 var Curricula = require('../config/db_models.js').Curricula;
+var Channels = require('../config/db_models.js').Channels;
 
 module.exports = {
 
@@ -41,8 +42,20 @@ module.exports = {
     Curricula.find({ where:{ id: req.params.curriculumId } })
     .then(function(curriculum){
       console.log('Successfully found curriculum ', curriculum.id);
+      // Find the channel with the associated channel Id
+      Channels.find({ where:{ id: curriculum.channelId} })
+      .then(function(chan){
+        // console.log('chan', chan);
+        curriculum.dataValues.channelName = chan.dataValues.name;
+        // console.log('curr', curriculum);
+        // Send back to the client the Curriculum instance as a JSON object.
+        res.json(curriculum);
+      })
+      .error(function(err){
+        console.error('Error in finding curriculum\'s channel', err);
+      });
       // Send back to the client the Curriculum instance as a JSON object.
-      res.json(curriculum);
+      // res.json(curriculum);
     })
     .error(function(err){
       console.error('Error in finding curriculum', err);
