@@ -47,9 +47,6 @@ var GraphView = React.createClass({
       tooltip: null,
       prevDomain: null,
       showingAllTooltips: false,
-      // x: 20,
-      // y: 50,
-      // z: 10
     });
   },
 

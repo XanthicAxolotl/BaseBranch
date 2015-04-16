@@ -23,7 +23,6 @@ var ResourceList = React.createClass({
   render: function() {
     var self = this;
     var resources = this.props.resources;
-    console.log('resources', resources);
     var resourceNodes = resources.map(function(resource) {
       resource.addResource = function(){
         var info = {
