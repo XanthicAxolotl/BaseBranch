@@ -22,34 +22,51 @@ body{
   width: 100%;
 }
 .pictureContainer{
-  position: fixed;
-  width: 300px;
-  height: 100%;
-  text-align: center;
-  background-color: #f1f2f2;
-  border: 1px solid #E3DFE6;
+  margin: auto;
+  width: 80%;
+  height: 250px;
+  background-color: #fff;
+  border-bottom: 1px solid #3A5169;
 }
 
 
 .picture{
-  margin-top: 8%;
-  margin-bottom: 5%;
-  width: 10rem;
-  height:10rem;
+  margin-top: 3%;
+  margin-left: 3%;
+  width: 180px;
+  height:180px;
   border-radius: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  border: 1px solid #E1E1E1; 
 }
 
 .name{
-  display: block;
-  font-size: 20px;
-  margin-top: 2%;
+  display: inline-block;
+  font-size: 40px;
+  position: absolute;
+  margin-top: 8%;
+  margin-left:5%;
+  color: #3A5169;
 }
 
 .userInfo{
-  width: calc(100% - 300px);
-  float: right;
+  width: 80%;
+  margin: auto;
+}
+
+.mui-tabs-container .mui-tab-item-container{
+  background-color: #fff;
+}
+
+.mui-tabs-container .mui-tab-item-container .mui-tab-item{
+  color: #3A5169;
+
+}
+.mui-tabs-container .mui-tab-item-container .mui-tab-item.mui-tab-is-active{
+  color: #3A5169;
+}
+
+.mui-ink-bar{
+  background-color: #E74C3C;
 }
 
 .list{
@@ -63,8 +80,12 @@ body{
     padding: 15px 20px;
     background-color: #F8F8F8;
     font-size: 15px;
-    color: #7B8585;
+    color: #3A5169;
     margin-bottom: 3px;
     position: relative;
     transition: 0.3s;
+}
+
+.item:hover{
+    background-color:#d1f1f9;
 }

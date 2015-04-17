@@ -26,8 +26,8 @@ var ProfileView = React.createClass({
         <div className="name">{profileInfo[0].name}</div>
       </div>
       <div className="userInfo">
-      <Tabs>
-        <Tab label="My Curricula">
+      <Tabs className="tabs">
+        <Tab label="My Curricula" className="tab">
           <ul className="list">
             {profileInfo[1].map(function(curriculum){
               var url = "./course.html#" + curriculum.id;
@@ -35,13 +35,17 @@ var ProfileView = React.createClass({
             })}
           </ul>
         </Tab>
-        <Tab label="Created Curricula">
+        <Tab label="Created Curricula" className="tab">
           <ul className="list">
             {profileInfo[2].map(function(curriculum){
               var url = "./course.html#" + curriculum.id;
               return <a href={url}><li className="item">{ curriculum.name }</li></a>
             })}
           </ul>
+        </Tab>
+        <Tab label="My Resources" className="tab">
+        </Tab>
+        <Tab label="Created Resources" className="tab">
         </Tab>
       </Tabs>
       </div>
