@@ -9,6 +9,8 @@ var RaisedButton = mui.RaisedButton;
 var NavBar = require('./components/NavBar.jsx');
 var SearchBarView = require('./components/SearchBarView.jsx');
 var PopularView = require('./components/PopularView.jsx');
+var Tabs = mui.Tabs;
+var Tab = mui.Tab;
 
 injectTapEventPlugin();
 
@@ -20,8 +22,14 @@ var Main = React.createClass({
           <NavBar />
         </div>
         <div className="index">
-          <PopularView />
-          <SearchBarView />
+          <Tabs className="indigo">
+            <Tab label="Popular Channels">
+              <PopularView />
+            </Tab>
+            <Tab label="Search Languages">  
+              <SearchBarView />
+            </Tab>
+          </Tabs>
         </div>
       </div>
     );

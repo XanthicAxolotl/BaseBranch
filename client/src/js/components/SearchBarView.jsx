@@ -1,6 +1,7 @@
 var React = require('react');
 var Reflux = require('reflux');
-var LanguageStore = require('../stores/LanguageStore.js')
+var LanguageStore = require('../stores/LanguageStore.js');
+var SearchActions = require('../actions/SearchActions.js');
 
 var SearchBarView = React.createClass({
   mixins: [Reflux.connect(LanguageStore, 'languages')],
@@ -13,6 +14,9 @@ var SearchBarView = React.createClass({
   handleChange: function(e){
     this.setState({ searchString: e.target.value})
   },
+  componentDidMount: function(){
+    SearchActions.getLanguages();
+  },
   render: function(){
     var languages = this.state.languages,
     searchString = this.state.searchString.trim().toLowerCase();
@@ -22,6 +26,7 @@ var SearchBarView = React.createClass({
         return language.name.toLowerCase().match( searchString );
       }); 
     }
+    console.log(this.state.languages);
     return (
       <div className="searchBarContainer">
         <input type="text" className="searchBar" value={this.state.searchString} onChange={this.handleChange} placeholder="Type here" />
