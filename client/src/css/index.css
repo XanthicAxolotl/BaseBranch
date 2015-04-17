@@ -11,6 +11,14 @@
   flex-direction: column;
 }
 
+.index .mui-tabs-container .mui-tab-item-container{
+  background-color: #3498DB;
+}
+
+.index .mui-ink-bar {
+  background-color: #E74C3C;
+}
+
 p{
   font-size: 15px;
 }

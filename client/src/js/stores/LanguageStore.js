@@ -1,12 +1,14 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
+var SearchActions = require('../actions/SearchActions.js');
 
 var _languages = []; 
 
 /*================ CREATE Language STORE =================*/
 var LanguageStore = Reflux.createStore({
+  listenables: SearchActions,
   init: function(){
-    this.getLanguages();
+
   },
   getLanguages: function(){
     var context = this;

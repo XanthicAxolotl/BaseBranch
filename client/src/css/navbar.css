@@ -1,5 +1,5 @@
 .blue {
-  background-color: #3498DB !important;
+  background-color: #2980B9 !important;
   padding: 0 auto !important;
 }
 
@@ -17,7 +17,6 @@
 
 .mui-flat-button-label {
   width: 100%;
-  margin-left: 5%;
 }
 
 .mui-left:first-child {
