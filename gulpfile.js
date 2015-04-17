@@ -22,6 +22,7 @@ var path = {
   PROFILE_HTML: './client/src/profile.html',
   //SRC CSS Files
   CSS: ['./client/src/css/*.css', './node_modules/bootstrap/dist/css/*.css'],
+  IMG: ['./client/src/images/*'],
   //Target Minified JS File Names
   INDEX_MINIFIED_OUT: 'index.min.js',
   GRAPH_MINIFIED_OUT: 'graph.min.js',
@@ -142,6 +143,11 @@ gulp.task('copyCSS', function(){
       .pipe(gulp.dest(path.DEST + '/css'));
 });
 
+gulp.task('copyImg', function(){
+  gulp.src(path.IMG)
+    .pipe(gulp.dest(path.DEST+ '/images'))
+})
+
 // gulp.task('build', function () {
 //   return gulp.src(path.ENTRY_POINT)
 //       .pipe(react())
@@ -247,7 +253,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','replaceProfileHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup', 'buildProfile']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'copyImg', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','replaceProfileHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup', 'buildProfile']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 
