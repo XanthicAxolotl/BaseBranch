@@ -104,6 +104,11 @@ img {
   height:  200px;
   background-color: #FFFFFF;
   color: #6D665C;
+  transition: 0.5s;
+}
+
+.box:hover {
+  box-shadow: rgba(0, 0, 0, 0.227451) 0px 6px 10px 0px;
 }
 
 .box>div{
