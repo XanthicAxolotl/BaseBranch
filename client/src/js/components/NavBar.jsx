@@ -25,17 +25,17 @@ var NavBar = React.createClass({
   render: function() {
     return (
       <Toolbar className="blue">
-        <ToolbarGroup key={0} float="left">
-          <a className ="hidden-link" href="./"><h2 className="mui-app-bar-title">BaseBranch</h2></a>
+        <ToolbarGroup key={0} float="left" className="nav-bar-title">
+          <a className ="hidden-link" href="./"><h3 className="mui-app-bar-title"> BaseBranch</h3></a>
         </ToolbarGroup>
-        <ToolbarGroup key={1} float="left">
+        <ToolbarGroup key={1} float="left" className="nav-bar-dropdown">
           <DropDownMenu menuItems={filterOptions} />
         </ToolbarGroup>
         <ToolbarGroup className="signup" key={2} float="right">
-          <FlatButton secondary={true} label="Sign Up" linkButton={true} href="./signup.html"/>
+          <FlatButton className="nav-bar-button" secondary={true} label="Sign Up" linkButton={true} href="./signup.html"/>
         </ToolbarGroup>
         <ToolbarGroup className="login" key={3} float="right">
-          <FlatButton secondary={true} label="Log In" linkButton={true} href="./login.html"/>
+          <FlatButton className="nav-bar-button" secondary={true} label="Log In" linkButton={true} href="./login.html"/>
         </ToolbarGroup>
       </Toolbar>
     );
