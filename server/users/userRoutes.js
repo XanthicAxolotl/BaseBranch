@@ -67,6 +67,12 @@ module.exports = function(app, passport) {
     })(req, res, next);
   });
 
+  // Logout the user from the session that they are in using the Passport logout function.
+  app.route('/logout', function(req, res, next){
+    req.logout();
+    res.status(200);
+  });
+
   // The Passport Github strategy for authenticating a user.
   app.route('/auth/github')
     .get(passport.authenticate('github'));
