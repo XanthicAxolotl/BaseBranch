@@ -2,7 +2,7 @@
 var Reflux = require('reflux');
 var SignUpActions = require('../actions/SignUpActions.js');
 
-var _newUser = {};
+var _signedInUser = {};
 
 /*================ CREATE SIGNUP STORE =================*/
 var SignUpStore = Reflux.createStore({

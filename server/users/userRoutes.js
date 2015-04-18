@@ -43,6 +43,7 @@ module.exports = function(app, passport) {
         // If the user could not be signed up then send a 404 status code to the client.
         return res.sendStatus(404);
       } else {
+        console.log('Signed up user: ', JSON.stringify(user));
         // If the user was signed up successfully then send a 200 status code and the newly created user as a JSON object to the client.
         res.status(200).send(JSON.stringify(user));
       }
