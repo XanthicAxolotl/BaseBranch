@@ -16,7 +16,7 @@ var session = require('express-session');
 // Allows for cross-origin requests
 var cors = require('cors');
 // Error logging and handling helper functions.
-var helpers = require('./helpers.js'); 
+var helpers = require('./helpers.js');
 // Logs requests sent from the client.
 var morgan = require('morgan');
 

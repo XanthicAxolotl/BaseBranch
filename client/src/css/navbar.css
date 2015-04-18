@@ -4,11 +4,11 @@
 }
 
 .blue .mui-app-bar-title {
-  color: #FFFFFF !important;
+  color: #ECF0F1 !important;
 }
 
 .blue .mui-drop-down-menu {
-  color: #FFFFFF !important;
+  color: #ECF0F1 !important;
 }
 
 .blue .mui-drop-down-menu:hover {
@@ -35,7 +35,6 @@
   height: 100%;
   margin-left: 0px !important;
   margin-right: 10px !important;
-  
 }
 
 .blue .mui-left>a>h3{
@@ -45,5 +44,16 @@
 }
 
 .blue .mui-flat-button.mui-is-secondary {
-  color: #687D77;
+  color: #ECF0F1;
+  background-color: #2980B9;
+  transition: 0.5s;
+}
+
+.blue .mui-flat-button.mui-is-secondary:hover {
+  color: #ECF0F1;
+  background-color: #3A5169;
+}
+
+.login span {
+  margin-left: 7%;
 }

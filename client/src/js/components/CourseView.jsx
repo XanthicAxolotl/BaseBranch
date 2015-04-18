@@ -5,9 +5,6 @@ var Reflux          = require('reflux');
 var CourseStore     = require('../stores/CourseStore.js');
 var CourseActions   = require('../actions/CourseActions.js');
 
-//import JS stylesheet
-var Styles = require('../styles/CourseStyles.js');
-
 /*============== DECLARE MATERIAL COMPONENTS ==============*/
 //NavBar Components
 var Toolbar = mui.Toolbar;
@@ -17,6 +14,7 @@ var FontIcon = mui.FontIcon;
 var RaisedButton = mui.RaisedButton;
 var DropDownIcon = mui.DropDownIcon;
 //Set Material-UI Vars
+var Menu = mui.Menu;
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
 var TextField = mui.TextField;
@@ -31,14 +29,20 @@ injectTapEventPlugin();
 /*================ CREATE CURRICULUM COMPONENTS ================*/
 //Create Header View
 var Header = React.createClass({
+  back: function(){
+    this.props.goBack();
+  },
   render: function() {
     return(
-      <div style={Styles.header}>
-        <div style={Styles.headerLeft}>
-          <div><h3 style={Styles.reset}>{this.props.name}</h3></div>
+      <div className="header">
+        <div className="back-button" onClick={this.back}>
+          <i className="fa fa-chevron-left fa-2x"></i>
+        </div>
+        <div className="header-left">
+          <div><h3 className="reset">{this.props.name}</h3></div>
           <div>{this.props.desc}</div>
         </div>
-        <div style={Styles.headerRight}>
+        <div className="header-right">
           <ul>
             <li>Created By: {this.props.creator}</li>
             <li>Last Updated: {this.props.update}</li>
@@ -58,11 +62,11 @@ var CheckListResource = React.createClass({
   render: function(){
     if (this.props.type === 'header'){
       return(
-        <li style={Styles.title}><h5 style={Styles.section}>{this.props.name}</h5></li>
+        <li className="title"><h5 className="section">{this.props.name}</h5></li>
       )
     } else {
       return(
-        <li style={Styles.item}><span>{this.props.name}</span><input type="checkbox" checked={this.props.isChecked} onChange={this.toggleCheck}/></li>
+        <li className="item"><span>{this.props.name}</span><input type="checkbox" checked={this.props.isChecked} onChange={this.toggleCheck}/></li>
       )
     }
   }
@@ -72,15 +76,18 @@ var CheckListResource = React.createClass({
 var CheckList = React.createClass({
   render: function(){
     var context = this;
+    var index = 2;
     var checkListResource = this.props.resources.map(function(result){
-      return <CheckListResource key={result.id} name={result.name} isChecked={result.isChecked} type={result.type} toggleCheck={context.toggleCheck}/>
+      result.toggleCheck = function(){
+        context.props.toggleCheck(result.id);
+      }
+      return { payload: index, text: result.name, toggle: true, onToggle: result.toggleCheck };
     });
+    var filterMenuItems = [{ payload: '1', text: 'CheckList'}];
+    var filterMenuItems = filterMenuItems.concat(checkListResource);
     return(
-      <div style={{paddingLeft: '10px'}}>
-        <h4 style={Styles.reset}>CheckList</h4>
-        <ul>
-          {checkListResource}
-        </ul>
+      <div>
+        <Menu menuItems={filterMenuItems} />
       </div>
     )
   }
@@ -97,12 +104,12 @@ var ResourceView = React.createClass({
   render: function() {
     if (this.props.type === 'header'){
       return(
-        <li style={Styles.singleResourceH}><h5 style={Styles.section}>{this.props.name}</h5></li>
+        <li className="single-resource"><h5 style={Styles.section}>{this.props.name}</h5></li>
       )
     } else {
       return(
-        <li style={Styles.singleResourceI}>
-          <div><span style={Styles.bold}>{this.props.name}</span><span> - Rating: {this.props.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
+        <li className="single-resource">
+          <div><span className="bold">{this.props.name}</span><span> - Rating: {this.props.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
           <div>{this.props.description}</div>
           <div><a href={this.props.url} target="_blank">View Resource</a></div>
         </li>
@@ -120,6 +127,10 @@ var CourseView = React.createClass({
       isMobile: window.innerWidth < 1024,
       course:{resources:[]}
     };
+  },
+  goBack: function(){
+    var url = "./curriculum.html#" + this.state.course.id;
+    window.location.href = url;
   },
   handleResize: function(e) {
     this.setState({
@@ -149,15 +160,16 @@ var CourseView = React.createClass({
     var resources = this.state.course.resources.map(function(result) {
       return <ResourceView key={result.id} id={result.id} name={result.name} rating={result.rating} description={result.description} url={result.url} type={result.type} handleVote={context.handleVote}/>
     });
+    console.log(this.state.course);
     return (
       <div>
-        <Header name={this.state.course.name} desc={this.state.course.description} creator={this.state.course.creator} updated={this.state.course.createdAt} rating={this.state.course.rating}/>
-        <div style={Styles.resourceContainer}>
-          <div style={Styles.checkList}>
+        <Header name={this.state.course.name} goBack={this.goBack} desc={this.state.course.description} creator={this.state.course.creator} updated={this.state.course.createdAt} rating={this.state.course.rating}/>
+        <div className="resource-container">
+          <div className="check-list">
             <CheckList resources={this.state.course.resources} toggleCheck={this.handleCheck} />
           </div>
-          <div style={Styles.resources}>
-            <h3 style={Styles.reset}>Resources</h3>
+          <div className="resources">
+            <h3 className="reset">Resources</h3>
             <ul>
               {resources}
             </ul>

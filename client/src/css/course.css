@@ -1,4 +1,18 @@
-.container {
+#app, #app>div, .full, .check-list>div, .check-list>div>div, .check-list {
+	height: 100%;
+}
+
+.full>div:last-child {
+	height: -webkit-calc(100% - 56px);
+	height: calc(100% - 56px);
+}
+
+.resource-container {
+	height: -webkit-calc(100% - 76px);
+	height: calc(100% - 76px);
+}
+
+.resource-container {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -8,4 +22,109 @@
 	-webkit-flex-direction: row;
 	-ms-flex-direction: row;
 	flex-direction: row;
+}
+
+.header {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	border-bottom: 1px solid #C0C0C0;
+}
+
+.back-button {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	border-right: 1px solid #C0C0C0;
+}
+
+.header-left {
+	padding-top: 10px;
+	-webkit-box-flex: 8;
+	-webkit-flex: 8;
+	-ms-flex: 8;
+	flex: 8;
+	padding-left: 20px;
+	padding-bottom: 5px;
+}
+
+.header-right {
+	padding-top: 10px;
+	padding-bottom: 5px;
+	-webkit-box-flex: 4;
+	-webkit-flex: 4;
+	-ms-flex: 4;
+	flex: 4;
+	padding-left: 5px;
+}
+
+.check-list {
+	-webkit-box-flex: 2;
+	-webkit-flex: 2;
+	-ms-flex: 2;
+	flex: 2;
+}
+
+.check-list .mui-menu {
+	width: 100% !important;
+}
+
+.check-list .mui-menu .mui-paper-container .mui-menu-item:first-child{
+	font-size: 1.7em;
+}
+
+.resources {
+	-webkit-box-flex: 5;
+	-webkit-flex: 5;
+	-ms-flex: 5;
+	flex: 5;
+	padding-top: 13px;
+	padding-left: 25px;
+}
+
+.single-resource {
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
+.reset {
+	margin: 0;
+	padding: 0;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.section {
+	margin: 0;
+	padding: 0;
+	font-weight: 600;
+}
+
+.title {
+	margin-left: 5px;
+}
+
+.item {
+	margin-left: 10px;
 }
