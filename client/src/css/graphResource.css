@@ -57,3 +57,15 @@
 .AddToCurriculum{
   width: 10%;
 }
+
+.topic{
+  max-width: 500px;
+  max-height: 300px;
+  margin: auto;
+  margin-top: 9.5%;
+}
+
+.btn-flat{
+  background-color: #3498DB;
+  margin-right: 5px;
+}
