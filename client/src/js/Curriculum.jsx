@@ -4,11 +4,13 @@ window.React = React;
 var injectTapEventPlugin = require("react-tap-event-plugin");
 var mui = require('material-ui');
 
-/*============== DECLARE MATERIAL COMPONENTS ==============*/
-var RaisedButton = mui.RaisedButton;
+/*=================== REQUIRE COMPONENTS ===================*/
 var NavBar = require('./components/NavBar.jsx');
 var CurriculumView = require('./components/CurriculumView.jsx');
+var CurriculumBar = require('./components/CurriculumBar.jsx')
+/*============== DECLARE MATERIAL COMPONENTS ===============*/
 var Paper = mui.Paper;
+var RaisedButton = mui.RaisedButton;
 
 injectTapEventPlugin();
 
@@ -19,6 +21,7 @@ var Main = React.createClass({
       <div>
         <div className="full">
           <NavBar />
+          <CurriculumBar />
           <CurriculumView />
         </div>
       </div>
