@@ -23,7 +23,6 @@ var LanguageStore = Reflux.createStore({
       }
     };
     http.send();
-    // this.trigger(_languages);
   }
 });
 

@@ -1,6 +1,6 @@
-.blue {
+.blue.mui-toolbar {
   background-color: #2980B9 !important;
-  padding: 0 auto !important;
+  padding-right: 0 !important;
 }
 
 .blue .mui-app-bar-title {

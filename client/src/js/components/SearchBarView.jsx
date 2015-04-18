@@ -26,7 +26,6 @@ var SearchBarView = React.createClass({
         return language.name.toLowerCase().match( searchString );
       }); 
     }
-    console.log(this.state.languages);
     return (
       <div className="searchBarContainer">
         <input type="text" className="searchBar" value={this.state.searchString} onChange={this.handleChange} placeholder="Type here" />
