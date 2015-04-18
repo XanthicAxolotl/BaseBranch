@@ -71,8 +71,8 @@ ns._drawPoints = function(el, scales, data, prevScales) {
 
   this.destroy(el);
 
-  var width = 960;
-  var height = 500;
+  var width = window.innerWidth * 0.75; //960;
+  var height = 560;
   // Padding variable for separation between same-color nodes.
   var padding = 20;
   // Cluster padding variable for separation between different-color nodes.
@@ -80,8 +80,6 @@ ns._drawPoints = function(el, scales, data, prevScales) {
   var maxRadius = 100;
 
 
-  console.log('length',GraphStore.nodeData.length);
-  // GraphStore.nodeData.length returns 0 here
   // Variable n is the total number of nodes.
   var n = data.length; //4;//GraphStore.nodeData.length,
   // Variable m is the number of distinct clusters
@@ -135,8 +133,8 @@ ns._drawPoints = function(el, scales, data, prevScales) {
   // Create SVG containing element for graph nodes.
   var svg = d3.select(el).append('svg')
       .attr('class', 'd3')
-      .attr('width', GraphStore.width)
-      .attr('height', GraphStore.height)
+      .attr('width', window.innerWidth * 0.75)
+      .attr('height', height)
       .attr('style', 'background: AliceBlue');
 
   // Create a group for node circles.
@@ -258,6 +256,13 @@ ns._drawPoints = function(el, scales, data, prevScales) {
 
 
 };
+
+ns.resize = function(el) {
+  console.log('D3Graph resize called');
+  d3.select(el).selectAll("svg")
+    .attr("width", window.innerWidth * 0.75);
+
+}
 
 ns.destroy = function(el) {
   d3.select(el).selectAll(".d3-point").remove();

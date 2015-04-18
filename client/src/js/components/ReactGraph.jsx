@@ -5,8 +5,6 @@ var _ = require('lodash');
 
 var D3Graph = require('./D3Graph.jsx');
 
-// require('./Chart.less');
-
 // get the width and height from the graph store next
 var ReactGraph = React.createClass({
   getDefaultProps: function() {
@@ -20,11 +18,14 @@ var ReactGraph = React.createClass({
 
   componentDidMount: function() {
     var el = this.getDOMNode();
-    var dispatcher = D3Graph.create(el, {
+    var dispatcher = D3Graph._drawPoints(el, {
       width: this.props.width,
       height: this.props.height
     }, this.getReactGraphState());
     this.dispatcher = dispatcher;
+    window.addEventListener('resize', function() {
+      D3Graph.resize(el);
+    });
   },
 
   componentDidUpdate: function(prevProps, prevState) {
