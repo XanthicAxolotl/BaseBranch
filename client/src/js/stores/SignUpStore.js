@@ -1,6 +1,7 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
 var SignUpActions = require('../actions/SignUpActions.js');
+var Cookies = require('cookies-js');
 
 var _signedInUser = {};
 
@@ -18,6 +19,10 @@ var SignUpStore = Reflux.createStore({
       console.log('hi', http.status);
       if (http.readyState === 4){
         if (http.status === 200){
+          _signedInUser = JSON.parse(http.response);
+          console.log(_signedInUser);
+          var seconds = 7 * 24 * 60 * 60;
+          Cookies.set('basebranchuser', _signedInUser.id, {expires: seconds});
           window.location.replace('./');
         } else {
           alert('Login failed!');
