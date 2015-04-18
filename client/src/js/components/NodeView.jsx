@@ -1,10 +1,11 @@
 var React = require('react');
 var ResourceListBox = require('./ResourceListBox.jsx');
 var NewResourceView = require('./NewResourceView.jsx');
+var RaisedButton = require('material-ui').RaisedButton;
 
 var NodeView = React.createClass({
   getInitialState: function() {
-    return {id: null}
+    return {id: null, showNewResource: false};
   },
 
   onEdit: function(id) {
@@ -15,18 +16,24 @@ var NodeView = React.createClass({
     this.setState({currentlyEdited:null});
   },
 
+  onAddResource:function(e){
+    e.preventDefault();
+    this.setState({showNewResource: !this.state.showNewResource });
+  },
+
   render: function() {
     return (
       <div className="container">
         <div className="row header">
           <div className="page-header">
-            <h1>Resource List</h1>
+            <span className="newResourceHeader">Resource List</span>
+            <RaisedButton label="Add New Resource" onClick={this.onAddResource} />
           </div>
         </div>
         <div className="row">
-          <ResourceListBox onEdit={this.onEdit} onAdd={this.onAdd}/>
+          { this.state.showNewResource ? <NewResourceView />: null}
           <br />
-          <NewResourceView />
+          <ResourceListBox onEdit={this.onEdit} onAdd={this.onAdd}/>
         </div>
       </div>
     )

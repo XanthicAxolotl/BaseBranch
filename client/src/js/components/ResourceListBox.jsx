@@ -31,16 +31,9 @@ var ResourceListBox = React.createClass({
     this.unsubscribe();
   },
 
-  onAdd: function(event) {
-    event.preventDefault();
-    this.props.onAdd();
-    this.refs.resourceList.setActiveResource(null);
-  },
-
   render: function() {
     return (
       <div className="col-md-4">
-        <div className="centered"><a href="" onClick={this.onAdd}>Add New</a></div>
         <ResourceList ref="resourceList" resources={this.state.resources} onEdit={this.props.onEdit} />
       </div>
     )
