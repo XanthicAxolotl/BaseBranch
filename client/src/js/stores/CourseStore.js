@@ -74,7 +74,7 @@ var CourseStore = Reflux.createStore({
     http.open("POST", url, true);
     http.send();
   },
-  onTogglecheck: function(course) {
+  onToggleCheck: function(course) {
     console.log('toggle me silly');
   }
 });

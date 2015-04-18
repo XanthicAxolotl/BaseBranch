@@ -38,7 +38,7 @@ var LoginView = React.createClass({
           <TextField
             hintText="Username" onChange={this.handleUser}/> <br />
           <TextField
-            hintText="Password" onChange={this.handlePass}/> <br />
+            hintText="Password" onChange={this.handlePass} type="password"/> <br />
           <RaisedButton label="Log In" secondary={true} onClick={this.login}/>
           <RaisedButton label="Log In with GitHub" secondary={true} />
           <p><a href="./">Dont have an account? Sign up here.</a></p>

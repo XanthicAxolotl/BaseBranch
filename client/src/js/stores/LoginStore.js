@@ -1,12 +1,18 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
 var LoginActions = require('../actions/LoginActions.js');
+var Cookies = require('cookies-js');
 
 var _signedInUser = {};
 
 /*================ CREATE LOGIN STORE =================*/
 var LoginStore = Reflux.createStore({
   listenables: LoginActions,
+  init: function(){
+    if (Cookies.get('basebranchuser')){
+      window.location.replace('./');
+    }
+  },
   isLoggedIn: function(){
     // if the user logged in successfully then the _signedInUser object will have an id property and the return value will be true
     // otherwise they will not and the return value will be false
@@ -16,7 +22,6 @@ var LoginStore = Reflux.createStore({
     // send login info to the server
     var http = new XMLHttpRequest();
     var url = "./api/user/login";
-    
     var context = this;
 
     http.open("POST", url, true);
@@ -27,6 +32,8 @@ var LoginStore = Reflux.createStore({
         if (http.status === 200){
           // set the signedInUser property to the User object returned in the login response
           _signedInUser = JSON.parse(http.response);
+          var seconds = 7 * 24 * 60 * 60;
+          Cookies.set('basebranchuser', _signedInUser.id, {expires: seconds});
           window.location.replace('./');
         } else {
           alert('Login failed!');
