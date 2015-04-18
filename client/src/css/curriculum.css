@@ -1,6 +1,7 @@
 .indigo {
 	background-color: #3498DB !important;
 	height: 47px !important;
+	padding-right: 0;
 }
 
 .indigo .mui-drop-down-menu {
