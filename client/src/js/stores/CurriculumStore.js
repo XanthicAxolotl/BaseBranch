@@ -50,6 +50,9 @@ var CurriculumStore = Reflux.createStore({
         if (http.readyState === 4) {
           _curricula[index].resources = JSON.parse(http.response);
           if (index === _curricula.length - 1){
+            for (var i = 0; i < _curricula.length; i++){
+              _curricula[i].createdAt = _curricula[i].createdAt.split('T')[0];
+            }
             context.trigger(_curricula);
           }
         }

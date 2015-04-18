@@ -1,12 +1,9 @@
 /*==================== REQUIRE MODULES ====================*/
-var mui               = require('material-ui'),
-    React             = require('react'),
-    Reflux            = require('reflux'),
-    CurriculumActions = require('../actions/CurriculumActions.js'),
-    CurriculumStore   = require('../stores/CurriculumStore.js');
-
-//import JS stylesheet
-var Styles = require('../styles/CurriculumStyles.js');
+var mui               = require('material-ui');
+var React             = require('react');
+var Reflux            = require('reflux');
+var CurriculumActions = require('../actions/CurriculumActions.js');
+var CurriculumStore   = require('../stores/CurriculumStore.js');
 
 /*============== DECLARE MATERIAL COMPONENTS ==============*/
 //NavBar Components
@@ -38,24 +35,26 @@ var ItemView = React.createClass({
     var resourceItems = this.props.curriculum.resources.map(function(resource){
       return <li key={resource.id}>{resource.name}</li>
     });
-    Styles.curriculum.width = '100%';
     var curriculumUrl = "./Course.html#" + this.props.curriculum.id;
     return(
-      <li style={Styles.curriculum}>
-        <div style={Styles.information}>
-          <ul>
-            <li style={Styles.title}><div>{this.props.curriculum.name}</div><a href={curriculumUrl}>View Curriculum</a></li>
-            <li>{this.props.curriculum.desc}</li>
-            <li>Created By: {this.props.curriculum.author}</li>
-            <li>Last Updated: {this.props.curriculum.createdAt}</li>
-            <li>Rating: {this.props.curriculum.rating}<div onClick={this.voteUp}> up</div><div onClick={this.voteDown}> down</div></li>
-          </ul>
-        </div>
-        <div style={Styles.resources}>
-          <ul>
-            {resourceItems}
-          </ul>
-        </div>
+      <li className="curriculum-item">
+        <Paper className="curriculum-paper" zDepth={1} rounded={false}>
+          <div className="curriculum-item-left">
+            <ul className="curriculum-props-list">
+              <li className="title-line"><a href={curriculumUrl}><h4>{this.props.curriculum.name}</h4></a></li>
+              <li>{this.props.curriculum.desc}</li>
+              <li>Created By: {this.props.curriculum.author}</li>
+              <li>Last Updated: {this.props.curriculum.createdAt}</li>
+              <li className="rating-line"><div className="rating">Rating: {this.props.curriculum.rating}</div><div className="vote-up" onClick={this.voteUp}> up</div><div className="vote-down" onClick={this.voteDown}> down</div></li>
+            </ul>
+          </div>
+          <div className="curriculum-item-right">
+            <h4>Resources</h4>
+            <ul className="curriculum-resource-list">
+              {resourceItems}
+            </ul>
+          </div>
+        </Paper>
       </li>
     )
   }
@@ -92,14 +91,13 @@ var CurriculumView = React.createClass({
     window.removeEventListener('resize', this.handleResize);
   },
   render: function() {
-    Styles.list.width = (this.state.windowWidth * 0.9);
-    var curry = this;
+    var context = this;
     var curricular = this.state.curricula.map(function(result) {
-      return <ItemView key={result.id} curriculum={result} editRating={curry.handleRating}/>
+      return <ItemView key={result.id} curriculum={result} editRating={context.handleRating}/>
     });
     return (
-      <div style={Styles.container}>
-        <ul style={Styles.list}>
+      <div className="curricula-container">
+        <ul className="curricula-list">
           {curricular}
         </ul>
       </div>
