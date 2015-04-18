@@ -33,3 +33,27 @@
 .resourceType{
   margin-bottom: 5%;
 }
+
+.Rating{
+  width: 6%;
+}
+
+.Name{
+  width: 25%;
+}
+
+.Description{
+  width: 30%;
+}
+
+.Type{
+  width:15%;
+}
+
+.ViewResource{
+  width: 10%;
+}
+
+.AddToCurriculum{
+  width: 10%;
+}

@@ -32,7 +32,6 @@ var NodeView = React.createClass({
         </div>
         <div className="row">
           { this.state.showNewResource ? <NewResourceView />: null}
-          <br />
           <ResourceListBox onEdit={this.onEdit} onAdd={this.onAdd}/>
         </div>
       </div>

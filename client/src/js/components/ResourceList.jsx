@@ -48,15 +48,14 @@ var ResourceList = React.createClass({
           className="node-table" 
           data={resources}
           sortable={true} 
-          filterable={['name', 'author', 'rating', 'type', 'description']}
+          filterable={['name', 'rating', 'type', 'description']}
           columns={[
-            {key: 'name', label: 'Name'},
-            {key: 'author', label: 'Author'},
-            {key: 'rating', label: 'Rating'},
-            {key: 'type', label: 'Type'},
-            {key: 'description', label: 'Description'},
-            {key: 'link', label: 'View Resource'},
-            {key: 'addresource', label: 'Add to Curriculum'}
+            {key: 'rating', label: 'Rating', className:'Rating'},
+            {key: 'name', label: 'Name', className:'Name'},
+            {key: 'description', label: 'Description', className:'Description'},
+            {key: 'type', label: 'Type', className:'Type'},
+            {key: 'link', label: 'View Resource', className:'ViewResource'},
+            {key: 'addresource', label: 'Add to Curriculum', className:'AddToCurriculum'}
           ]} />
       </div>
     )
