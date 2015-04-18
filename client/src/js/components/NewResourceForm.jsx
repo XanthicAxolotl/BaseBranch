@@ -64,22 +64,29 @@ var NewResourceForm = React.createClass({
     return (
       <div>
         <div className="addResource" ref="newResourceForm">
-          <h2>New Resource</h2>
           <div className="full">
-            <h3>Name:</h3>
+            <div className="left">
+            Name:
             <TextField
               value={this.state.resourceName} 
               onChange={this.handleChangeName} />
-            <h3>Author:</h3>
-            <TextField
-              value={this.state.resourceAuthor} 
-              onChange={this.handleChangeAuthor} />
-            <h3>URL:</h3>
+            URL:
             <TextField
               value={this.state.resourceURL} 
               onChange={this.handleChangeURL} />
+            Author:
+            <TextField
+              value={this.state.resourceAuthor} 
+              onChange={this.handleChangeAuthor} />
+            Description:
+            <TextField
+              multiLine={true} 
+              value={this.state.resourceDesc} 
+            onChange={this.handleChangeDesc} />
+            </div>
+            <div className ="right">
             <div className="resourceType">
-              <h3>Type:</h3>
+              Type:
               <Checkbox 
                 name="Documentation"
                 value={this.state.resourceType}
@@ -131,16 +138,10 @@ var NewResourceForm = React.createClass({
                 onCheck={this.handleChangeType}
                 label="Other"/>
             </div>
-            <div className="description">
-              <h3>Description:</h3>
-              <TextField
-                multiLine={true} 
-                value={this.state.resourceDesc} 
-              onChange={this.handleChangeDesc} />
+            <input type="button" className="btn btn-success btn-lg" value="Save" onClick={this.handleSave}/>
             </div>
           </div>
         </div>
-        <input type="button" className="btn btn-success btn-lg" value="Save" onClick={this.handleSave}/>
       </div>
     )
   }
