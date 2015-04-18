@@ -24,10 +24,7 @@ var ReactGraph = React.createClass({
       width: this.props.width,
       height: this.props.height
     }, this.getReactGraphState());
-    // dispatcher.on('point:mouseover', this.showTooltip);
-    // dispatcher.on('point:mouseout', this.hideTooltip);
     this.dispatcher = dispatcher;
-    // on click, trigger "setNodeId" from NodeResourceActions.jsx
   },
 
   componentDidUpdate: function(prevProps, prevState) {
