@@ -16,11 +16,9 @@ injectTapEventPlugin();
 var Main = React.createClass({
   render: function(){
     return (
-      <div>
-        <div className="full">
-          <NavBar />
-          <LoginView />
-        </div>
+      <div className="full">
+        <NavBar />
+        <LoginView />
       </div>
     );
   }

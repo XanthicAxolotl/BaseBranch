@@ -1,6 +1,6 @@
 module.exports = {
   main: {
-		display: '-webkit-box',
+	display: '-webkit-box',
     display: '-webkit-flex',
     display: '-ms-flexbox',
     display: 'flex',
@@ -14,9 +14,9 @@ module.exports = {
     msFlexPack: 'center',
     justifyContent: 'center',
     WebkitBoxAlign: 'center',
-	  WebkitAlignItems: 'center',
-	  msFlexAlign: 'center',
-	  alignItems: 'center',
+	WebkitAlignItems: 'center',
+	msFlexAlign: 'center',
+	alignItems: 'center',
     marginTop: '10px'
-	}
+  }
 }
