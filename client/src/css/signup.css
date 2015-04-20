@@ -12,4 +12,5 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-top: 10px;
+	min-height: calc(70% - 56px);
 }

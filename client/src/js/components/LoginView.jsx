@@ -32,7 +32,7 @@ var LoginView = React.createClass({
   },
   render: function() { 
     return (
-      <div className="login-main" styles={LoginStyles.main}>
+      <div className="login-main" className="login-main">
         <div>
           <h1>Log In</h1>
           <TextField
