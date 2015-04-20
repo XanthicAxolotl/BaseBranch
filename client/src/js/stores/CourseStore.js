@@ -54,7 +54,6 @@ var CourseStore = Reflux.createStore({
     var url = "./api/resource/rating/down/" + resourceId;
     http.onreadystatechange = function() {
       if (http.readyState === 4) {
-        console.log('sent down');
         context.getResources();
       }
     };
@@ -67,15 +66,11 @@ var CourseStore = Reflux.createStore({
     var url = "./api/resource/rating/up/" + resourceId;
     http.onreadystatechange = function() {
       if (http.readyState === 4) {
-        console.log('sent up');
         context.getResources();
       }
     };
     http.open("POST", url, true);
     http.send();
-  },
-  onToggleCheck: function(course) {
-    console.log('toggle me silly');
   }
 });
 

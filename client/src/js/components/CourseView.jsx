@@ -62,7 +62,6 @@ var CheckList = React.createClass({
     var checkListResource = this.props.resources.map(function(result){
       index++;
       result.changeResource = function(){
-        console.log('click event');
         context.props.changeResource(result.id);
       };
       return { payload: index, text: result.name, onItemClick: result.changeResource};
@@ -80,12 +79,10 @@ var CheckList = React.createClass({
 //Create Individual Resource View
 var ResourceView = React.createClass({
   voteUp: function(){
-    console.log('up');
-    this.props.handleVote(this.props.id, 'up');
+    this.props.handleVote(this.props.resource.id, 'up');
   },
   voteDown: function(){
-    console.log('down');
-    this.props.handleVote(this.props.id, 'down');
+    this.props.handleVote(this.props.resource.id, 'down');
   },
   render: function() {
     return(
@@ -114,17 +111,28 @@ var CourseView = React.createClass({
     window.location.href = url;
   },
   updateCourse: function(course){
+    var context = this;
     this.setState({
       course: course
+    }, function(){
+      if (!context.state.selected.hasOwnProperty('id')){
+        context.setState({
+          selected: course.resources[0]
+        });
+      } else {
+        var resources = context.state.course.resources;
+        for (var i = 0; i < resources.length; i++){
+          if (context.state.selected.id === resources[i].id && context.state.selected.rating !== resources[i].rating){
+            context.setState({
+              selected: resources[i]
+            });
+          return;
+          }
+        }
+      }
     });
-    if (!this.state.selected.hasOwnProperty('id')){
-      this.setState({
-        selected: course.resources[0]
-      });
-    }
   },
   changeResource: function(e, resourceId, menuItem){
-    console.log('hi', resourceId, menuItem);
     var resources = this.state.course.resources;
     for (var i = 0; i < resources.length; i++){
       if (resourceId === resources[i].id){
@@ -144,7 +152,6 @@ var CourseView = React.createClass({
   },
   render: function() {
     var context = this;
-    console.log(this.state.course);
     return (
       <div>
         <Header name={this.state.course.name} goBack={this.goBack} desc={this.state.course.description} creator={this.state.course.creator} updated={this.state.course.createdAt} rating={this.state.course.rating}/>
