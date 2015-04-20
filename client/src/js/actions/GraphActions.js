@@ -6,7 +6,8 @@ var GraphActions = Reflux.createActions([
   'updateNodes',
   'loadNodes',
   'resourceToSide',
-  'saveCurriculum'
+  'saveCurriculum',
+  'deleteFromSide'
 ]);
 
 
