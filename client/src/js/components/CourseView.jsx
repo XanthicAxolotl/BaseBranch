@@ -107,7 +107,7 @@ var CourseView = React.createClass({
     };
   },
   goBack: function(){
-    var url = "./curriculum.html#" + this.state.course.id;
+    var url = "./curriculum.html#" + this.state.course.channelName;
     window.location.href = url;
   },
   updateCourse: function(course){

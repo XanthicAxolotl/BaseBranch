@@ -258,7 +258,6 @@ ns._drawPoints = function(el, scales, data, prevScales) {
 };
 
 ns.resize = function(el) {
-  console.log('D3Graph resize called');
   d3.select(el).selectAll("svg")
     .attr("width", window.innerWidth * 0.75);
 
