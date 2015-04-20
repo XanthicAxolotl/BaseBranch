@@ -45,17 +45,13 @@ module.exports = {
       // Find the channel with the associated channel Id
       Channels.find({ where:{ id: curriculum.channelId} })
       .then(function(chan){
-        // console.log('chan', chan);
         curriculum.dataValues.channelName = chan.dataValues.name;
-        // console.log('curr', curriculum);
         // Send back to the client the Curriculum instance as a JSON object.
         res.json(curriculum);
       })
       .error(function(err){
         console.error('Error in finding curriculum\'s channel', err);
       });
-      // Send back to the client the Curriculum instance as a JSON object.
-      // res.json(curriculum);
     })
     .error(function(err){
       console.error('Error in finding curriculum', err);

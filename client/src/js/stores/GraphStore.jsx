@@ -9,42 +9,9 @@ var GraphStore = Reflux.createStore({
   width: 900,
   height: 560,
   color: "Azure",
-  channelName: 'JavaScript',
+  channelName: 'asdf',
   channelId: 1,
-  circleProperties: [{
-    id: 1,
-    channelName: 'placeholderName',
-    nodeCoordinates: {'x': 100, 'y': 200, 'r': 60}
-  }],
-
-  // hardcoded data is replaced on this.load()
-  // uncomment hardcoded data for svg text deletion testing later
-  nodeData: [
-    /*{
-      id: 1,//cuid(),
-      name: 'google',
-      nodeLink: 'http://google.com',
-      x: 20,
-      y: 50,
-      z: 10,
-    },
-    {
-      id: 2,//cuid(),
-      name: 'sounds',
-      nodeLink: 'https://soundcoud.com',
-      x: 1,
-      y: 70,
-      z: 10,
-    },
-    {
-      id: 3,//cuid(),
-      name: 'past fred place',
-      nodeLink: 'http://walmart.com',
-      x: 10,
-      y: 10,
-      z: 10,
-    }*/
-  ],
+  nodeData: [],
 
   listenables: [NodeResourceActions, GraphActions],
 
@@ -52,18 +19,18 @@ var GraphStore = Reflux.createStore({
     this.load();
     this.listenTo(GraphActions.loadNodes, this.load);
     this.listenTo(GraphActions.addNode, this.onCreate);
-    // this.listenTo(GraphActions.editNode, this.XXXX);
-    // this.listenTo(GraphActions.updateNodes, this.XXXX);
   },
+
   load: function(){
     var language = window.location.href.split('#')[1];
+    console.log('lan out', language);
     // use this to get the graph data from the database
     if (language !== undefined && language.length > 0) {
       var context = this;
       $.ajax({
         type: "GET",
         dataType: 'json',
-        url: './api/channel/nodes/' + language, //this.channelName,
+        url: './api/channel/nodes/' + language,
       }).then(function(data){
           this.nodeData = data; //push data to store
 
@@ -76,7 +43,9 @@ var GraphStore = Reflux.createStore({
             this.nodeData[i].y = 8 * ( i + 1 );
             this.nodeData[i].z = 10;
           }
+          console.log('lan in', language);
           context.channelName = language;
+          console.log('con chan name', context.channelName);
           context.trigger(data);
       },function(error){
         console.log('Error on GraphStore.load\'s GET request');
@@ -85,19 +54,6 @@ var GraphStore = Reflux.createStore({
     } else {
       window.location.replace('./');
     }
-  },
-  pushChanges: function() {
-    // use this to push updates to database
-    // var context = this;
-    // $.ajax({
-    //   type: "POST",
-    //   dataType: 'json',
-    //   data: _jobs,
-    //   url: '/api/listings',
-    // }).done(function(data){
-    //     console.log(data);
-    //     context.trigger(_jobs);
-    // });
   },
   
   onCreate: function(topic) {
@@ -114,18 +70,6 @@ var GraphStore = Reflux.createStore({
       console.log('Error on GraphStore.onCreate');
       console.error(error);
     });
-  },
-
-  onEdit: function(job) {
-    // console.log("from onEdit in jobStore.jsx");
-    // for (var i = 0; i < _jobs.length; i++) {
-    //   if(_jobs[i]._id === job._id) {
-    //     _jobs[i].mutable = job.mutable;
-    //     this.trigger(_jobs);
-    //     break;
-    //   }
-    // }
-    // this.pushChanges();
   },
 
 });
