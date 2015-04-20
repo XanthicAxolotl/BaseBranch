@@ -54,40 +54,24 @@ var Header = React.createClass({
   }
 });
 
-//Create CL Resource View
-var CheckListResource = React.createClass({
-  toggleCheck: function(){
-    this.props.toggleCheck(this.props.id);
-  },
-  render: function(){
-    if (this.props.type === 'header'){
-      return(
-        <li className="title"><h5 className="section">{this.props.name}</h5></li>
-      )
-    } else {
-      return(
-        <li className="item"><span>{this.props.name}</span><input type="checkbox" checked={this.props.isChecked} onChange={this.toggleCheck}/></li>
-      )
-    }
-  }
-});
-
 //Create Checklist View
 var CheckList = React.createClass({
   render: function(){
     var context = this;
-    var index = 2;
+    var index = 1;
     var checkListResource = this.props.resources.map(function(result){
-      result.toggleCheck = function(){
-        context.props.toggleCheck(result.id);
-      }
-      return { payload: index, text: result.name, toggle: true, onToggle: result.toggleCheck };
+      index++;
+      result.changeResource = function(){
+        console.log('click event');
+        context.props.changeResource(result.id);
+      };
+      return { payload: index, text: result.name, onItemClick: result.changeResource};
     });
     var filterMenuItems = [{ payload: '1', text: 'CheckList'}];
     var filterMenuItems = filterMenuItems.concat(checkListResource);
     return(
       <div>
-        <Menu menuItems={filterMenuItems} />
+        <Menu menuItems={filterMenuItems} onItemClick={this.props.changeResource}/>
       </div>
     )
   }
@@ -96,57 +80,60 @@ var CheckList = React.createClass({
 //Create Individual Resource View
 var ResourceView = React.createClass({
   voteUp: function(){
+    console.log('up');
     this.props.handleVote(this.props.id, 'up');
   },
   voteDown: function(){
+    console.log('down');
     this.props.handleVote(this.props.id, 'down');
   },
   render: function() {
-    if (this.props.type === 'header'){
-      return(
-        <li className="single-resource"><h5 style={Styles.section}>{this.props.name}</h5></li>
-      )
-    } else {
-      return(
-        <li className="single-resource">
-          <div><span className="bold">{this.props.name}</span><span> - Rating: {this.props.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
-          <div>{this.props.description}</div>
-          <div><a href={this.props.url} target="_blank">View Resource</a></div>
-        </li>
-      )
-    }
+    return(
+      <div className="single-resource">
+        <div><span className="bold">{this.props.resource.name}</span><span> - Rating: {this.props.resource.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
+        <div>{this.props.resource.description}</div>
+        <div><a href={this.props.resource.url} target="_blank">View Resource</a></div>
+      </div>
+    )
   }
 });
 
 //Create Course View
 var CourseView = React.createClass({
-  mixins: [Reflux.connect(CourseStore, 'course')],
+  mixins: [Reflux.listenTo(CourseStore, 'updateCourse')],
   getInitialState: function(){
     return {
       windowWidth: window.innerWidth,
       isMobile: window.innerWidth < 1024,
-      course:{resources:[]}
+      course:{resources:[]},
+      selected: {}
     };
   },
   goBack: function(){
     var url = "./curriculum.html#" + this.state.course.id;
     window.location.href = url;
   },
-  handleResize: function(e) {
+  updateCourse: function(course){
     this.setState({
-      windowWidth: window.innerWidth,
-      isMobile: window.innerWidth < 1024
+      course: course
     });
+    if (!this.state.selected.hasOwnProperty('id')){
+      this.setState({
+        selected: course.resources[0]
+      });
+    }
   },
-  componentDidMount: function() {
-    window.addEventListener('resize', this.handleResize);
-    // CourseStore.getResources();
-  },
-  componentWillUnmount: function() {
-    window.removeEventListener('resize', this.handleResize);
-  },
-  handleCheck: function(resourceId){
-    CourseActions.toggleCheck(resourceId);
+  changeResource: function(e, resourceId, menuItem){
+    console.log('hi', resourceId, menuItem);
+    var resources = this.state.course.resources;
+    for (var i = 0; i < resources.length; i++){
+      if (resourceId === resources[i].id){
+        this.setState({
+          selected: resources[i]
+        });
+        return;
+      }
+    }
   },
   handleVote: function(id, dir){
     if (dir === 'up'){
@@ -157,22 +144,16 @@ var CourseView = React.createClass({
   },
   render: function() {
     var context = this;
-    var resources = this.state.course.resources.map(function(result) {
-      return <ResourceView key={result.id} id={result.id} name={result.name} rating={result.rating} description={result.description} url={result.url} type={result.type} handleVote={context.handleVote}/>
-    });
     console.log(this.state.course);
     return (
       <div>
         <Header name={this.state.course.name} goBack={this.goBack} desc={this.state.course.description} creator={this.state.course.creator} updated={this.state.course.createdAt} rating={this.state.course.rating}/>
         <div className="resource-container">
           <div className="check-list">
-            <CheckList resources={this.state.course.resources} toggleCheck={this.handleCheck} />
+            <CheckList resources={this.state.course.resources} changeResource={this.changeResource} />
           </div>
           <div className="resources">
-            <h3 className="reset">Resources</h3>
-            <ul>
-              {resources}
-            </ul>
+            <ResourceView resource={this.state.selected} handleVote={this.handleVote}/>
           </div>
         </div>
       </div>

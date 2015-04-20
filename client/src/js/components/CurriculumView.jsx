@@ -35,7 +35,7 @@ var ItemView = React.createClass({
     var resourceItems = this.props.curriculum.resources.map(function(resource){
       return <li key={resource.id}>{resource.name}</li>
     });
-    var curriculumUrl = "./Course.html#" + this.props.curriculum.id;
+    var curriculumUrl = "./course.html#" + this.props.curriculum.id;
     return(
       <li className="curriculum-item">
         <Paper className="curriculum-paper" zDepth={1} rounded={false}>

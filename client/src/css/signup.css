@@ -12,5 +12,13 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-top: 10px;
-	min-height: calc(70% - 56px);
+	height: calc(75% - 56px);
+}
+
+#app {
+	height: 100%;
+}
+
+#app>.full {
+	height: 100%;
 }
