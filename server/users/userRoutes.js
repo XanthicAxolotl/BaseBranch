@@ -32,6 +32,9 @@ module.exports = function(app, passport) {
     .get(userController.getSubscribedCurricula)
     .post(userController.subscribeToCurriculum);
 
+  app.route('/resources/created/:userId')
+    .get(userController.getCreatedResources);
+
   // The Passport local strategy for signing up a new user using an email and hashed password.
   app.post('/signup', function(req, res, next){
     passport.authenticate('local-signup', function(err, user, info){

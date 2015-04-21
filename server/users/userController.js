@@ -5,6 +5,7 @@
 
 var Users = require('../config/db_models.js').Users;
 var Curricula = require('../config/db_models.js').Curricula;
+var Resources = require('../config/db_models.js').Resources;
 
 module.exports = {
 
@@ -128,6 +129,18 @@ module.exports = {
     })
     .error(function(err){
       console.error('Error in finding user for subscription', err);
+    })
+  },
+
+  //Retrieve all resources created by User.
+  getCreatedResources: function(req, res, next) {
+    Resources.findAll({where:{ userId: req.params.userId }})
+    .then(function(resources){
+      console.log('Successfully found all resources created by user', resources);
+      res.json(resources);
+    })
+    .error(function(err){
+      console.error('Error in finding resources created by user', err);
     })
   }
 };
