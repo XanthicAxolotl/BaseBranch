@@ -2,13 +2,14 @@
 var Reflux = require('reflux');
 var GraphActions = require('../actions/GraphActions.js');
 
-/*================ CREATE LOGIN STORE =================*/
+/*================ CREATE GRAPHSIDEBAR STORE =================*/
 var resourceList = [];
 
 var GraphSideBarStore = Reflux.createStore({
   listenables: GraphActions,
-  onSaveCurriculum: function(curriculum, id){
-    var data = {name: 'example', description:'hardcoded', channelId: id, resources: curriculum};
+  onSaveCurriculum: function(curriculum, id, name, desc){
+    console.log('storeonsave', curriculum);
+    var data = {name: name, description: desc, channelId: id, resources: curriculum};
     // send login info to the server
     var http = new XMLHttpRequest();
     var url = "./api/curriculum";
@@ -23,9 +24,25 @@ var GraphSideBarStore = Reflux.createStore({
     http.send(JSON.stringify(data));
   },
 
-  onResourceToSide: function(user){
-    resourceList.push(user);
-    this.trigger(resourceList);
+  onDeleteFromSide: function(item, curric) {
+    var arr = curric;
+    arr.splice(item.payload-1, 1);
+    this.trigger(arr);
+  },
+
+  onResourceToSide: function(info){
+    var found = false;
+
+    for (var i = 0; i<resourceList.length; i++) {
+      if (info.id === resourceList[i].id) {
+        found = true;
+      }
+    }
+    if (!found) {
+      resourceList.push(info);
+      this.trigger(resourceList);
+    }
+    
   }
 });
 

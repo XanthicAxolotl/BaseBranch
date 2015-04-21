@@ -5,6 +5,8 @@ var GraphSideBarStore = require('../stores/GraphSideBarStore.jsx');
 var GraphStore = require('../stores/GraphStore.jsx');
 var GraphActions = require('../actions/GraphActions.js');
 var FlatButton = mui.FlatButton;
+var RaisedButton = mui.RaisedButton;
+var TextField = mui.TextField;
 
 
 //Set Material-UI Vars
@@ -31,8 +33,16 @@ var GraphSideBar = React.createClass({
   
   getInitialState: function() {
     return {
-      curriculum: []
+      curriculum: [], curricName: '', curricDesc: ''
     }
+  },
+
+  handleChangeName: function(event) {
+    this.setState({curricName: event.target.value});
+  },
+
+  handleChangeDesc: function(event) {
+    this.setState({curricDesc: event.target.value});
   },
 
   saveNewCurriculum: function() {
@@ -40,21 +50,37 @@ var GraphSideBar = React.createClass({
     for (var i = 0; i<this.state.curriculum.length; i++) {
       resources.push(this.state.curriculum[i].id); 
     }
-    GraphActions.saveCurriculum(resources, this.props.channelId);
+    GraphActions.saveCurriculum(resources, this.props.channelId, this.state.curricName, this.state.curricDesc);
     window.location.href = "./curriculum.html#" + GraphStore.channelName;
+  },
+
+  deleteFromBar: function(event, index, item) {
+    GraphActions.deleteFromSide(item, this.state.curriculum);
   },
 
   render: function() {
     var index = 0;
+    var context = this;
     var resources = this.state.curriculum.map(function(resource) {
       index++;
-      return {payload: index, text: resource.name, data: 'test'};
+      return {payload: index, text: resource.name, iconClassName: 'fa fa-times'};
     });
 
     return (
       <div className="right">
         <h3 className="center">Add Resources</h3>
-        <Menu menuItems={resources} />
+        <Menu 
+          menuItems={resources} 
+          onItemClick={this.deleteFromBar} />
+        Name:
+        <TextField
+          value={this.state.curricName} 
+          onChange={this.handleChangeName} />
+        Description:
+        <TextField
+          multiLine={true} 
+          value={this.state.curricDesc} 
+          onChange={this.handleChangeDesc} />
         <FlatButton label="Create Curriculum" className="center full-button" secondary={true} onClick={this.saveNewCurriculum} />
       </div>
     );

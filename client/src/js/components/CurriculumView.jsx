@@ -25,6 +25,13 @@ injectTapEventPlugin();
 /*================ CREATE CURRICULUM COMPONENTS ================*/
 //Create Individual Curriculum View
 var ItemView = React.createClass({
+  getInitialState: function() {
+    var author = this.props.curriculum.userid || 'Admin';
+    return {
+      author: author
+    }
+  },
+
   voteUp: function(){
     this.props.editRating(this.props.curriculum.id, 'up');
   },
@@ -42,8 +49,8 @@ var ItemView = React.createClass({
           <div className="curriculum-item-left">
             <ul className="curriculum-props-list">
               <li className="title-line"><a href={curriculumUrl}><h4>{this.props.curriculum.name}</h4></a></li>
-              <li>{this.props.curriculum.desc}</li>
-              <li>Created By: {this.props.curriculum.author}</li>
+              <li><strong>{this.props.curriculum.description}</strong></li>
+              <li>Created By: {this.state.author}</li>
               <li>Last Updated: {this.props.curriculum.createdAt}</li>
               <li className="rating-line"><div className="rating">Rating: {this.props.curriculum.rating}</div><div className="vote-up" onClick={this.voteUp}> up</div><div className="vote-down" onClick={this.voteDown}> down</div></li>
             </ul>
