@@ -26,9 +26,8 @@
 }
 
 .right{
-  margin-right: 5%;
-  width: 25%;
-  height: 560px;
+  width: 24%;
+  height: 530px;
   display: inline-block;
 }
 
@@ -116,12 +115,6 @@ h3{
   width: 100%;
 }
 
-.mui-left>a>h3{
-  padding: 0;
-  margin: auto 0;
-  font-size: 2.2em;
-}
-
 .mui-flat-button.mui-is-secondary {
   background-color: #3498DB;
   color: #ECF0F1;
@@ -131,10 +124,6 @@ h3{
 .mui-flat-button.mui-is-secondary:hover {
   color: #ECF0F1;
   background-color: #3A5169;
-}
-
-.mui-menu {
-  height: 61.2%;
 }
 
 .full-button {
