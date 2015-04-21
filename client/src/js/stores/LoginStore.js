@@ -44,6 +44,25 @@ var LoginStore = Reflux.createStore({
   },
   onLogin: function(user){
     this.newUser(JSON.stringify(user));
+  },
+  onGithubLogin: function(){
+    // send a request to the server to use Github for authentication
+    console.log("Inside of onGithubLogin in LoginStore.js");
+    var http = new XMLHttpRequest();
+    var url = "./api/user/auth/github";
+
+    http.open("GET", url, true);
+    http.onreadystatechange = function(){
+      console.log('Sent Github authentication request to the server');
+      if (http.readyState === 4){
+        if (http.status === 200){
+          window.location.replace('./');
+        } else {
+          alert('Login with Github failed!');
+        }
+      }
+    };
+    http.send();
   }
 });
 

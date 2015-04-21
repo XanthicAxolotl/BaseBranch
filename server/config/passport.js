@@ -110,13 +110,29 @@ module.exports = function(passport){
   passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID || 12345,
     clientSecret: process.env.GITHUB_CLIENT_SECRET || 'secret',
-    callbackURL: process.env.GITHUB_CLIENT_CALLBACK || 'http://localhost:8000'
+    callbackURL: process.env.GITHUB_CLIENT_CALLBACK || 'http://localhost:8000/api/user/auth/github/callback'
   }, function(accessToken, refreshToken, profile, done) {
 
     process.nextTick(function() {
       // Lookup the user in the database based on Github ID.
-      Users.findOrCreate({ githubId: profile.id }, function(err, user){
-        return done(err, user);
+      Users.find({ where: {githubId: profile.id} }, function(err, user){
+        if (err) {
+          // if an error was encountered while looking for the user then return the error.
+          return done(err);
+        }
+        if (user) {
+          // if the user was found then login.
+          return done(null, user);
+        } else {
+          // if there's no user with the githubId in the database then create the user.
+          var newUser = Users.create({
+            name: profile.id.toString(),
+            password: '12345678',
+            email: profile.id.toString(),
+            githubId: profile.id
+          });
+        }
+        return done(null, newUser);
       });
     });
   }));

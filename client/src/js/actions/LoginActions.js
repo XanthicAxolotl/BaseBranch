@@ -2,4 +2,4 @@
 var Reflux = require('reflux');
 
 /*==================== CREATE ACTIONS =====================*/
-module.exports = Reflux.createActions(['login']);
+module.exports = Reflux.createActions(['login','githubLogin']);
