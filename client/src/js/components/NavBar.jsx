@@ -48,11 +48,11 @@ var NavBar = React.createClass({
           <ToolbarGroup key={0} float="left" className="nav-bar-title">
             <a className ="hidden-link" href="./"><h3 className="mui-app-bar-title"> BaseBranch</h3></a>
           </ToolbarGroup>
-          <ToolbarGroup key={1} float="left" className="nav-bar-dropdown">
-            <DropDownMenu menuItems={filterOptions} />
+          <ToolbarGroup className="logout" key={1} float="right">
+            <FlatButton className="nav-bar-button logout-button" secondary={true} label="Logout" linkButton={true} href="#" onClick={this.logout}/>
           </ToolbarGroup>
           <ToolbarGroup className="logout" key={2} float="right">
-            <FlatButton className="nav-bar-button signup-button" secondary={true} label="Logout" linkButton={true} href="#" onClick={this.logout}/>
+            <FlatButton className="nav-bar-button profile-button" secondary={true} label="My Profile" linkButton={true} href="./profile.html"/>
           </ToolbarGroup>
         </Toolbar>      
       );
@@ -62,13 +62,10 @@ var NavBar = React.createClass({
           <ToolbarGroup key={0} float="left" className="nav-bar-title">
             <a className ="hidden-link" href="./"><h3 className="mui-app-bar-title"> BaseBranch</h3></a>
           </ToolbarGroup>
-          <ToolbarGroup key={1} float="left" className="nav-bar-dropdown">
-            <DropDownMenu menuItems={filterOptions} />
-          </ToolbarGroup>
-          <ToolbarGroup className="signup" key={2} float="right">
+          <ToolbarGroup className="signup" key={1} float="right">
             <FlatButton className="nav-bar-button signup-button" secondary={true} label="Sign Up" linkButton={true} href="./signup.html"/>
           </ToolbarGroup>
-          <ToolbarGroup className="login" key={3} float="right">
+          <ToolbarGroup className="login" key={2} float="right">
             <FlatButton className="nav-bar-button login-button" secondary={true} label="Log In" linkButton={true} href="./login.html"/>
           </ToolbarGroup>
         </Toolbar>      
