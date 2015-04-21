@@ -30,6 +30,10 @@ var LoginView = React.createClass({
       password: this.state.password
     });
   },
+  githubLogin: function(){
+    console.log("Inside of githubLogin in LoginView.jsx");
+    LoginActions.githubLogin();
+  },
   render: function() { 
     return (
       <div className="login-main" className="login-main">
@@ -40,7 +44,7 @@ var LoginView = React.createClass({
           <TextField
             hintText="Password" onChange={this.handlePass} type="password"/> <br />
           <RaisedButton label="Log In" secondary={true} onClick={this.login}/>
-          <RaisedButton label="Log In with GitHub" secondary={true} />
+          <RaisedButton label="Log In with GitHub" secondary={true} onClick={this.githubLogin} />
           <p><a href="./">Dont have an account? Sign up here.</a></p>
         </div>
       </div>
