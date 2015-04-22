@@ -68,7 +68,7 @@ var GraphSideBar = React.createClass({
 
     return (
       <div className="right">
-        <h3 className="center">Add Resources</h3>
+        <h3 className="center">My Curriculum</h3>
         <Menu 
           menuItems={resources} 
           onItemClick={this.deleteFromBar} />

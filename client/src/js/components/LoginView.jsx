@@ -45,7 +45,7 @@ var LoginView = React.createClass({
             hintText="Password" onChange={this.handlePass} type="password"/> <br />
           <RaisedButton label="Log In" secondary={true} onClick={this.login}/>
           <RaisedButton label="Log In with GitHub" secondary={true} onClick={this.githubLogin} />
-          <p><a href="./">Dont have an account? Sign up here.</a></p>
+          <p><a href="./signup.html">Dont have an account? Sign up here.</a></p>
         </div>
       </div>
     );

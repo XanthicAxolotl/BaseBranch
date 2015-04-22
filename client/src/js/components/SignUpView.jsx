@@ -133,7 +133,7 @@ var SignUpView = React.createClass({
             hintText="Confirm Password" value={this.state.cPassword[0]} errorText={this.state.errorCPass} onChange={this.cPassInput} type="password"/> <br />
           <RaisedButton label="Sign Up" secondary={true} onClick={this.newUser} disabled={this.state.disable}/>
           <RaisedButton label="Sign Up with GitHub" secondary={true} />
-          <p><a href="/">Already have an account? Log in here.</a></p>
+          <p><a href="./login.html">Already have an account? Log in here.</a></p>
         </div>
       </div>
     );
