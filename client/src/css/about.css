@@ -1,0 +1,191 @@
+html{
+  height:100%;
+  width: 100%
+}
+ 
+body{
+  width: 100%;
+  height:100%;
+}
+#app{
+  height: 100%;
+  width: 100%
+}
+
+#app>div:first-child {
+  height: 100%;
+  width: 100%;
+}
+
+#app>div:first-child>div:last-child{
+  height: calc(100% - 56px);
+  width: 100%;
+}
+.pictureContainer{
+  margin: auto;
+  width: 80%;
+  height: 250px;
+  background-color: #fff;
+  border-bottom: 1px solid #3A5169;
+}
+
+
+.picture{
+  margin-top: 3%;
+  margin-left: 3%;
+  margin-bottom: 3%;
+  width: 135px;
+  height:135px;
+  border-radius: 100%;
+  border: 1px solid #E1E1E1; 
+}
+
+.name{
+  display: inline-block;
+  font-size: 40px;
+  position: absolute;
+  margin-top: 8%;
+  margin-left:5%;
+  color: #3A5169;
+}
+
+.userInfo{
+  width: 80%;
+  margin: auto;
+}
+
+.mui-tabs-container .mui-tab-item-container{
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.mui-tabs-container .mui-tab-item-container .mui-tab-item{
+  color: #3A5169;
+
+}
+.mui-tabs-container .mui-tab-item-container .mui-tab-item.mui-tab-is-active{
+  color: #3A5169;
+}
+
+.mui-ink-bar{
+  background-color: #E74C3C;
+}
+
+.list{
+    list-style: none;
+    display: inline-block;
+    width: 100%;
+}
+
+.item{
+    display: block;
+    padding: 1% 2%;
+    background-color: #F8F8F8;
+    font-size: 15px;
+    color: #3A5169;
+    margin-bottom: 3px;
+    position: relative;
+    transition: 0.3s;
+}
+
+.item-left{
+    padding:0% 2%;
+    display: inline-block;
+    width: 35%;
+    vertical-align: top;
+    font-size: 20px;
+    border-right: 1px solid #D3E0E8;
+    border-left: 1px solid #D3E0E8;
+}
+
+.item-left-details{
+    font-size: 14px;
+}
+
+.item-right{
+    display: inline-block;
+    border-opacity: .7;
+    padding-left: 2%;
+    width: 60%;
+    opacity: .8;
+    font-size: 16px;
+}
+
+.item-rating{
+  padding-top: 1.4%;
+  padding-right: 2%;
+  width: 5%;
+  font-size: 23px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+.item:hover{
+    background-color:#d1f1f9;
+}
+
+.col-md-2 h4 {
+  color: #3498DB
+}
+
+.col-md-2 h5 {
+  color: #3498DB;
+  font-weight: bold;
+}
+
+.col-md-2 {
+  width: 15%;
+  float: left;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  text-align: center;
+}
+
+.col-md-3 {
+  max-height: 100px;
+  width: 33%;
+  float: left;
+  text-align: center;
+}
+
+.col-md-4 {
+  max-height: 100px;
+  width: 20%;
+  float: left;
+  text-align: center;
+  color: #3498DB;
+}
+
+.col-md-two {
+  width: 50%;
+  float: left;
+  max-height: 100px;
+  text-align: center;
+}
+
+.about-title {
+  text-align: center;
+}
+
+.row {
+  width: 75%
+}
+
+.sect-3 h1, p {
+  color: #3498DB;
+}
+
+.sect-3 {
+  overflow: hidden;
+  padding-top: 5%;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #3498DB;
+    margin: 1em 0;
+    padding: 0;
+}
