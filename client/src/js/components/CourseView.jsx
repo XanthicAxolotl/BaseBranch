@@ -4,6 +4,8 @@ var React           = require('react');
 var Reflux          = require('reflux');
 var CourseStore     = require('../stores/CourseStore.js');
 var CourseActions   = require('../actions/CourseActions.js');
+var CommentStore    = require('../stores/CourseCommentStore.js');
+var Cookies         = require('cookies-js');
 
 /*============== DECLARE MATERIAL COMPONENTS ==============*/
 //NavBar Components
@@ -12,6 +14,7 @@ var ToolbarGroup = mui.ToolbarGroup;
 var DropDownMenu = mui.DropDownMenu;
 var FontIcon = mui.FontIcon;
 var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 var DropDownIcon = mui.DropDownIcon;
 //Set Material-UI Vars
 var Menu = mui.Menu;
@@ -22,9 +25,6 @@ var Paper = mui.Paper;
 var injectTapEventPlugin = require("react-tap-event-plugin");
 
 injectTapEventPlugin();
-
-/*======================== MOCK DATA ========================*/
-// these should be populated by the database
 
 /*================ CREATE CURRICULUM COMPONENTS ================*/
 //Create Header View
@@ -78,18 +78,55 @@ var CheckList = React.createClass({
 
 //Create Individual Resource View
 var ResourceView = React.createClass({
+  getInitialState: function(){
+    return {
+      newComment: '',
+      userId: Cookies.get('basebranchuser') || null
+    };
+  },
+  handleText: function(e){
+    this.setState({
+      newComment: e.target.value
+    });
+  },
   voteUp: function(){
     this.props.handleVote(this.props.resource.id, 'up');
   },
   voteDown: function(){
     this.props.handleVote(this.props.resource.id, 'down');
   },
+  addComment: function(){
+    var comment = {
+      userId: this.state.userId,
+      text: this.state.newComment,
+      resourceId: this.props.resource.id 
+    };
+    this.setState({
+      newComment: ''
+    });
+    CourseActions.newComment(comment);
+  },
   render: function() {
+    var comments = this.props.comments.map(function(comment){
+      return (<li><span>{comment.text}</span><span>{comment.createdAt.split('T')[0]}</span></li>);
+    });
     return(
       <div className="single-resource">
-        <div><span className="bold">{this.props.resource.name}</span><span> - Rating: {this.props.resource.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
-        <div>{this.props.resource.description}</div>
-        <div><a href={this.props.resource.url} target="_blank">View Resource</a></div>
+        <div className="resource-info">
+          <div><span className="bold">{this.props.resource.name}</span><span> - Rating: {this.props.resource.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
+          <div>{this.props.resource.description}</div>
+          <div><a href={this.props.resource.url} target="_blank">View Resource</a></div>
+        </div>
+        <div className="resource-comments">
+          <h5>Comments</h5>
+          <ul className="comment-list">
+            {comments}
+          </ul>
+          <div>
+            <textarea onChange={this.handleText} value={this.state.newComment}> </textarea>
+            <FlatButton disabled={this.state.userId === null} onClick={this.addComment}>Add a New Comment</FlatButton>
+          </div>
+        </div>
       </div>
     )
   }
@@ -97,13 +134,14 @@ var ResourceView = React.createClass({
 
 //Create Course View
 var CourseView = React.createClass({
-  mixins: [Reflux.listenTo(CourseStore, 'updateCourse')],
+  mixins: [Reflux.listenTo(CourseStore, 'updateCourse'), Reflux.connect(CommentStore, 'comments')],
   getInitialState: function(){
     return {
       windowWidth: window.innerWidth,
       isMobile: window.innerWidth < 1024,
       course:{resources:[]},
-      selected: {}
+      selected: {},
+      comments: []
     };
   },
   goBack: function(){
@@ -119,6 +157,7 @@ var CourseView = React.createClass({
         context.setState({
           selected: course.resources[0]
         });
+        CourseActions.getComments(course.resources[0].id);
       } else {
         var resources = context.state.course.resources;
         for (var i = 0; i < resources.length; i++){
@@ -139,6 +178,7 @@ var CourseView = React.createClass({
         this.setState({
           selected: resources[i]
         });
+        CourseActions.getComments(resources[i].id);
         return;
       }
     }
@@ -160,7 +200,7 @@ var CourseView = React.createClass({
             <CheckList resources={this.state.course.resources} changeResource={this.changeResource} />
           </div>
           <div className="resources">
-            <ResourceView resource={this.state.selected} handleVote={this.handleVote}/>
+            <ResourceView resource={this.state.selected} handleVote={this.handleVote} comments={this.state.comments}/>
           </div>
         </div>
       </div>
