@@ -100,7 +100,7 @@ sequelize.sync().success(function() {
     console.log('basebranch tables created successfully');
 
     // Create initial data in the MySQL database if the data does not exist yet.
-    var channel1, channel2, node1, node2, resource1, resource2, resource3;
+    var channel1, channel2, channel3, channel4, channel5, node1, node2, node3, node4, resource1, resource2, resource3, resource4, resource5;
 
     // Create a channel.
     Channels.findOrCreate({ where: {name: 'JavaScript'}})
@@ -108,7 +108,7 @@ sequelize.sync().success(function() {
       channel1 = channel;
       console.log('Found or created channel ', channel.name);
       console.log('Created? ', created);
-      // Create a related channel.
+      // Create a related channel: Angular
       Channels.findOrCreate({ where: {name: 'Angular'}})
       .spread(function(channel, created){
         channel2 = channel;
@@ -161,7 +161,69 @@ sequelize.sync().success(function() {
                           curriculum.setChannel(channel1)
                           .then(function(){
                             console.log('successfully related curriculum with channel');
-                          })
+                            // Create a related channel: React
+                            Channels.findOrCreate({ where: {name: 'React'}})
+                            .spread(function(channel, created){
+                              channel3 = channel;
+                              console.log('Found or created channel ', channel.name);
+                              console.log('Created? ', created);
+                              channel1.addNeighbor(channel)
+                              .then(function(){
+                                console.log('successfully related JavaScript and React channels');
+                                // Create a related channel: BackBone
+                                Channels.findOrCreate({ where: {name: 'Backbone'}})
+                                .spread(function(channel, created){
+                                  channel4 = channel;
+                                  console.log('Found or created channel ', channel.name);
+                                  console.log('Created? ', created);
+                                  channel1.addNeighbor(channel)
+                                  .then(function(){
+                                    console.log('successfully related JavaScript and Backbone channels');
+                                    // Create a channel: Ruby
+                                    Channels.findOrCreate({ where: {name: 'Ruby'}})
+                                      .spread(function(channel, created){
+                                        channel5 = channel;
+                                        console.log('Found or created channel ', channel.name);
+                                        console.log('Created? ', created);
+                                      }).then(
+                                        Nodes.findOrCreate({ where: {name: 'Intro to React'}, defaults: {channelId: channel3.id}})
+                                          .spread(function(node, created){
+                                            node3 = node;
+                                            console.log('Found or created node ', node.name);
+                                            console.log('Created? ', created);
+                                            // Create a neighbor node in the same channel.
+                                            Nodes.findOrCreate({ where: {name: 'Flux Architecture'}, defaults: {channelId: channel3.id}})
+                                            .spread(function(node, created){
+                                              node4 = node;
+                                              console.log('Found or created node ', node.name);
+                                              console.log('Created? ', created);
+                                              node3.addNeighbor(node)
+                                              .then(function(){
+                                                console.log('successfully related Intro to React and Flux Architecture nodes');
+                                                // Create a resource in a node.
+                                                Resources.findOrCreate({ where: {name: 'A Quick Introduction to React'}, defaults: {url: 'http://words.taylorlapeyre.me/an-introduction-to-react', type: 'blog', description: 'Taylor Lapeyre\s introductory blog post', nodeId: node3.id}})
+                                                .spread(function(resource, created){
+                                                  resource4 = resource;
+                                                  console.log('Found or created resource ', resource.name);
+                                                  console.log('Created? ', created);
+                                                  // Create a second resource in the node.
+                                                  Resources.findOrCreate({ where: {name: 'Flux Overview'}, defaults: {url: 'https://facebook.github.io/flux/docs/overview.html', type: 'website', description: 'An online reference for Flux', nodeId: node4.id}})
+                                                  .spread(function(resource, created){
+                                                    resource5 = resource;
+                                                    console.log('Found or created resource ', resource.name);
+                                                    console.log('Created? ', created);
+                                                  });
+                                                });
+                                              });
+                                            });
+                                          })
+                                        
+                                      );
+                                  });
+                                });
+                              });
+                            });
+                          });
                         });
                       });
                     });
@@ -171,7 +233,7 @@ sequelize.sync().success(function() {
             });
           });
         });
-      }); 
+      });
     });
 });
 
