@@ -20,7 +20,7 @@ var Main = React.createClass({
         <div className="full">
           <NavBar />
           <GraphBar />
-          <GraphSideBar channelId='1'/>
+          <GraphSideBar />
           <GraphView />
         </div>
       </div>

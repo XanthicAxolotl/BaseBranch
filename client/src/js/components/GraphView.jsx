@@ -42,7 +42,7 @@ var GraphView = React.createClass({
     // update this.state's data
     var domain = [0, 30];
     this.setState({
-      data: data,
+      data: data.nodes,
       domain: {x: domain, y: [0, 100]},
       tooltip: null,
       prevDomain: null,

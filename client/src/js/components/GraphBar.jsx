@@ -43,13 +43,13 @@ var GraphBar = React.createClass({
     return {
       addedTopic: '',
       modalIsOpen: false,
-      channelName: GraphStore.channelName
+      channelName: ''
     };
   },
 
   updateData: function(data) {
     this.setState({
-      channelName: GraphStore.channelName
+      channelName: data.channelName
     });
   },
 
@@ -80,22 +80,17 @@ var GraphBar = React.createClass({
             <h3 className="light-font">Channel: {this.state.channelName}</h3>
           </ToolbarGroup>
           <ToolbarGroup key={1} float="left" className="nav-bar-title">
-            <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} href="https://pbs.twimg.com/profile_images/458794430200152064/XdQULww6_400x400.png">
-              <span className="mui-raised-button-label light-font">{this.state.channelName} Topics</span>
-            </FlatButton>
-          </ToolbarGroup>
-          <ToolbarGroup key={2} float="left" className="nav-bar-title">
             <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} href={curriculumLink}>
               <span className="mui-raised-button-label light-font">{this.state.channelName} Curricula</span>
             </FlatButton>
           </ToolbarGroup>
-          <ToolbarGroup key={3} float="left">
+          <ToolbarGroup key={2} float="left">
             <DropDownMenu className="light-font" menuItems={menuItems} />
           </ToolbarGroup>
-          <ToolbarGroup key={4} float="left">
+          <ToolbarGroup key={3} float="left">
             <FlatButton className="bar-btn-flat" secondary={true}  linkButton={true} onClick={this.openModal}><span className="light-font mui-raised-button-label">Add New Topic</span></FlatButton>
           </ToolbarGroup>
-          <ToolbarGroup key={5} float="left">
+          <ToolbarGroup key={4} float="left">
             <Modal className="topic" isOpen={this.state.modalIsOpen}>
               <NewTopicForm handleTopic={this.handleTopic} /> <br /> <br />
               <button onClick={this.handleSave} className="waves-effect waves-light btn-flat light-font">Add Topic</button>

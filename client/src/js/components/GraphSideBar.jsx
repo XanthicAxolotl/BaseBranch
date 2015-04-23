@@ -29,20 +29,35 @@ var numberMenuItems = [
 
 
 var GraphSideBar = React.createClass({
-  mixins: [Reflux.connect(GraphSideBarStore, 'curriculum')],
+  mixins: [Reflux.connect(GraphSideBarStore, 'curriculum'), Reflux.listenTo(GraphStore, 'updateId')],
   
   getInitialState: function() {
     return {
-      curriculum: [], curricName: '', curricDesc: ''
+      curriculum: [],
+      curricName: '',
+      curricDesc: '',
+      channelId: 0,
+      channelName: ''
     }
   },
 
+  updateId: function(data){
+    this.setState({
+      channelId: data.channelId,
+      channelName: data.channelName
+    });
+  },
+
   handleChangeName: function(event) {
-    this.setState({curricName: event.target.value});
+    this.setState({
+      curricName: event.target.value
+    });
   },
 
   handleChangeDesc: function(event) {
-    this.setState({curricDesc: event.target.value});
+    this.setState({
+      curricDesc: event.target.value
+    });
   },
 
   saveNewCurriculum: function() {
@@ -50,8 +65,8 @@ var GraphSideBar = React.createClass({
     for (var i = 0; i<this.state.curriculum.length; i++) {
       resources.push(this.state.curriculum[i].id); 
     }
-    GraphActions.saveCurriculum(resources, this.props.channelId, this.state.curricName, this.state.curricDesc);
-    window.location.href = "./curriculum.html#" + GraphStore.channelName;
+    GraphActions.saveCurriculum(resources, this.state.channelId, this.state.curricName, this.state.curricDesc);
+    window.location.href = "./curriculum.html#" + this.state.channelName;
   },
 
   deleteFromBar: function(event, index, item) {
