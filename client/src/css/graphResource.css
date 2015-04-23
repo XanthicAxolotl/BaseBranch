@@ -26,7 +26,7 @@
 }
 
 .right{
-  width: 24%;
+  width: 25%;
   height: 530px;
   display: inline-block;
 }
@@ -128,5 +128,22 @@ h3{
 
 .full-button {
   display: block;
+  width: 100%;
+}
+
+.d3-text {
+  text-stroke: 20px #333333;
+  -webkit-text-stroke: 20px #333333;
+  color: #ECF0F1 !important;
+  text-shadow:
+       2px 2px 0 #333,
+     -1px -1px 0 #333,  
+      1px -1px 0 #333,
+      -1px 1px 0 #333,
+       1px 1px 0 #333;
+}
+
+.mui-paper > .mui-paper-container {
+  height: calc(100% - 200px);
   width: 100%;
 }
