@@ -6,7 +6,7 @@ var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
 var DropDownMenu = mui.DropDownMenu;
 var FontIcon = mui.FontIcon;
-var RaisedButton = mui.RaisedButton;
+var FlatButton = mui.FlatButton;
 var DropDownIcon = mui.DropDownIcon;
 //Set Material-UI Vars
 var LeftNav = mui.LeftNav;
@@ -32,9 +32,9 @@ var CurriculumBar = React.createClass({
     return (
       <Toolbar className="indigo">
         <ToolbarGroup key={0} float="left" className="nav-bar-title">
-          <RaisedButton linkButton={true} href={graphLink}>
-            <span className="mui-raised-button-label">Topic View</span>
-          </RaisedButton>
+          <FlatButton linkButton={true} href={graphLink} className="topic-button">
+            <span className="mui-flat-button-label">Topic View</span>
+          </FlatButton>
         </ToolbarGroup>
         <ToolbarGroup key={1} float="left" className="nav-bar-dropdown">
           <DropDownMenu menuItems={menuItems} />
