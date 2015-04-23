@@ -4,14 +4,13 @@ var cuid = require('cuid');
 var GraphActions = require('../actions/GraphActions.js');
 var NodeResourceActions = require('../actions/NodeResourceActions.js');
 
-
 var GraphStore = Reflux.createStore({
   width: 900,
   height: 560,
   color: "Azure",
   channelName: 'asdf',
   channelId: 1,
-  nodeData: [],
+  nodeData: {nodes:[]},
 
   listenables: [NodeResourceActions, GraphActions],
 
@@ -32,21 +31,21 @@ var GraphStore = Reflux.createStore({
         dataType: 'json',
         url: './api/channel/nodes/' + language,
       }).then(function(data){
-          this.nodeData = data; //push data to store
+          context.nodeData.nodes = data; //push data to store
 
           // set the channelId
           if (data.length > 0) {
-            context.channelId = data[0].channelId;
+            context.nodeData.channelId = data[0].channelId;
           }
-          for (var i = 0; i < this.nodeData.length; i++) {
-            this.nodeData[i].x = (8 * ( i + 1 )) % 25;
-            this.nodeData[i].y = 8 * ( i + 1 );
-            this.nodeData[i].z = 10;
+          for (var i = 0; i < context.nodeData.length; i++) {
+            context.nodeData.nodes[i].x = (8 * ( i + 1 )) % 25;
+            context.nodeData.nodes[i].y = 8 * ( i + 1 );
+            context.nodeData.nodes[i].z = 10;
           }
           console.log('lan in', language);
-          context.channelName = language;
+          context.nodeData.channelName = language;
           console.log('con chan name', context.channelName);
-          context.trigger(data);
+          context.trigger(context.nodeData);
       },function(error){
         console.log('Error on GraphStore.load\'s GET request');
         console.error(error);
@@ -58,7 +57,7 @@ var GraphStore = Reflux.createStore({
   
   onCreate: function(topic) {
     var context = this;
-    var data = {name: topic, channelId: context.channelId};
+    var data = {name: topic, channelId: context.nodeData.channelId};
     $.ajax({
       type: 'POST',
       dataType: 'json',
