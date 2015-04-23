@@ -169,7 +169,7 @@ ns._drawPoints = function(el, scales, data, prevScales) {
     .text( function (d) { return d.name; })
     .attr("font-family", "sans-serif")
     .attr("font-size", "20px")
-    .attr("fill", "black")
+    .attr("fill", "#ECF0F1")
     .attr("cursor", "pointer")
     .attr("id", function(d) {return d.id})
     .style("text-anchor", "middle")

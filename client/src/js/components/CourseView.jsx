@@ -34,22 +34,17 @@ var Header = React.createClass({
   },
   render: function() {
     return(
-      <div className="header">
+      <Paper className="header" zDepth={1} rounded={false}>
         <div className="back-button" onClick={this.back}>
           <i className="fa fa-chevron-left fa-2x"></i>
         </div>
         <div className="header-left">
           <div><h3 className="reset">{this.props.name}</h3></div>
-          <div>{this.props.desc}</div>
         </div>
         <div className="header-right">
-          <ul>
-            <li>Created By: {this.props.creator}</li>
-            <li>Last Updated: {this.props.update}</li>
-            <li>Rating: {this.props.rating}</li>
-          </ul>
+          <div>{this.props.desc}</div>
         </div>
-      </div>
+      </Paper>
     )
   }
 });
@@ -66,7 +61,7 @@ var CheckList = React.createClass({
       };
       return { payload: index, text: result.name, onItemClick: result.changeResource};
     });
-    var filterMenuItems = [{ payload: '1', text: 'CheckList'}];
+    var filterMenuItems = [{ payload: '1', text: 'Resources'}];
     var filterMenuItems = filterMenuItems.concat(checkListResource);
     return(
       <div>
@@ -107,24 +102,38 @@ var ResourceView = React.createClass({
     CourseActions.newComment(comment);
   },
   render: function() {
+    console.log(this.props.comments);
     var comments = this.props.comments.map(function(comment){
-      return (<li><span>{comment.text}</span><span>{comment.createdAt.split('T')[0]}</span></li>);
+      return (
+        <li className="single-comment">
+          <Paper zDepth={1} rounded={false} className="comment-paper">
+            <div><span className="user-name">{comment.userId} - </span>{comment.createdAt.split('T')[0]}</div>
+            <div className="comment-text">{comment.text}</div>
+          </Paper>
+        </li>
+      );
     });
     return(
       <div className="single-resource">
-        <div className="resource-info">
-          <div><span className="bold">{this.props.resource.name}</span><span> - Rating: {this.props.resource.rating}</span><span onClick={this.voteUp}> up</span><span onClick={this.voteDown}> down</span></div>
-          <div>{this.props.resource.description}</div>
-          <div><a href={this.props.resource.url} target="_blank">View Resource</a></div>
-        </div>
+        <Paper className="resource-info" zDepth={1} rounded={false}>
+          <div className="rating">
+            <div className="rating-number">{this.props.resource.rating}</div>
+            <div className="plus-minus"><span className="plus" onClick={this.voteUp}><i className="fa fa-chevron-up"></i></span><span className="minus" onClick={this.voteDown}><i className="fa fa-chevron-down"></i></span></div>
+          </div>
+          <div className="resource-name-desc">
+            <div className="bold">{this.props.resource.name}</div>
+            <div>{this.props.resource.description}</div>
+          </div>
+          <div className="resource-link"><a href={this.props.resource.url} target="_blank"><div className="view-button">View Resource</div></a></div>
+        </Paper>
         <div className="resource-comments">
           <h5>Comments</h5>
           <ul className="comment-list">
             {comments}
           </ul>
-          <div>
-            <textarea onChange={this.handleText} value={this.state.newComment}> </textarea>
-            <FlatButton disabled={this.state.userId === null} onClick={this.addComment}>Add a New Comment</FlatButton>
+          <div className="comment-form">
+            <textarea onChange={this.handleText} value={this.state.newComment} className="comment-box"> </textarea>
+            <FlatButton disabled={this.state.userId === null} onClick={this.addComment} className="comment-button">Add a New Comment</FlatButton>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ var SearchBarView = React.createClass({
           {languages.map(function(language){
             var url = "./curriculum.html#" + language.name;
             var gurl = "./graph.html#" + language.name;
-            return <li className="searchItem">{language.name} <a href={gurl} className="graphLink">Graph View</a> <a href={url} className="curriculumLink">Curriculum View</a></li>
+            return <li className="searchItem">{language.name} <a href={gurl} className="graphLink">Topic View</a> <a href={url} className="curriculumLink">Curriculum View</a></li>
           })}
         </ul>
       </div>
