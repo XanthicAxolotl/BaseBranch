@@ -1,12 +1,13 @@
 /*==================== REQUIRE MODULES ====================*/
 var Reflux = require('reflux');
 var CurriculumActions = require('../actions/CurriculumActions.js');
+var CurriculumBarActions = require('../actions/CurriculumBarActions.js');
 
 var _curricula = [];
 
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
-  listenables: CurriculumActions,
+  listenables: [CurriculumActions, CurriculumBarActions],
   init: function(){
     this.load();
   },
@@ -28,8 +29,12 @@ var CurriculumStore = Reflux.createStore({
       http.onreadystatechange = function() {
         if (http.readyState === 4) {
           _curricula = JSON.parse(http.response);
-          for (var i = 0; i < _curricula.length; i++){
-            context.loadResource(i);
+          if (_curricula.length === 0){
+            context.trigger(_curricula);
+          } else {
+            for (var i = 0; i < _curricula.length; i++){
+              context.loadResource(i);
+            }
           }
         }
       };
@@ -59,6 +64,9 @@ var CurriculumStore = Reflux.createStore({
       };
       http.send();
     }
+  },
+  onGetNewChannel: function(){
+    this.load();
   },
   onChangeFramework: function(){
     this.load();
