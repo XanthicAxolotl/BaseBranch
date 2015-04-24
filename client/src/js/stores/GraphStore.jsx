@@ -3,6 +3,7 @@ var mui = require('material-ui');
 var cuid = require('cuid');
 var GraphActions = require('../actions/GraphActions.js');
 var NodeResourceActions = require('../actions/NodeResourceActions.js');
+var CurriculumBarActions = require('../actions/CurriculumBarActions.js');
 
 var GraphStore = Reflux.createStore({
   width: 900,
@@ -12,7 +13,7 @@ var GraphStore = Reflux.createStore({
   channelId: 1,
   nodeData: {nodes:[]},
 
-  listenables: [NodeResourceActions, GraphActions],
+  listenables: [NodeResourceActions, GraphActions, CurriculumBarActions],
 
   init: function(){
     this.load();
@@ -68,6 +69,11 @@ var GraphStore = Reflux.createStore({
       console.error(error);
     });
   },
+
+  onGetNewNodes: function(){
+    console.log('ingetnewNodeFuntion')
+    this.load();
+  }
 
 });
 
