@@ -2,4 +2,4 @@
 var Reflux = require('reflux');
 
 /*==================== CREATE ACTIONS =====================*/
-module.exports = Reflux.createActions(['getRelatedChannels', 'getNewChannel']);
+module.exports = Reflux.createActions(['getRelatedChannels', 'getNewChannel', 'getNewNodes']);
