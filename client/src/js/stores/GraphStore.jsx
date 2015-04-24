@@ -42,9 +42,7 @@ var GraphStore = Reflux.createStore({
             context.nodeData.nodes[i].y = 8 * ( i + 1 );
             context.nodeData.nodes[i].z = 10;
           }
-          console.log('lan in', language);
           context.nodeData.channelName = language;
-          console.log('con chan name', context.channelName);
           context.trigger(context.nodeData);
       },function(error){
         console.log('Error on GraphStore.load\'s GET request');
