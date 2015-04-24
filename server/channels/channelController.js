@@ -6,6 +6,7 @@
 var Nodes = require('../config/db_models.js').Nodes;
 var Curricula = require('../config/db_models.js').Curricula;
 var Channels = require('../config/db_models.js').Channels;
+var Users = require('../config/db_models.js').Users;
 
 module.exports = {
 
@@ -50,7 +51,7 @@ module.exports = {
     .then(function(channel){
       console.log('Found channel');
       // Lookup all of the Curriculum instances that are associated with the Channel instance.
-      Curricula.findAll({where:{ channelId: channel.id }})
+      Curricula.findAll({where:{ channelId: channel.id }, include: [ Users ]})
       .then(function(curricula){
         console.log('Successfully found all curricula');
         // Send back to the client the Curriculum instances as a JSON object.
