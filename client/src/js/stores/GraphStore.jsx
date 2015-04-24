@@ -23,7 +23,6 @@ var GraphStore = Reflux.createStore({
 
   load: function(){
     var language = window.location.href.split('#')[1];
-    console.log('lan out', language);
     // use this to get the graph data from the database
     if (language !== undefined && language.length > 0) {
       var context = this;
