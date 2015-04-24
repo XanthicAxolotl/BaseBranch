@@ -7,6 +7,7 @@ var GraphActions = require('../actions/GraphActions.js');
 var FlatButton = mui.FlatButton;
 var RaisedButton = mui.RaisedButton;
 var TextField = mui.TextField;
+var Cookies = require('cookies-js');
 
 
 //Set Material-UI Vars
@@ -24,10 +25,6 @@ var numberMenuItems = [
    { payload: '3', text: 'Example Node 2', data: 'Backbone' }
 ];
 
-
-
-
-
 var GraphSideBar = React.createClass({
   mixins: [Reflux.connect(GraphSideBarStore, 'curriculum'), Reflux.listenTo(GraphStore, 'updateId')],
   
@@ -37,7 +34,8 @@ var GraphSideBar = React.createClass({
       curricName: '',
       curricDesc: '',
       channelId: 0,
-      channelName: ''
+      channelName: '',
+      userId: Cookies.get('basebranchuser') || null
     }
   },
 
@@ -94,7 +92,7 @@ var GraphSideBar = React.createClass({
           multiLine={true} 
           value={this.state.curricDesc} 
           onChange={this.handleChangeDesc} />
-        <FlatButton label="Create Curriculum" className="center full-button" secondary={true} onClick={this.saveNewCurriculum} />
+        <FlatButton disabled={this.state.userId === null} label={this.state.userId === null ? 'Login to Create' : 'Create Curriculum'} className="center full-button" secondary={true} onClick={this.saveNewCurriculum} />
       </div>
     );
   }

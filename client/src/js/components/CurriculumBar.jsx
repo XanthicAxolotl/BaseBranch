@@ -20,7 +20,6 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 var Reflux = require('reflux');
 
 injectTapEventPlugin();
-
 var language = window.location.href.split('#')[1];
 
 var CurriculumBar = React.createClass({
