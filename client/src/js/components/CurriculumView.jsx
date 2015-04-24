@@ -74,7 +74,7 @@ var CurriculumView = React.createClass({
     return {
       windowWidth: window.innerWidth,
       isMobile: window.innerWidth < 1024,
-      curricula: [{resources:[]}]
+      curricula: [{id: 0, resources:[{id: 0, name:''}]}]
     };
   },
   handleRating: function(itemId, dir){

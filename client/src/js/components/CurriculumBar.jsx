@@ -27,7 +27,7 @@ var CurriculumBar = React.createClass({
   mixins: [Reflux.connect(ChannelStore, 'channels')],
   getInitialState: function(){
     return { 
-      channels: [],
+      channels: [{name: ''}],
       graphLink: "./graph.html#" + language
     };
   },

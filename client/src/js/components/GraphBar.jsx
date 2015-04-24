@@ -43,19 +43,21 @@ var GraphBar = React.createClass({
     return {
       addedTopic: '',
       modalIsOpen: false,
-      channelName: ''
+      channelName: '',
+      channelId: 0
     };
   },
 
   updateData: function(data) {
     this.setState({
-      channelName: data.channelName
+      channelName: data.channelName,
+      channelId: data.channelId
     });
   },
 
   handleSave: function() {
     // console.log('handleSave', this.state.addedTopic);
-    GraphActions.addNode(this.state.addedTopic, this.state.topicId);
+    GraphActions.addNode(this.state.addedTopic, this.state.channelId);
     this.closeModal();
   },
 
@@ -73,6 +75,7 @@ var GraphBar = React.createClass({
 
   render: function() {
     var curriculumLink = "./curriculum.html#" + this.state.channelName;
+    console.log(this.state.channelId);
     return (
       <div className="full">
         <Toolbar className="button-nav-container bar-div">

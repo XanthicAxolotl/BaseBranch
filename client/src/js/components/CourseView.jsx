@@ -130,7 +130,7 @@ var ResourceView = React.createClass({
           </ul>
           <div className="comment-form">
             <textarea onChange={this.handleText} value={this.state.newComment} className="comment-box"> </textarea>
-            <FlatButton disabled={this.state.userId === null} onClick={this.addComment} className="comment-button">Add a New Comment</FlatButton>
+            <FlatButton disabled={this.state.userId === null} onClick={this.addComment} className="comment-button">{this.state.userId === null ? "Log in to Comment!" : "Add a New Comment"}</FlatButton>
           </div>
         </div>
       </div>
