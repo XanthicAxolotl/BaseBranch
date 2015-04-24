@@ -63,7 +63,7 @@ var GraphSideBar = React.createClass({
     for (var i = 0; i<this.state.curriculum.length; i++) {
       resources.push(this.state.curriculum[i].id); 
     }
-    GraphActions.saveCurriculum(resources, this.state.channelId, this.state.curricName, this.state.curricDesc);
+    GraphActions.saveCurriculum(resources, this.state.channelId, this.state.curricName, this.state.curricDesc, this.state.userId);
     window.location.href = "./curriculum.html#" + this.state.channelName;
   },
 

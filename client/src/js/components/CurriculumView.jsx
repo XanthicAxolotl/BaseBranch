@@ -39,6 +39,7 @@ var ItemView = React.createClass({
     this.props.editRating(this.props.curriculum.id, 'down');
   },
   render: function() {
+    while(!this.props.curriculum.resources){ }
     var resourceItems = this.props.curriculum.resources.map(function(resource){
       return <li key={resource.id}>{resource.name}</li>
     });
@@ -74,7 +75,7 @@ var CurriculumView = React.createClass({
     return {
       windowWidth: window.innerWidth,
       isMobile: window.innerWidth < 1024,
-      curricula: [{id: 0, resources:[{id: 0, name:''}]}]
+      curricula: [{id: 0, resources:[{id: 0, name:'a'}]}]
     };
   },
   handleRating: function(itemId, dir){
