@@ -56,10 +56,7 @@ var CheckList = React.createClass({
     var index = 1;
     var checkListResource = this.props.resources.map(function(result){
       index++;
-      result.changeResource = function(){
-        context.props.changeResource(result.id);
-      };
-      return { payload: index, text: result.name, onItemClick: result.changeResource};
+      return { payload: index, text: result.name, id:result.id};
     });
     var filterMenuItems = [{ payload: '1', text: 'Resources'}];
     var filterMenuItems = filterMenuItems.concat(checkListResource);
@@ -180,10 +177,10 @@ var CourseView = React.createClass({
       }
     });
   },
-  changeResource: function(e, resourceId, menuItem){
+  changeResource: function(e, index, menuItem){
     var resources = this.state.course.resources;
     for (var i = 0; i < resources.length; i++){
-      if (resourceId === resources[i].id){
+      if (menuItem.id === resources[i].id){
         this.setState({
           selected: resources[i]
         });
