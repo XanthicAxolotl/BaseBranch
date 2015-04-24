@@ -137,7 +137,8 @@ describe('', function() {
     it('should retrieve all comments belonging to resource', function(done){
       db.Comments.create({
         text: 'textcomment',
-        resourceId: resourceId
+        resourceId: resourceId,
+        userId: userId
       })
       .then(function(comment){
         request(app)
@@ -146,6 +147,8 @@ describe('', function() {
           .expect(function(res){
             expect(Array.isArray(res.body)).to.equal(true);
             expect(res.body[0].id).to.equal(comment.id);
+            expect(res.body[0].userId).to.equal(userId);
+            expect(res.body[0].user.name).to.equal('testuser');
           })
           .end(done);   
       });
@@ -154,14 +157,24 @@ describe('', function() {
   });
 
   describe('Nodes', function(){
-    var nodeId,
+    var userId,
+        nodeId,
         resourceId,
         resourceName = 'testresource',
         nodeName = 't3stn0d3';
 
     beforeEach(function(done){
       db.sequelize.sync().then(function(){
-        done();
+        db.Users.create({
+          name: 'testuser',
+          password: '12345',
+          email: 'testuser@test.com'
+        })
+        .then(function(user){
+          userId = user.id;
+          console.log('Created user ', userId);
+          done();
+        });
       });
     });
 
@@ -172,8 +185,12 @@ describe('', function() {
         db.Resources.destroy({where: {name: resourceName }})
         .then(function(affectedRows){
           console.log('Deleted testresource from DB. Rows affected: ', affectedRows);
-          done();
-        })
+          db.Users.destroy({ where: { name: 'testuser' }})
+          .then(function(affectedRows){
+            console.log('Deleted testuser from DB. Rows affected: '. affectedRows);
+            done();
+          });
+        });
       });
     });
 
@@ -209,7 +226,8 @@ describe('', function() {
           'url': 'test.com',
           'type': 'app',
           'description': 'test',
-          'nodeId': nodeId
+          'nodeId': nodeId,
+          'userId': userId
         })
         .expect(200)
         .expect(function(res){
@@ -226,6 +244,7 @@ describe('', function() {
         .expect(function(res){
           expect(Array.isArray(res.body)).to.equal(true);
           expect(res.body[0].id).to.equal(resourceId);
+          expect(res.body[0].user.name).to.equal('testuser');
         })
         .end(done);
     });
@@ -461,59 +480,72 @@ describe('', function() {
 
   describe('Curricula', function(){
 
-    var channelId, nodeId, res1, res2, res3;
+    var userId, channelId, nodeId, res1, res2, res3;
 
     beforeEach(function(done){
       db.sequelize.sync().then(function(){
-        // create channel for curricula testing
-        db.Channels.create({
-          name: 'testchannel'
-        })
-        .then(function(channel){
-          channelId = channel.id;
-          console.log('Created channel ', channelId);
-          
-          db.Nodes.create({
-            name: 'testnode1',
-            neighbor: 1
-          })
-          .then(function(node){
-            nodeId = node.id;
-            console.log('Created node ', nodeId);
+        // create data for curricula testing
+         db.Users.create({
+           name: 'testuser',
+           password: '12345',
+           email: 'testuser@test.com'
+         })
+         .then(function(user){
+          userId = user.id;
+          console.log('Created user ', userId);
 
-            db.Resources.create({
-              name: 'testresource1',
-              url: 'www.test1.com',
-              type: 'tutorial',
-              description: 'This is a test resource.',
-              nodeId: nodeId
+          db.Channels.create({
+            name: 'testchannel'
+          })
+          .then(function(channel){
+            channelId = channel.id;
+            console.log('Created channel ', channelId);
+
+            db.Nodes.create({
+              name: 'testnode1',
+              neighbor: 1
             })
-            .then(function(resource){
-              res1 = resource;
-              console.log('Created resource ', resource.name);
+            .then(function(node){
+              nodeId = node.id;
+              console.log('Created node ', nodeId);
 
               db.Resources.create({
-                name: 'testresource2',
-                url: 'www.test2.com',
+                name: 'testresource1',
+                url: 'www.test1.com',
                 type: 'tutorial',
                 description: 'This is a test resource.',
-                nodeId: nodeId
+                nodeId: nodeId,
+                userId: userId
               })
               .then(function(resource){
-                res2 = resource;
+                res1 = resource;
                 console.log('Created resource ', resource.name);
 
                 db.Resources.create({
-                  name: 'testresource3',
-                  url: 'www.test3.com',
+                  name: 'testresource2',
+                  url: 'www.test2.com',
                   type: 'tutorial',
                   description: 'This is a test resource.',
-                  nodeId: nodeId
+                  nodeId: nodeId,
+                  userId: userId
                 })
                 .then(function(resource){
-                  res3 = resource;
+                  res2 = resource;
                   console.log('Created resource ', resource.name);
-                  done();
+
+                  db.Resources.create({
+                    name: 'testresource3',
+                    url: 'www.test3.com',
+                    type: 'tutorial',
+                    description: 'This is a test resource.',
+                    nodeId: nodeId,
+                    userId: userId
+                  })
+                  .then(function(resource){
+                    res3 = resource;
+                    console.log('Created resource ', resource.name);
+                    done();
+                  });
                 });
               });
             });
@@ -541,7 +573,11 @@ describe('', function() {
                 db.Channels.destroy({ where: { name: 'testchannel' }})
                 .then(function(affectedRows){
                   console.log('Deleted testchannel from DB. Rows affected: ', affectedRows);
-                  done();
+                  db.Users.destroy({ where: { name: 'testuser' }})
+                  .then(function(affectedRows){
+                    console.log('Deleted testuser from DB. Rows affected: ', affectedRows);
+                    done();
+                  });
                 });
               });
             });
@@ -615,6 +651,9 @@ describe('', function() {
                 expect(res.body[0].name).to.equal('testresource1');
                 expect(res.body[1].name).to.equal('testresource2');
                 expect(res.body[2].name).to.equal('testresource3');
+                expect(res.body[0].user.name).to.equal('testuser');
+                expect(res.body[1].user.name).to.equal('testuser');
+                expect(res.body[2].user.name).to.equal('testuser');
               })
               .end(function(){
                 done();

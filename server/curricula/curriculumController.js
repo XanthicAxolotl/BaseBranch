@@ -5,6 +5,7 @@
 
 var Curricula = require('../config/db_models.js').Curricula;
 var Channels = require('../config/db_models.js').Channels;
+var Users = require('../config/db_models.js').Users;
 
 module.exports = {
 
@@ -98,10 +99,10 @@ module.exports = {
 
   // Retrieve all of the Resources for a specific Curriculum from the database and send back to the client.
   getAllResources: function(req, res, next) {
-    Curricula.find({ where:{ id: req.params.curriculumId } })
+    Curricula.find({ where:{ id: req.params.curriculumId }})
     .then(function(curriculum){
       console.log('Found curriculum: ', curriculum.name);
-      curriculum.getResources()
+      curriculum.getResources({ include: [ Users ]})
       .then(function(resources){
         console.log('Successfully found all resources associated with curriculum');
         // Send back to the client the Resource instances as a JSON object.
