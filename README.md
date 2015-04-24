@@ -1,8 +1,8 @@
 # BaseBranch.io
 
-> Web all your curriculums on one cob.
+> Crowd-sourced coding curricula constructor.
 
-- Use [BaseBranch](http://giphy.com/gifs/wWxVqAfXF464w/html5)
+- Use [BaseBranch](basebranch.herokuapp.com)
 
 ## Team
 
@@ -24,13 +24,16 @@
 
 ## Usage
 
-> BaseBranch is a crowd-sourced collecture of coding resources and curriculums. Browse graphs and curriculums of coding subjects and languages or log in and construct and edit curriculums or vote on the quality of resources.
+> BaseBranch is a crowd-sourced collection of coding resources and curriculums. Browse coding topics and curricula or log in and construct and edit curricula or vote on the quality of resources.
 
 ## Requirements
 
+For a complete list of requirements, see the [package.json](package.json) file.
+
 - Node 0.12.0
 - Express 4.0.0
-- Etc...
+- React 0.12.2
+- Reflux 0.2.7
 
 ## Development
 
@@ -39,9 +42,7 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
 ```
 
 ## Tasks
@@ -49,11 +50,28 @@ bower install
 From within the root directory:
 
 ```sh
-gulp test
+gulp production
 ```
 
 > gulp tasks:
-- gulp test
+- gulp production
+- gulp localtest
+- gulp default
+
+## Get Started Locally
+
+Setup MySQL database named basebranch
+
+```sh
+mysql.server start
+mysql -u root
+```
+
+To start the server, from within the root directory:
+
+```sh
+node server.js
+```
 
 ### Roadmap
 
