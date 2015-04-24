@@ -137,7 +137,8 @@ describe('', function() {
     it('should retrieve all comments belonging to resource', function(done){
       db.Comments.create({
         text: 'textcomment',
-        resourceId: resourceId
+        resourceId: resourceId,
+        userId: userId
       })
       .then(function(comment){
         request(app)
@@ -146,6 +147,8 @@ describe('', function() {
           .expect(function(res){
             expect(Array.isArray(res.body)).to.equal(true);
             expect(res.body[0].id).to.equal(comment.id);
+            expect(res.body[0].userId).to.equal(userId);
+            expect(res.body[0].user.name).to.equal('testuser');
           })
           .end(done);   
       });

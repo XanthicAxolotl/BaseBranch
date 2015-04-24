@@ -5,6 +5,7 @@
 
 var Resources = require('../config/db_models.js').Resources;
 var Comments = require('../config/db_models.js').Comments;
+var Users = require('../config/db_models.js').Users;
 
 module.exports = {
 
@@ -85,10 +86,14 @@ module.exports = {
 
   // Retrieve all of the Comments for a specific Resource from the database and send back to the client.
   getAllComments: function(req, res, next) {
-    Comments.findAll({where: { resourceId: req.params.resourceId }})
+    // Array of comment objects with username property appended to each one
+    var commentsWithNames = [];
+
+    // TODO: use the "include" option with the findAll query to get the associated User instances along with the Comment instances
+    Comments.findAll({where: { resourceId: req.params.resourceId }, include: [ Users ]})
     .then(function(comments){
-      console.log('Successfully found all comments');
-      // Send back to the client the Comment instances as a JSON object.
+      console.log('Successfully found all comments along with associated users');
+      console.log(JSON.stringify(comments));
       res.json(comments);
     })
     .error(function(err){
