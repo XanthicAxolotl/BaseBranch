@@ -99,12 +99,11 @@ var ResourceView = React.createClass({
     CourseActions.newComment(comment);
   },
   render: function() {
-    console.log(this.props.comments);
     var comments = this.props.comments.map(function(comment){
       return (
         <li className="single-comment">
           <Paper zDepth={1} rounded={false} className="comment-paper">
-            <div><span className="user-name">{comment.userId} - </span>{comment.createdAt.split('T')[0]}</div>
+            <div><span className="user-name">{comment.user.name} - </span>{comment.createdAt.split('T')[0]}</div>
             <div className="comment-text">{comment.text}</div>
           </Paper>
         </li>
