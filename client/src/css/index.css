@@ -171,3 +171,23 @@ img {
 .searchItem:hover{
     background-color:#d8f2f1;
 }
+
+.banner-container h1, .banner-container h2, .banner-container h3, .banner-container h4, .banner-container p, .banner-container ul, .banner-container li{
+  color: #ECF0F1;
+  font-weight: bold;
+  /*text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;*/
+}
+
+.banner-container {
+  text-align: center;
+  border-top: 2px solid #E74C3C;
+  border-bottom: 2px solid #E74C3C;
+  color: #ECF0F1;
+  background-color: #E74C3C;
+  background-size: 4px 4px;
+}
+
+.banner-container .mui-flat-button.mui-is-secondary {
+  color: #ECF0F1;
+  background-color: #2980B9;
+}

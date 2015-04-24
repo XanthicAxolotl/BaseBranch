@@ -20,9 +20,10 @@ var path = {
   LOGIN_HTML: './client/src/login.html',
   SIGNUP_HTML: './client/src/signup.html',
   PROFILE_HTML: './client/src/profile.html',
+  ABOUT_HTML: './client/src/about.html',
   //SRC CSS Files
   CSS: ['./client/src/css/*.css', './node_modules/bootstrap/dist/css/*.css'],
-  IMG: ['./client/src/images/*'],
+  IMG: ['./client/src/images/*', './client/src/images/stack/*'],
   //Target Minified JS File Names
   INDEX_MINIFIED_OUT: 'index.min.js',
   GRAPH_MINIFIED_OUT: 'graph.min.js',
@@ -31,6 +32,7 @@ var path = {
   LOGIN_MINIFIED_OUT: 'login.min.js',
   SIGNUP_MINIFIED_OUT: 'signup.min.js',
   PROFILE_MINIFIED_OUT: 'profile.min.js',
+  ABOUT_MINIFIED_OUT: 'about.min.js',
   OUT: 'bundle.js',
   //Production Build Destination Directories
   DEST: './client/dist',
@@ -44,7 +46,8 @@ var path = {
   COURSE_ENTRY_POINT: './client/src/js/Course.jsx',
   LOGIN_ENTRY_POINT: './client/src/js/Login.jsx',
   SIGNUP_ENTRY_POINT: './client/src/js/SignUp.jsx',
-  PROFILE_ENTRY_POINT: './client/src/js/Profile.jsx'
+  PROFILE_ENTRY_POINT: './client/src/js/Profile.jsx',
+  ABOUT_ENTRY_POINT: './client/src/js/About.jsx',
 };
 
 /*===================== BUILD JSX TO JS =====================*/
@@ -125,6 +128,17 @@ gulp.task('buildProfile', function(){
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
+gulp.task('buildAbout', function(){
+  browserify({
+    entries: [path.ABOUT_ENTRY_POINT],
+    transform: [reactify],
+  })
+    .bundle()
+    .pipe(source(path.ABOUT_MINIFIED_OUT))
+    .pipe(streamify(uglify(path.ABOUT_MINIFIED_OUT)))
+    .pipe(gulp.dest(path.DEST_BUILD));
+});
+
 /*================== BUILD MATERIAL UI CSS ==================*/
 gulp.task('less', function(){
   return gulp.src('./client/src/css/main.less')
@@ -146,7 +160,12 @@ gulp.task('copyCSS', function(){
 gulp.task('copyImg', function(){
   gulp.src(path.IMG)
     .pipe(gulp.dest(path.DEST+ '/images'))
-})
+});
+
+gulp.task('copyImgStack', function(){
+  gulp.src(path.IMG)
+    .pipe(gulp.dest(path.DEST+ '/images/stack'))
+});
 
 // gulp.task('build', function () {
 //   return gulp.src(path.ENTRY_POINT)
@@ -232,6 +251,15 @@ gulp.task('replaceProfileHTML', function(){
     .pipe(gulp.dest(path.DEST));
 });
 
+gulp.task('replaceAboutHTML', function(){
+  gulp.src(path.ABOUT_HTML)
+    .pipe(htmlreplace({
+      'css': './css/main.css',
+      'js': 'build/' + path.ABOUT_MINIFIED_OUT
+    }))
+    .pipe(gulp.dest(path.DEST));
+});
+
 gulp.task('watch', function() {
   gulp.watch(path.HTML, ['copy']);
 
@@ -253,7 +281,7 @@ gulp.task('watch', function() {
     .pipe(gulp.dest(path.DEST_SRC));
 });
 
-gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'copyImg', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','replaceProfileHTML','build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup', 'buildProfile']);
+gulp.task('production', ['less', 'copyCSS', 'replaceHTML', 'copyImg', 'copyImgStack', 'replaceGraphHTML', 'replaceCurriculumHTML', 'replaceCourseHTML', 'replaceLoginHTML', 'replaceSignupHTML','replaceProfileHTML', 'replaceAboutHTML', 'build', 'buildGraph', 'buildCurriculum', 'buildCourse', 'buildLogin', 'buildSignup', 'buildProfile', 'buildAbout']);
 gulp.task('localtest', ['production', 'webserver', 'watchProd']);
 gulp.task('default', ['watch']);
 

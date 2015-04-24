@@ -51,8 +51,11 @@ var NavBar = React.createClass({
           <ToolbarGroup className="logout" key={1} float="right">
             <FlatButton className="nav-bar-button logout-button" secondary={true} label="Logout" linkButton={true} href="#" onClick={this.logout}/>
           </ToolbarGroup>
-          <ToolbarGroup className="logout" key={2} float="right">
+          <ToolbarGroup className="profile" key={2} float="right">
             <FlatButton className="nav-bar-button profile-button" secondary={true} label="My Profile" linkButton={true} href="./profile.html"/>
+          </ToolbarGroup>
+          <ToolbarGroup className="about" key={3} float="right">
+            <FlatButton className="nav-bar-button about-button" secondary={true} label="About" linkButton={true} href="./about.html" />
           </ToolbarGroup>
         </Toolbar>      
       );
@@ -67,6 +70,9 @@ var NavBar = React.createClass({
           </ToolbarGroup>
           <ToolbarGroup className="login" key={2} float="right">
             <FlatButton className="nav-bar-button login-button" secondary={true} label="Log In" linkButton={true} href="./login.html"/>
+          </ToolbarGroup>
+          <ToolbarGroup className="about" key={3} float="right">
+            <FlatButton className="nav-bar-button about-button" secondary={true} label="About" linkButton={true} href="./about.html" />
           </ToolbarGroup>
         </Toolbar>      
       );
