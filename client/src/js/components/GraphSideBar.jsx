@@ -75,24 +75,22 @@ var GraphSideBar = React.createClass({
 
   render: function() {
     var index = 0;
-    var context = this;
     var resources = this.state.curriculum.map(function(resource) {
       index++;
       return {payload: index, text: resource.name, iconClassName: 'fa fa-times'};
     });
-
     return (
       <div className="right">
         <h3 className="center">My Curriculum</h3>
         <Menu 
           menuItems={resources} 
           onItemClick={this.deleteFromBar} />
-        Name:
         <TextField
+          floatingLabelText="Name"
           value={this.state.curricName} 
           onChange={this.handleChangeName} />
-        Description:
         <TextField
+          floatingLabelText="Description"
           multiLine={true} 
           value={this.state.curricDesc} 
           onChange={this.handleChangeDesc} />
