@@ -5,6 +5,7 @@
 
 var Nodes = require('../config/db_models.js').Nodes;
 var Resources = require('../config/db_models.js').Resources;
+var Users = require('../config/db_models.js').Users;
 
 module.exports = {
 
@@ -47,7 +48,7 @@ module.exports = {
 
   // Retrieve all of the Resources for a specific Node from the database and send back to the client.
   getResources: function(req, res, next) {
-    Resources.findAll({where:{ nodeId: req.params.nodeId }})
+    Resources.findAll({where:{ nodeId: req.params.nodeId }, include: [ Users ]})
     .then(function(resources){
       console.log('Successfully found all resources');
       // Send back to the client the Resource instances as a JSON object.
