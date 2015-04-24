@@ -21,11 +21,6 @@ var Reflux = require('reflux');
 
 injectTapEventPlugin();
 
-// these should be populated by the database
-// var menuItems = [
-//   {payload: '1', text:'Example Framework 1'},
-//   {payload: '2', text:'Example Framework 2'},
-// ];
 var language = window.location.href.split('#')[1];
 
 var CurriculumBar = React.createClass({
@@ -54,6 +49,7 @@ var CurriculumBar = React.createClass({
       });
       return array;
     }();
+    console.log(menuItems);
     return (
       <Toolbar className="indigo">
         <ToolbarGroup key={0} float="left" className="nav-bar-title">
