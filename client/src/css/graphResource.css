@@ -28,7 +28,6 @@
 .right{
   width: 25%;
   height: 530px;
-  display: inline-block;
 }
 
 .resourceType{
@@ -105,6 +104,7 @@ h3{
 
 .mui-drop-down-menu {
   color: #ECF0F1 !important;
+  height: 100% !important;
 }
 
 .mui-drop-down-menu:hover {
@@ -132,18 +132,24 @@ h3{
 }
 
 .d3-text {
-  text-stroke: 20px #333333;
-  -webkit-text-stroke: 20px #333333;
   color: #ECF0F1 !important;
-  text-shadow:
-       2px 2px 0 #333,
-     -1px -1px 0 #333,  
-      1px -1px 0 #333,
-      -1px 1px 0 #333,
-       1px 1px 0 #333;
 }
 
-.mui-paper > .mui-paper-container {
+.mui-paper.mui-z-depth-1 > .mui-z-depth-bottom {
+  box-shadow: 0px 0px 0px #888888 !important;
+}
+
+.graph-side-bar {
   height: calc(100% - 200px);
   width: 100%;
+}
+
+h4 {
+  padding-top: 6;
+  margin-bottom: 0;
+}
+
+h5 {
+  padding-top: 0;
+  margin-bottom: 7;
 }
