@@ -60,7 +60,7 @@ var AboutView = React.createClass({
         <img className="picture" src={'https://s-media-cache-ak0.pinimg.com/originals/fb/cd/97/fbcd9760780dceec903649fd75ef7016.jpg'} />
         <hr />
         <div className="row">
-          <a className="col-md-3" href="http://www.github.com/KalevRK"><span className="fa fa-github-alt"></span></a>
+          <a className="col-md-3" href="https://www.github.com/KalevRK"><span className="fa fa-github-alt"></span></a>
           <a className="col-md-3" href="http://www.linkedin.com/in/kalevrk"><span className="fa fa-linkedin"></span></a>
           <a className="col-md-3" href="http://www.twitter.com/kalevrk"><span className="fa fa-twitter"></span></a>
         </div>
