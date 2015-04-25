@@ -72,10 +72,38 @@ var CurriculumStore = Reflux.createStore({
     this.load();
   },
   onUpVote: function(itemId){
-    console.log('up', itemId);
+    var http = new XMLHttpRequest();
+    var url = "./api/curriculum/rating/up/" + itemId;
+    var context = this;
+
+    http.open("POST", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.onreadystatechange = function(){
+      if (http.readyState === 4){
+        if (http.status === 200){
+          // set the signedInUser property to the User object returned in the login response
+          context.load();
+        }
+      }
+    };
+    http.send();
   },
   onDownVote: function(itemId){
-    console.log('down', itemId);
+    var http = new XMLHttpRequest();
+    var url = "./api/curriculum/rating/down/" + itemId;
+    var context = this;
+
+    http.open("POST", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.onreadystatechange = function(){
+      if (http.readyState === 4){
+        if (http.status === 200){
+          // set the signedInUser property to the User object returned in the login response
+          context.load();
+        }
+      }
+    };
+    http.send();
   }
 });
 
