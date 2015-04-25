@@ -39,10 +39,17 @@ var ItemView = React.createClass({
     this.props.editRating(this.props.curriculum.id, 'down');
   },
   render: function() {
-    while(!this.props.curriculum.resources){ }
-    var resourceItems = this.props.curriculum.resources.map(function(resource){
-      return <li key={resource.id}>{resource.name}</li>
-    });
+    var resourceItems;
+    var checkItems = function(){
+      console.log('currently checking', this.props.curriculum.resources)
+      if (!Array.isArray(this.props.curriculum.resources)){
+        setTimeout(checkItems, 10);
+      } else {
+        resourceItems = this.props.curriculum.resources.map(function(resource){
+          return <li key={resource.id}>{resource.name}</li>
+        });
+      }
+    }
     var curriculumUrl = "./course.html#" + this.props.curriculum.id;
     return(
       <li className="curriculum-item">
