@@ -79,17 +79,19 @@ var GraphSideBar = React.createClass({
     });
     return (
       <div className="right">
-        <h3 className="center">My Curriculum</h3>
-        <Menu 
+        <h4 className="center">Constructed Curriculum</h4>
+        <h5 className="center">Added Resources</h5>
+        <Menu className="graph-side-bar"
           menuItems={resources} 
           onItemClick={this.deleteFromBar} />
         <TextField
           floatingLabelText="Name"
+          multiLine={true}
           value={this.state.curricName} 
           onChange={this.handleChangeName} />
         <TextField
           floatingLabelText="Description"
-          multiLine={true} 
+          multiLine={true}
           value={this.state.curricDesc} 
           onChange={this.handleChangeDesc} />
         <FlatButton disabled={this.state.userId === null} label={this.state.userId === null ? 'Login to Create' : 'Create Curriculum'} className="center full-button" secondary={true} onClick={this.saveNewCurriculum} />

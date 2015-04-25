@@ -7,34 +7,7 @@ var ANIMATION_DURATION = 400;
 var TOOLTIP_WIDTH = 30;
 var TOOLTIP_HEIGHT = 30;
 
-
-// d3.selection.prototype.moveToFront = function() {
-//   return this.each(function(){
-//     this.parentNode.appendChild(this);
-//   });
-// };  
-
-
 var ns = {};
-
-ns.create = function(el, props, state) {
-  // var svg = d3.select(el).append('svg')
-  //     .attr('class', 'd3')
-  //     .attr('width', GraphStore.width)
-  //     .attr('height', GraphStore.height)
-  //     .attr('style', 'background: AliceBlue');
-
-  // svg.append('g')
-  //     .attr('class', 'd3-points');
-
-  // svg.append('g')
-  //     .attr('class', 'd3-texts');
-
-  // //var dispatcher = new EventEmitter();
-  // this.update(el, state, null);
-
-  return; //dispatcher;
-};
 
 ns.update = function(el, state) {
   var scales = this._scales(el, state.domain);
@@ -81,7 +54,7 @@ ns._drawPoints = function(el, scales, data, prevScales) {
 
 
   // Variable n is the total number of nodes.
-  var n = data.length; //4;//GraphStore.nodeData.length,
+  var n = data.length;
   // Variable m is the number of distinct clusters
   var m = 1;
 
@@ -93,8 +66,8 @@ ns._drawPoints = function(el, scales, data, prevScales) {
 
   var nodes = d3.range(n).map(function() {
     var i = Math.floor(Math.random() * m); // cluster number
-    var r = 50;
-    var d = {cluster: i, radius: r/*, id: data*/};
+    var r = 83;
+    var d = {cluster: i, radius: r, rw: 999.9};
     if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d;
     return d;
   });
@@ -102,7 +75,7 @@ ns._drawPoints = function(el, scales, data, prevScales) {
   // put data into nodes
   for (var i = 0; i < nodes.length; i++) {
     if(i === 0) {
-      nodes[i].radius = 70;
+      nodes[i].radius = 95;
     }
     nodes[i].id = data[i].id;
     nodes[i].channelId = data[i].channelId;
@@ -154,8 +127,23 @@ ns._drawPoints = function(el, scales, data, prevScales) {
   var node = g.selectAll(".d3-points")
       .data(nodes)
       .enter().append("circle")
-      .style("fill", function(d) { return color(d.cluster); }) // can just set the color here
+      .style("fill", function(d) { return color(d.cluster); }) // set color with this
       .call(force.drag);
+
+  // console.log('nodes data', nodes);
+
+  // var wrap = text
+  //   .each(function() { console.log('this does things',this.getComputedTextLength()); })
+  //   .data(nodes)
+  //   .enter()
+  //   .append("rect")
+  //   .attr("x", function(d) { return d.x - 100; })
+  //   .attr("y", function(d) { return d.y - 20; })
+  //   .attr("height", 40)
+  //   .attr("width", 200)
+  //   // .attr("width", function(d) {return texts.node().getComputedTextLength()/*d.rw*/;})
+  //   .attr("z", 10)
+  //   .attr("fill", "#3498DB");
 
   // Add text and link to circles
   var texts = text
@@ -167,9 +155,11 @@ ns._drawPoints = function(el, scales, data, prevScales) {
     .attr("z", 11)
     .attr('class', 'd3-text')
     .text( function (d) { return d.name; })
-    .attr("font-family", "sans-serif")
-    .attr("font-size", "20px")
+    .attr("font-family", "roboto")
+    .attr("font-size", "25px")
     .attr("fill", "#ECF0F1")
+    .attr("stroke", "#333333")
+    .attr("stroke-width", "0.5px")
     .attr("cursor", "pointer")
     .attr("id", function(d) {return d.id})
     .style("text-anchor", "middle")
@@ -190,13 +180,17 @@ ns._drawPoints = function(el, scales, data, prevScales) {
       .duration(750)
       .delay(function(d, i) { return i * 5; });
 
-
   function tick(e) {
     node
         .each(cluster(10 * e.alpha * e.alpha))
         .each(collide(.5))
         .attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
+    // wrap
+    //     .each(cluster(10 * e.alpha * e.alpha))
+    //     .each(collide(.5))
+    //     .attr("x", function(d) { return d.x - 100; })
+    //     .attr("y", function(d) { return d.y - 20; });
     texts
         .each(cluster(10 * e.alpha * e.alpha))
         .each(collide(.5))
@@ -221,7 +215,7 @@ ns._drawPoints = function(el, scales, data, prevScales) {
         cluster.y += y;
       }
     };
-  }
+  };
 
   // Resolves collisions between d and all other circles.
   function collide(alpha) {
@@ -249,18 +243,12 @@ ns._drawPoints = function(el, scales, data, prevScales) {
         return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
       });
     };
-  }
-
-
-
-
-
+  };
 };
 
 ns.resize = function(el) {
   d3.select(el).selectAll("svg")
     .attr("width", window.innerWidth * 0.75);
-
 }
 
 ns.destroy = function(el) {
