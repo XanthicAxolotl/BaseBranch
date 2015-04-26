@@ -48,7 +48,6 @@ var CurriculumBar = React.createClass({
       });
       return array;
     }();
-    console.log(menuItems);
     return (
       <Toolbar className="indigo">
         <ToolbarGroup key={0} float="left" className="nav-bar-title">

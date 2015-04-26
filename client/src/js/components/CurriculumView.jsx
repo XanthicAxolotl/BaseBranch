@@ -25,13 +25,6 @@ injectTapEventPlugin();
 /*================ CREATE CURRICULUM COMPONENTS ================*/
 //Create Individual Curriculum View
 var ItemView = React.createClass({
-  getInitialState: function() {
-    var author = this.props.curriculum.userid || 'Admin';
-    return {
-      author: author
-    }
-  },
-
   voteUp: function(){
     this.props.editRating(this.props.curriculum.id, 'up');
   },
@@ -41,7 +34,6 @@ var ItemView = React.createClass({
   render: function() {
     var resourceItems;
     var checkItems = function(){
-      console.log('currently checking', this.props.curriculum.resources)
       if (!Array.isArray(this.props.curriculum.resources)){
         setTimeout(checkItems, 10);
       } else {
@@ -58,7 +50,7 @@ var ItemView = React.createClass({
             <ul className="curriculum-props-list">
               <li className="title-line"><a href={curriculumUrl}><h4>{this.props.curriculum.name}</h4></a></li>
               <li><strong>{this.props.curriculum.description}</strong></li>
-              <li>Created By: {this.state.author}</li>
+              <li>Created By: {(this.props.curriculum.user === undefined || this.props.curriculum.user === null)? 'Admin' : this.props.curriculum.user.name}</li>
               <li>Last Updated: {this.props.curriculum.createdAt}</li>
               <li className="rating-line"><div className="rating">Rating: {this.props.curriculum.rating}</div><div className="vote-up" onClick={this.voteUp}> up</div><div className="vote-down" onClick={this.voteDown}> down</div></li>
             </ul>
@@ -106,6 +98,7 @@ var CurriculumView = React.createClass({
     window.removeEventListener('resize', this.handleResize);
   },
   render: function() {
+    console.log(this.state.curricula);
     var context = this;
     var curricular = this.state.curricula.map(function(result) {
       return <ItemView key={result.id} curriculum={result} editRating={context.handleRating}/>
