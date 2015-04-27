@@ -4,7 +4,7 @@ var CurriculumActions = require('../actions/CurriculumActions.js');
 var CurriculumBarActions = require('../actions/CurriculumBarActions.js');
 
 var _curricula = [];
-
+var count = {};
 /*================ CREATE CURRICULA STORE =================*/
 var CurriculumStore = Reflux.createStore({
   listenables: [CurriculumActions, CurriculumBarActions],
@@ -33,6 +33,9 @@ var CurriculumStore = Reflux.createStore({
             context.trigger(_curricula);
           } else {
             for (var i = 0; i < _curricula.length; i++){
+              count[i] = false;
+            }
+            for (var i = 0; i < _curricula.length; i++){
               context.loadResource(i);
             }
           }
@@ -54,12 +57,25 @@ var CurriculumStore = Reflux.createStore({
       http.onreadystatechange = function(){
         if (http.readyState === 4) {
           _curricula[index].resources = JSON.parse(http.response);
-          if (index === _curricula.length - 1){
+          count[index] = true;
+          var done = true;
+
+          for (var key in count){
+            if (!count[key]){
+              done = false;
+            }
+          }
+
+          if (done){
             for (var i = 0; i < _curricula.length; i++){
               _curricula[i].createdAt = _curricula[i].createdAt.split('T')[0];
             }
+            _curricula.sort(function(a, b){
+              return (a.rating < b.rating);
+            });
             context.trigger(_curricula);
           }
+
         }
       };
       http.send();

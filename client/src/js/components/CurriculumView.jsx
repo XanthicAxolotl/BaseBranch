@@ -33,34 +33,39 @@ var ItemView = React.createClass({
   },
   render: function() {
     var resourceItems;
-    var checkItems = function(){
-      if (!Array.isArray(this.props.curriculum.resources)){
-        setTimeout(checkItems, 10);
-      } else {
-        resourceItems = this.props.curriculum.resources.map(function(resource){
-          return <li key={resource.id}>{resource.name}</li>
-        });
-      }
+    if (Array.isArray(this.props.resources)){
+      resourceItems = this.props.resources.map(function(resource){
+        return <div className="single-resource" key={resource.id}>{resource.name}</div>
+      });      
+    } else {
+      resourceItems = [{id:0, name:'a'}];
     }
-    var curriculumUrl = "./course.html#" + this.props.curriculum.id;
+    var curriculumUrl = "./course.html#" + this.props.curriculumId;
     return(
       <li className="curriculum-item">
         <Paper className="curriculum-paper" zDepth={1} rounded={false}>
           <div className="curriculum-item-left">
-            <ul className="curriculum-props-list">
-              <li className="title-line"><a href={curriculumUrl}><h4>{this.props.curriculum.name}</h4></a></li>
-              <li><strong>{this.props.curriculum.description}</strong></li>
-              <li>Created By: {(this.props.curriculum.user === undefined || this.props.curriculum.user === null)? 'Admin' : this.props.curriculum.user.name}</li>
-              <li>Last Updated: {this.props.curriculum.createdAt}</li>
-              <li className="rating-line"><div className="rating">Rating: {this.props.curriculum.rating}</div><div className="vote-up" onClick={this.voteUp}> up</div><div className="vote-down" onClick={this.voteDown}> down</div></li>
-            </ul>
+            <div className="rating-arrows">
+              <div className="vote-up" onClick={this.voteUp}><i className="fa fa-chevron-up"></i></div>
+              <div className="vote-down" onClick={this.voteDown}><i className="fa fa-chevron-down"></i></div>
+            </div>
+            <div className="rating">{this.props.curriculum.rating}</div>
           </div>
-          <div className="curriculum-item-right">
-            <h4>Resources</h4>
-            <ul className="curriculum-resource-list">
-              {resourceItems}
-            </ul>
-          </div>
+          <a className="curriculum-info-container" href={curriculumUrl}>
+            <div className="curriculum-item-center">
+              <ul className="curriculum-props-list">
+                <li className="title-line"><h4>{this.props.curriculum.name}</h4></li>
+                <li>Created By: {(this.props.curriculum.user === undefined || this.props.curriculum.user === null)? 'Admin' : this.props.curriculum.user.name}</li>
+                <li><strong>{this.props.curriculum.description}</strong></li>
+              </ul>
+            </div>
+            <div className="curriculum-item-right">
+              <h4>Resources</h4>
+              <div className="curriculum-resource-list">
+                {resourceItems}
+              </div>
+            </div>
+          </a>
         </Paper>
       </li>
     )
@@ -101,7 +106,7 @@ var CurriculumView = React.createClass({
     console.log(this.state.curricula);
     var context = this;
     var curricular = this.state.curricula.map(function(result) {
-      return <ItemView key={result.id} curriculum={result} editRating={context.handleRating}/>
+      return <ItemView key={result.id} curriculum={result} curriculumId={result.id} resources={result.resources} editRating={context.handleRating}/>
     });
     return (
       <div className="curricula-container">
