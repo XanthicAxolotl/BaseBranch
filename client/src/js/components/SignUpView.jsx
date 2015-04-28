@@ -5,6 +5,7 @@ var TextField = mui.TextField;
 var RaisedButton = mui.RaisedButton;
 var SignUpActions = require('../actions/SignUpActions.js');
 var SignUpStore = require('../stores/SignUpStore.js');
+var Paper = mui.Paper;
 
 var SignUpView = React.createClass({
   mixins: [Reflux.connect(SignUpStore, 'error')],
@@ -121,7 +122,7 @@ var SignUpView = React.createClass({
   render: function(){ 
     return (
       <div className="signup-main">
-        <div>
+        <Paper className="signup-box" zDepth={1} rounded={true}>
           <h1>Sign Up</h1>
           <TextField
             hintText="Username" value={this.state.username[0]} errorText={this.state.errorUser} onChange={this.userInput}/> <br />
@@ -131,10 +132,12 @@ var SignUpView = React.createClass({
             hintText="Password" value={this.state.password[0]} errorText={this.state.errorPass} onChange={this.passInput} type="password"/> <br />
           <TextField
             hintText="Confirm Password" value={this.state.cPassword[0]} errorText={this.state.errorCPass} onChange={this.cPassInput} type="password"/> <br />
-          <RaisedButton label="Sign Up" secondary={true} onClick={this.newUser} disabled={this.state.disable}/>
-          <RaisedButton label="Sign Up with GitHub" secondary={true} />
+          <div className="button-container">
+            <RaisedButton label="Sign Up" secondary={true} onClick={this.newUser} disabled={this.state.disable}/>
+            <RaisedButton label="Sign Up with GitHub" secondary={true} />
+          </div>
           <p><a href="./login.html">Already have an account? Log in here.</a></p>
-        </div>
+        </Paper>
       </div>
     );
   }
