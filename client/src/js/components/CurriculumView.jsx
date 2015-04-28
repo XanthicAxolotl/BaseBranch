@@ -56,7 +56,7 @@ var ItemView = React.createClass({
               <ul className="curriculum-props-list">
                 <li className="title-line"><h4>{this.props.curriculum.name}</h4></li>
                 <li>Created By: {(this.props.curriculum.user === undefined || this.props.curriculum.user === null)? 'Admin' : this.props.curriculum.user.name}</li>
-                <li><strong>{this.props.curriculum.description}</strong></li>
+                <li className="desc">{this.props.curriculum.description}</li>
               </ul>
             </div>
             <div className="curriculum-item-right">
