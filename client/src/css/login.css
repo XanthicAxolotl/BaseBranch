@@ -39,3 +39,11 @@
 	display: flex;
 	flex-direction: row;
 }
+
+.button-container .mui-raised-button.mui-is-secondary .mui-raised-button-container {
+  background-color: #3498DB;
+}
+
+.button-container .mui-raised-button.mui-is-secondary .mui-raised-button-container:hover {
+  background-color: #2980B9;
+}
