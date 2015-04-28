@@ -8,7 +8,6 @@ var resourceList = [];
 var GraphSideBarStore = Reflux.createStore({
   listenables: GraphActions,
   onSaveCurriculum: function(curriculum, id, name, desc, userId){
-    console.log('storeonsave', curriculum);
     var data = {name: name, description: desc, channelId: id, resources: curriculum, userId: userId};
     // send login info to the server
     var http = new XMLHttpRequest();
@@ -20,7 +19,7 @@ var GraphSideBarStore = Reflux.createStore({
       if (http.readyState === 4){
       
       }
-    };xw
+    };
     http.send(JSON.stringify(data));
   },
 
