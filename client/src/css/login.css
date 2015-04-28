@@ -12,5 +12,30 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-top: 10px;
-	height: calc(100% - 250px);
+	height: calc(100% - 150px);
+}
+
+.login-box {
+	width: 27%;
+	max-height: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.login-box>div{
+	max-height: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.login-box h1 {
+	font-family: 'Raleway', sans-serif;
+}
+
+.button-container {
+	display: flex;
+	flex-direction: row;
 }

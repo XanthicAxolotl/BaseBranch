@@ -12,7 +12,29 @@
 	-ms-flex-align: center;
 	align-items: center;
 	margin-top: 10px;
-	height: calc(75% - 56px);
+	height: calc(100% - 150px);
+}
+
+.signup-box {
+	width: 27%;
+	max-height: 550px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.signup-box>div{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	max-height: 550px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.signup-box h1 {
+	font-family: 'Raleway', sans-serif;
 }
 
 #app {
@@ -21,4 +43,9 @@
 
 #app>.full {
 	height: 100%;
+}
+
+.button-container {
+	display: flex;
+	flex-direction: row;
 }
