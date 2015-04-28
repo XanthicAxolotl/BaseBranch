@@ -9,22 +9,22 @@ var PopularView = React.createClass({
         <div className="PopularLanguages">
           <h3>Popular Topics</h3>
           <div className="inner-container">
-            <a href='#'>
+            <a href='./curriculum.html#JavaScript'>
               <Paper className="box" zDepth={1} rounded={true}>
                 <img className="popular-image" src="./images/javascript-icon.png" /><h5>JavaScript</h5>
               </Paper>
             </a>
-            <a href='#'>
+            <a href='./curriculum.html#React'>
               <Paper className="box" zDepth={1} rounded={true}>
                 <img className="popular-image" src="./images/react-icon.png" /><h5>React</h5>
               </Paper>
             </a>
-            <a href='#'>
+            <a href='./curriculum.html#Angular'>
               <Paper className="box" zDepth={1} rounded={true}>
                 <img className="popular-image" src="./images/angular.png" /><h5>Angular</h5>
               </Paper>
             </a>
-            <a href='#'>
+            <a href='./curriculum.html#Backbone'>
               <Paper className="box" zDepth={1} rounded={true}>
                 <img className="popular-image" src="./images/backbone.png" /><h5>Backbone</h5>
               </Paper>

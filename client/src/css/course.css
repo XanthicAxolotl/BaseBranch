@@ -134,6 +134,7 @@ body {
 	-webkit-flex-direction: column;
 	-ms-flex-direction: column;
 	flex-direction: column;
+	padding-left: 0;
 }
 
 .resource-info>div {
@@ -190,7 +191,7 @@ body {
 
 .rating-number {
 	order: 2;
-	font-size: 2em;
+	font-size: 1.8em;
 }
 
 .plus:hover, .minus:hover {
@@ -202,6 +203,7 @@ body {
 	order: 1;
 	display: flex;
 	flex-direction: column;
+	font-size: 0.8em;
 }
 
 .view-button {
@@ -244,7 +246,7 @@ body {
 }
 
 .single-comment>div>div {
-	padding-left: 5px;
+	padding-left: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -270,4 +272,21 @@ body {
 
 .item {
 	margin-left: 10px;
-}}
+}
+
+.user-name {
+	font-weight: 600;
+}
+
+.comment-form {
+	z-index: 99;
+	padding-top: 10px;
+}
+
+.comment-text {
+	padding-left: 10px;
+}
+
+.comment-box {
+	width: 97%;
+}
