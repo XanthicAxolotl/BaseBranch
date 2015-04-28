@@ -185,6 +185,7 @@ img {
   color: #ECF0F1;
   background-color: #E74C3C;
   background-size: 4px 4px;
+  display: none;
 }
 
 .banner-container .mui-flat-button.mui-is-secondary {

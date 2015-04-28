@@ -103,9 +103,9 @@ var ResourceView = React.createClass({
       return (
         <li className="single-comment">
           <Paper zDepth={1} rounded={false} className="comment-paper">
-            <div><span className="user-name">{comment.user.name} - </span>{comment.createdAt.split('T')[0]}</div>
+            <div><span className="user-name">{comment.user.name} </span>{comment.createdAt.split('T')[0]}</div>
             <div className="comment-text">{comment.text}</div>
-          </Paper>
+          </Paper> 
         </li>
       );
     });

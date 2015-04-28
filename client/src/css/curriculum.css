@@ -218,6 +218,7 @@
 
 .vote-up, .vote-down {
 	margin-left: 10px;
+	font-size: 1.4em;
 }
 
 .indigo .mui-drop-down-menu .mui-menu-control .mui-menu-label {
@@ -227,7 +228,6 @@
 .indigo .mui-drop-down-menu .mui-menu-control .mui-menu-label:hover {
 	color: #6D665C;
 }
-
 
 .indigo .mui-drop-down-menu .mui-menu-control .mui-menu-drop-down-icon polygon {
 	fill: #FFFFFF;
